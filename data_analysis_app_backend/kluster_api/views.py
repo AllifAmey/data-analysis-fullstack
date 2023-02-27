@@ -73,6 +73,7 @@ class RandomDataPointAPIView(APIView):
             return Response({"Message": "Error string is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         
 class KlusterAnalysisAPIView(APIView):
+    """Handles data analysis and displaying all the data"""
     queryset = models.DataSet.objects.all()
     
     def get(self, request):
@@ -80,7 +81,6 @@ class KlusterAnalysisAPIView(APIView):
         dataset_2 = models.DataSet.objects.get(id=2)
         dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_1)]
         dataset_2_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_2)]
-        print(f'dataset_1_datapoints {dataset_1_datapoints} dataset_2_datapoints {dataset_2_datapoints}')
         dataset_1_avg = numpy.average(dataset_1_datapoints)
         dataset_2_avg = numpy.average(dataset_2_datapoints)
         dataset_1_median = numpy.median(dataset_1_datapoints)
@@ -88,6 +88,9 @@ class KlusterAnalysisAPIView(APIView):
         dataset_1_mode = statistics.mode(dataset_1_datapoints)
         dataset_2_mode = statistics.mode(dataset_1_datapoints)
         
-        rsp = {"dataset_1": [dataset_1_avg,dataset_1_median, dataset_1_mode], "dataset_2":[dataset_2_avg,dataset_2_median, dataset_2_mode] }
+        rsp = {"dataset_1_data": dataset_1_datapoints,
+               "dataset_2_data": dataset_2_datapoints,
+               "dataset_1_analysis": [dataset_1_avg,dataset_1_median, dataset_1_mode], 
+               "dataset_2_analysis":[dataset_2_avg,dataset_2_median, dataset_2_mode] }
         
         return Response({"data": rsp},  status=status.HTTP_200_OK)

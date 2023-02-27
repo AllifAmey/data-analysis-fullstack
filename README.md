@@ -32,11 +32,16 @@ go to http://localhost:8000/admin to see backend data
 ## Phase 1 - Set up phase
 
 - &#9745; Set up Django and React
-- &#9744; Attempt to construct a long-term folder structure for React components
-- &#9744; Decide on a framework to allow for data visualisation for Kluster project.
-- &#9744; Create homepage for frontend
-- &#9744; Set up Django Rest Framework and Swagger for automatic api documentation.
+- &#9745; Attempt to construct a long-term folder structure for React components
+- &#9745; Decide on a framework to allow for data visualisation for Kluster project. - chartjs & chakra
+- &#9745; Create homepage for frontend
+- &#9745; Set up Django Rest Framework and Swagger for automatic api documentation.
 
 ## Phase 2 - Create kluster sales api and attach to frontend
 
-TBA
+- &#9745; Create models, views, serializer, api endpoints/urls for Kluster API
+- &#9745; Ensure the frontend can communicate to the API by utilising CORs
+- &#9745; Display the data on the frontend and the analysis.
+- &#9744; Add functionality to the top 3 buttons - Add 5, Delete 5, Bulk Delete
+- &#9744; Make the data displayed responsive to the inputs of the top 3 buttons.
+- &#9744; Add the CRUD functionality and ensure the data is responsive
