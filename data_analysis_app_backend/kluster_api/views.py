@@ -63,8 +63,9 @@ class RandomDataPointAPIView(APIView):
                     random_datapoints.delete()
                     return Response({"Message" : f"Datapoints with ids {random_datapoint_ids} have been deleted"}, status=status.HTTP_200_OK)
             elif action_type == "bulk_delete":
-                data = self.queryset
-                data.delete()
+                dataset = models.DataSet.objects.get(id=dataset_id)
+                delete_datapoints = models.DataPoint.objects.filter(dataset=dataset)
+                delete_datapoints.delete()
                 return Response({"Message": f"All datapoints for {dataset_id} have been deleted"}, status=status.HTTP_200_OK)
             else:
                 return Response({"Message": "Success"})
@@ -79,14 +80,19 @@ class KlusterAnalysisAPIView(APIView):
     def get(self, request):
         dataset_1 = models.DataSet.objects.get(id=1)
         dataset_2 = models.DataSet.objects.get(id=2)
-        dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_1)]
+        dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_1)] 
         dataset_2_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_2)]
+        if len(dataset_1_datapoints) == 0:
+            dataset_1_datapoints.append(0)
+        if len(dataset_2_datapoints) == 0:
+            dataset_2_datapoints.append(0)
         dataset_1_avg = numpy.average(dataset_1_datapoints)
         dataset_2_avg = numpy.average(dataset_2_datapoints)
         dataset_1_median = numpy.median(dataset_1_datapoints)
         dataset_2_median = numpy.median(dataset_2_datapoints)
         dataset_1_mode = statistics.mode(dataset_1_datapoints)
-        dataset_2_mode = statistics.mode(dataset_1_datapoints)
+        dataset_2_mode = statistics.mode(dataset_2_datapoints)
+
         
         rsp = {"dataset_1_data": dataset_1_datapoints,
                "dataset_2_data": dataset_2_datapoints,

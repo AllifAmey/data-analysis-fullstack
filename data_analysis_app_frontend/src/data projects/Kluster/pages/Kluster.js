@@ -4,7 +4,7 @@ import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import { Container, Flex, Box, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { getAnalysis } from "../APIs/DatasetAPI";
+import { getAnalysis, postRandom } from "../APIs/DatasetAPI";
 
 const options = {
   responsive: true,
@@ -74,27 +74,54 @@ function Kluster() {
                 <Button
                   variant="ghost"
                   colorScheme="green"
-                  as={RouterLink}
-                  to="/"
                   width="70px"
+                  onClick={() => {
+                    postRandom(
+                      setIsLoading,
+                      1,
+                      "add_5",
+                      setdataset1Data,
+                      setdataset2Data,
+                      setdatasetAnalysis1,
+                      setdatasetAnalysis2
+                    ).then((_) => {});
+                  }}
                 >
                   Add 5
                 </Button>
                 <Button
                   variant="ghost"
                   colorScheme="red"
-                  as={RouterLink}
-                  to="/"
                   width="90px"
+                  onClick={() => {
+                    postRandom(
+                      setIsLoading,
+                      1,
+                      "delete_5",
+                      setdataset1Data,
+                      setdataset2Data,
+                      setdatasetAnalysis1,
+                      setdatasetAnalysis2
+                    ).then((_) => {});
+                  }}
                 >
                   Delete 5
                 </Button>
                 <Button
                   variant="ghost"
                   colorScheme="blackAlpha"
-                  as={RouterLink}
-                  to="/"
                   width="110px"
+                  onClick={() => {
+                    postRandom(
+                      setIsLoading,
+                      1,
+                      "bulk_delete",
+                      setdataset1Data,
+                      setdataset2Data,
+                      setdatasetAnalysis1,
+                      setdatasetAnalysis2
+                    ).then((_) => {});
+                  }}
                 >
                   Bulk Delete
                 </Button>
@@ -102,10 +129,11 @@ function Kluster() {
               <Button
                 variant="ghost"
                 colorScheme="blue"
-                as={RouterLink}
-                to="/"
                 width="80px"
                 alignSelf="center"
+                onClick={() => {
+                  console.log("Hiya");
+                }}
               >
                 CRUD
               </Button>
@@ -162,7 +190,12 @@ function Kluster() {
               </Button>
             </Flex>
             <Flex alignSelf="start" flexDirection="column" gap="2rem" flex={1}>
-              <Box margin="5rem">
+              <Box
+                margin="5rem"
+                display="flex"
+                flexDirection="column"
+                gap="2rem"
+              >
                 <div>Sales Dataset 2</div>
                 <div>{`${dataset2Data}`}</div>
               </Box>
@@ -170,27 +203,54 @@ function Kluster() {
                 <Button
                   variant="ghost"
                   colorScheme="green"
-                  as={RouterLink}
-                  to="/"
                   width="70px"
+                  onClick={() => {
+                    postRandom(
+                      setIsLoading,
+                      2,
+                      "add_5",
+                      setdataset1Data,
+                      setdataset2Data,
+                      setdatasetAnalysis1,
+                      setdatasetAnalysis2
+                    ).then((_) => {});
+                  }}
                 >
                   Add 5
                 </Button>
                 <Button
                   variant="ghost"
                   colorScheme="red"
-                  as={RouterLink}
-                  to="/"
                   width="90px"
+                  onClick={() => {
+                    postRandom(
+                      setIsLoading,
+                      2,
+                      "delete_5",
+                      setdataset1Data,
+                      setdataset2Data,
+                      setdatasetAnalysis1,
+                      setdatasetAnalysis2
+                    ).then((_) => {});
+                  }}
                 >
                   Delete 5
                 </Button>
                 <Button
                   variant="ghost"
                   colorScheme="blackAlpha"
-                  as={RouterLink}
-                  to="/"
                   width="110px"
+                  onClick={() => {
+                    postRandom(
+                      setIsLoading,
+                      2,
+                      "bulk_delete",
+                      setdataset1Data,
+                      setdataset2Data,
+                      setdatasetAnalysis1,
+                      setdatasetAnalysis2
+                    ).then((_) => {});
+                  }}
                 >
                   Bulk Delete
                 </Button>
@@ -198,10 +258,11 @@ function Kluster() {
               <Button
                 variant="ghost"
                 colorScheme="blue"
-                as={RouterLink}
-                to="/"
                 width="80px"
                 alignSelf="center"
+                onClick={() => {
+                  console.log("Hiya");
+                }}
               >
                 CRUD
               </Button>

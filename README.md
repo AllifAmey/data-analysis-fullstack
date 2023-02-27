@@ -42,6 +42,6 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Create models, views, serializer, api endpoints/urls for Kluster API
 - &#9745; Ensure the frontend can communicate to the API by utilising CORs
 - &#9745; Display the data on the frontend and the analysis.
-- &#9744; Add functionality to the top 3 buttons - Add 5, Delete 5, Bulk Delete
-- &#9744; Make the data displayed responsive to the inputs of the top 3 buttons.
+- &#9745; Add functionality to the top 3 buttons - Add 5, Delete 5, Bulk Delete
+- &#9745; Make the data displayed responsive to the inputs of the top 3 buttons.
 - &#9744; Add the CRUD functionality and ensure the data is responsive
