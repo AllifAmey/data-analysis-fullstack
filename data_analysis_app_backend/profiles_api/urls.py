@@ -1,3 +1,6 @@
+"""
+Urls for the user API
+"""
 from django.urls import path, include
 from profiles_api import views
 
@@ -5,8 +8,8 @@ from profiles_api import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-# as referance
-#router.register("book", views.BookViewSet, basename='book-viewset')
+
+app_name = 'user'
 
 
 urlpatterns = [
