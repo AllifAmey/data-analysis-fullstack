@@ -13,6 +13,8 @@ from rest_framework import serializers
 from drf_spectacular.utils import extend_schema, inline_serializer, PolymorphicProxySerializer
 
 import random
+import numpy
+import statistics
 
 
 # Create your views here.
@@ -70,5 +72,22 @@ class RandomDataPointAPIView(APIView):
         else:
             return Response({"Message": "Error string is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         
-
+class KlusterAnalysisAPIView(APIView):
+    queryset = models.DataSet.objects.all()
+    
+    def get(self, request):
+        dataset_1 = models.DataSet.objects.get(id=1)
+        dataset_2 = models.DataSet.objects.get(id=2)
+        dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_1)]
+        dataset_2_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_2)]
+        print(f'dataset_1_datapoints {dataset_1_datapoints} dataset_2_datapoints {dataset_2_datapoints}')
+        dataset_1_avg = numpy.average(dataset_1_datapoints)
+        dataset_2_avg = numpy.average(dataset_2_datapoints)
+        dataset_1_median = numpy.median(dataset_1_datapoints)
+        dataset_2_median = numpy.median(dataset_2_datapoints)
+        dataset_1_mode = statistics.mode(dataset_1_datapoints)
+        dataset_2_mode = statistics.mode(dataset_1_datapoints)
         
+        rsp = {"dataset_1": [dataset_1_avg,dataset_1_median, dataset_1_mode], "dataset_2":[dataset_2_avg,dataset_2_median, dataset_2_mode] }
+        
+        return Response({"data": rsp},  status=status.HTTP_200_OK)

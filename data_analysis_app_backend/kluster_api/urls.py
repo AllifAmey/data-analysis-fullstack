@@ -18,4 +18,5 @@ router.register("datapoint", views.DataPointViewset, basename='datapoint-viewset
 urlpatterns = [
     path('', include(router.urls)),
     path('datapoint/random', views.RandomDataPointAPIView.as_view(), name='random-datapoints'),
+    path('datapoint/analysis', views.KlusterAnalysisAPIView.as_view(), name='analysis-datapoints'),
 ]
