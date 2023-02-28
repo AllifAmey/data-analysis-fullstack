@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -43,7 +44,7 @@ class DataPointViewset(viewsets.ModelViewSet):
         except:
             return Response({"Message": "Incorrect id"})
 
-class RandomDataPointAPIView(APIView):
+class RandomDataPointAPIView(generics.CreateAPIView):
     """Allow the flexible use of datapoints"""
     
     queryset = models.DataPoint.objects.all()
@@ -54,7 +55,7 @@ class RandomDataPointAPIView(APIView):
         }),responses={
             '2XX': inline_serializer(name='Success', fields={"message": serializers.CharField()})
         })
-    def post(self,request):
+    def create(self,request):
         """Allows bulk delete, delete 5 and add 5 datapoints"""
         action_type = request.data.get("action_type")
         dataset_id = request.data.get("dataset_id")
