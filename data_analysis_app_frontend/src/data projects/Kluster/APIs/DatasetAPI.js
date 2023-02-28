@@ -86,6 +86,24 @@ export async function getDatasetSpecific(setIsLoading, dataset_id) {
   return data[`dataset_${dataset_id}`];
 }
 
+export async function postDatapoint(setIsLoading, dataset_id, datapoint_val) {
+  // provides all of the data attached to each datapoint
+  // this allows for the data to be patched or specifically deleted.
+  const response = await fetch(`http://localhost:8000/api/datapoint/`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      dataset: dataset_id,
+      data: datapoint_val,
+    }),
+  });
+  const data = await response.json();
+
+  return data;
+}
+
 export async function patchDatapoint(
   setIsLoading,
   datapoint_id,

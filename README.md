@@ -44,4 +44,4 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Display the data on the frontend and the analysis.
 - &#9745; Add functionality to the top 3 buttons - Add 5, Delete 5, Bulk Delete
 - &#9745; Make the data displayed responsive to the inputs of the top 3 buttons.
-- &#9744; Add the CRUD functionality and ensure the data is responsive
+- &#9745; Add the CRUD functionality and ensure the data is responsive

@@ -18,7 +18,11 @@ import {
   NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { GoTools, GoTrashcan } from "react-icons/go";
-import { patchDatapoint, deleteDatapoint } from "../APIs/DatasetAPI";
+import {
+  postDatapoint,
+  patchDatapoint,
+  deleteDatapoint,
+} from "../APIs/DatasetAPI";
 
 function DatasetModal(props) {
   /*
@@ -27,14 +31,14 @@ function DatasetModal(props) {
     */
   const [changeDataPoint, setchangeDataPoint] = useState(null);
   const [trackChange, setTrackChange] = useState(null);
+
   return (
     <>
       <Modal
         isOpen={props.isOpen}
         onClose={() => {
           // add get analysis data I guess here.
-          console.log("I am closed!");
-          props.setIsOpen(false);
+          props.onClose();
         }}
       >
         <ModalOverlay />
@@ -62,7 +66,6 @@ function DatasetModal(props) {
                           <GoTools
                             color="green"
                             onClick={() => {
-                              console.log("hello");
                               setchangeDataPoint(datapoint);
                             }}
                           />
@@ -97,7 +100,10 @@ function DatasetModal(props) {
                   })}
               {changeDataPoint !== null && (
                 <Box textAlign="center">
-                  You are changing Datapoint {changeDataPoint.data}
+                  You are
+                  {changeDataPoint.data != undefined
+                    ? ` changing Datapoint ${changeDataPoint.data}`
+                    : " creating a new datapoint"}
                 </Box>
               )}
               {changeDataPoint !== null && (
@@ -134,7 +140,11 @@ function DatasetModal(props) {
                   onClick={() => {
                     console.log(changeDataPoint);
                     console.log(trackChange);
-                    if (trackChange != null) {
+                    if (
+                      trackChange != null &&
+                      changeDataPoint.data != undefined
+                    ) {
+                      //patch datapoint
                       patchDatapoint(
                         props.setIsLoading,
                         changeDataPoint.id,
@@ -151,11 +161,24 @@ function DatasetModal(props) {
                         setchangeDataPoint(null);
                         setTrackChange(null);
                       });
-                    } else {
-                      console.log("error");
+                    } else if (
+                      // post datapoint
+                      trackChange != null &&
+                      changeDataPoint.create_new_datapoint === true
+                    ) {
+                      postDatapoint(
+                        props.setIsLoading,
+                        props.datasetDataModalid,
+                        trackChange
+                      ).then((res) => {
+                        let currentData = [...props.modalData];
+                        console.log(res);
+                        currentData.push(res);
+                        props.setmodalData([...currentData]);
+                        setchangeDataPoint(null);
+                        setTrackChange(null);
+                      });
                     }
-
-                    // now send a patch request then update the data then done.
                   }}
                 >
                   Edit
@@ -174,16 +197,28 @@ function DatasetModal(props) {
             ) : (
               ""
             )}
+            <Flex>
+              <Button
+                colorScheme="green"
+                mr={3}
+                onClick={() => {
+                  console.log("hello");
+                  setchangeDataPoint({ create_new_datapoint: true });
+                }}
+              >
+                Create
+              </Button>
 
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={() => {
-                props.onClose();
-              }}
-            >
-              Close
-            </Button>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => {
+                  props.onClose();
+                }}
+              >
+                Close
+              </Button>
+            </Flex>
           </ModalFooter>
         </ModalContent>
       </Modal>
