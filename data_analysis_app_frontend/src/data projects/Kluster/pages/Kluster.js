@@ -47,13 +47,30 @@ function Kluster() {
   const [datasetAnalysis2, setdatasetAnalysis2] = useState([]);
 
   useEffect(() => {
-    getAnalysis(setIsLoading).then((analysis) => {
-      setdatasetAnalysis1(analysis.data.dataset_1_analysis);
-      setdatasetAnalysis2(analysis.data.dataset_2_analysis);
-      setdataset1Data(analysis.data.dataset_1_data);
-      setdataset2Data(analysis.data.dataset_2_data);
+    getAnalysis(
+      setIsLoading,
+      setdataset1Data,
+      setdataset2Data,
+      setdatasetAnalysis1,
+      setdatasetAnalysis2
+    ).then((analysis) => {
+      console.log(analysis);
     });
   }, []);
+
+  function onClose() {
+    getAnalysis(
+      setIsLoading,
+      setdataset1Data,
+      setdataset2Data,
+      setdatasetAnalysis1,
+      setdatasetAnalysis2
+    ).then((analysis) => {
+      console.log(analysis);
+      setIsOpen(false);
+    });
+  }
+
   const containerStyles = {
     width: "100%",
     height: "auto",
@@ -292,7 +309,7 @@ function Kluster() {
             setmodalData={setmodalData}
             datasetDataModalid={datasetDataModalid}
             isOpen={isOpen}
-            setIsOpen={setIsOpen}
+            onClose={onClose}
           />
         </Container>
       )}
