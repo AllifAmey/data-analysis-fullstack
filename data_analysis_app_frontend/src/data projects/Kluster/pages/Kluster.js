@@ -4,7 +4,12 @@ import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import { Container, Flex, Box, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { getAnalysis, postRandom } from "../APIs/DatasetAPI";
+import {
+  getAnalysis,
+  postRandom,
+  getDatasetSpecific,
+} from "../APIs/DatasetAPI";
+import DatasetModal from "../utility/DatasetModal";
 
 const options = {
   responsive: true,
@@ -33,6 +38,9 @@ function Kluster() {
     Delete all
     */
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [datasetDataModalid, setdatasetDataModalid] = useState(false);
+  const [modalData, setmodalData] = useState(false);
   const [dataset1Data, setdataset1Data] = useState([]);
   const [dataset2Data, setdataset2Data] = useState([]);
   const [datasetAnalysis1, setdatasetAnalysis1] = useState([]);
@@ -132,7 +140,12 @@ function Kluster() {
                 width="80px"
                 alignSelf="center"
                 onClick={() => {
-                  console.log("Hiya");
+                  getDatasetSpecific(setIsLoading, 1).then((data) => {
+                    setIsOpen(true);
+                    setdatasetDataModalid(1);
+                    setmodalData(data);
+                    console.log(`data is ${data}`);
+                  });
                 }}
               >
                 CRUD
@@ -261,13 +274,26 @@ function Kluster() {
                 width="80px"
                 alignSelf="center"
                 onClick={() => {
-                  console.log("Hiya");
+                  getDatasetSpecific(setIsLoading, 2).then((data) => {
+                    setIsOpen(true);
+                    setdatasetDataModalid(2);
+                    setmodalData(data);
+                    console.log(`data is ${data}`);
+                  });
                 }}
               >
                 CRUD
               </Button>
             </Flex>
           </Flex>
+          <DatasetModal
+            setIsLoading={setIsLoading}
+            modalData={modalData}
+            setmodalData={setmodalData}
+            datasetDataModalid={datasetDataModalid}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
         </Container>
       )}
     </>

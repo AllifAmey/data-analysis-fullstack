@@ -55,3 +55,36 @@ export async function postRandom(
   setIsLoading(false);
   return analysis;
 }
+
+export async function getDatasetSpecific(setIsLoading, dataset_id) {
+  // provides all of the data attached to each datapoint
+  // this allows for the data to be patched or specifically deleted.
+  setIsLoading(true);
+  const response = await fetch(`http://localhost:8000/api/datapoint/`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const data = await response.json();
+
+  setIsLoading(false);
+  return data[`dataset_${dataset_id}`];
+}
+
+export async function deleteDatapoint(setIsLoading, datapoint_id) {
+  // provides all of the data attached to each datapoint
+  // this allows for the data to be patched or specifically deleted.
+  const response = await fetch(
+    `http://localhost:8000/api/datapoint/${datapoint_id}/`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+
+  return data;
+}

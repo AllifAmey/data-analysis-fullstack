@@ -12,6 +12,7 @@ from rest_framework import serializers
 
 from drf_spectacular.utils import extend_schema, inline_serializer, PolymorphicProxySerializer
 
+# analysis tools. 
 import random
 import numpy
 import statistics
@@ -22,6 +23,25 @@ import statistics
 class DataPointViewset(viewsets.ModelViewSet):
     serializer_class = DataPointSerializer
     queryset = models.DataPoint.objects.all()
+    http_method_names = ['get', 'post', 'patch', 'delete']
+    
+    def list(self,request):
+        dataset_1 = models.DataSet.objects.get(id=1)
+        dataset_2 = models.DataSet.objects.get(id=2)
+        dataset_1_datapoints = models.DataPoint.objects.filter(dataset=dataset_1)
+        dataset_2_datapoints = models.DataPoint.objects.filter(dataset=dataset_2)
+        serializer_dataset_1 = self.serializer_class(dataset_1_datapoints, many=True)
+        serializer_dataset_2 = self.serializer_class(dataset_2_datapoints, many=True)
+        return Response({"dataset_1": serializer_dataset_1.data,
+                        "dataset_2": serializer_dataset_2.data}, status=status.HTTP_200_OK)
+    
+    def destroy(self, request, pk):
+        try:
+            datapoint = models.DataPoint.objects.get(id=pk);
+            datapoint.delete()
+            return Response({"Message": "Datapoint delete successfully"})
+        except:
+            return Response({"Message": "Incorrect id"})
 
 class RandomDataPointAPIView(APIView):
     """Allow the flexible use of datapoints"""
