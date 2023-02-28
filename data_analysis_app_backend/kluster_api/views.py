@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from kluster_api.serializers import (
-    DataPointSerializer
+    DataPointSerializer,
+    RandomDataPointSerializer
 )
 from kluster_api import models
 
@@ -46,21 +47,15 @@ class DataPointViewset(viewsets.ModelViewSet):
 
 class RandomDataPointAPIView(generics.CreateAPIView):
     """Allow the flexible use of datapoints"""
-    
+    serializer_class = RandomDataPointSerializer
     queryset = models.DataPoint.objects.all()
     
-    @extend_schema(request=inline_serializer(name="Mass_delete",fields={
-        "dataset_id": serializers.IntegerField(), 
-        "action_type": serializers.CharField(), 
-        }),responses={
-            '2XX': inline_serializer(name='Success', fields={"message": serializers.CharField()})
-        })
     def create(self,request):
         """Allows bulk delete, delete 5 and add 5 datapoints"""
         action_type = request.data.get("action_type")
         dataset_id = request.data.get("dataset_id")
-        validation = ["bulk_delete", "add_5", "delete_5"]
-        if action_type in validation and dataset_id in [1,2]:
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
             dataset = models.DataSet.objects.get(pk=dataset_id)
             if action_type == "add_5":
                 
@@ -90,15 +85,15 @@ class RandomDataPointAPIView(generics.CreateAPIView):
                 return Response({"Message": f"All datapoints for {dataset_id} have been deleted"}, status=status.HTTP_200_OK)
             else:
                 return Response({"Message": "Success"})
-
+            
         else:
-            return Response({"Message": "Error string is not valid"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         
-class KlusterAnalysisAPIView(APIView):
+class KlusterAnalysisAPIView(generics.ListAPIView):
     """Handles data analysis and displaying all the data"""
-    queryset = models.DataSet.objects.all()
     
-    def get(self, request):
+    def list(self, request):
         dataset_1 = models.DataSet.objects.get(id=1)
         dataset_2 = models.DataSet.objects.get(id=2)
         dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_1)] 
