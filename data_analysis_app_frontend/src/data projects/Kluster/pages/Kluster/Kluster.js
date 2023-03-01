@@ -8,8 +8,8 @@ import {
   getAnalysis,
   postRandom,
   getDatasetSpecific,
-} from "../APIs/DatasetAPI";
-import DatasetModal from "../utility/DatasetModal";
+} from "../../APIs/DatasetAPI";
+import DatasetModal from "./utility/DatasetModal";
 
 const options = {
   responsive: true,

@@ -45,3 +45,9 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Add functionality to the top 3 buttons - Add 5, Delete 5, Bulk Delete
 - &#9745; Make the data displayed responsive to the inputs of the top 3 buttons.
 - &#9745; Add the CRUD functionality and ensure the data is responsive
+
+## Phase 3 - Consolidation Of Kluster sales API
+
+- &#9744; Optimise APIs by reducing queries and implementing generators
+- &#9744; Ensure readability, maintainability and sustainability by documenting, refactoring and simplifying logic.
+- &#9744; Code split more on the frontend , restructure folders slightly

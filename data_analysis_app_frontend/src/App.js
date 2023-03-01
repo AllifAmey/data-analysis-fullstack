@@ -8,7 +8,7 @@ import {
 import "./App.css";
 
 import HomePage from "./data projects/HomePage";
-import Kluster from "./data projects/Kluster/pages/Kluster";
+import Kluster from "./data projects/Kluster/pages/Kluster/Kluster";
 
 const routeDefinition = createRoutesFromElements(
   <Route>

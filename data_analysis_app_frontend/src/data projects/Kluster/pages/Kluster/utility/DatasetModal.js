@@ -22,7 +22,7 @@ import {
   postDatapoint,
   patchDatapoint,
   deleteDatapoint,
-} from "../APIs/DatasetAPI";
+} from "../../../APIs/DatasetAPI";
 
 function DatasetModal(props) {
   /*
@@ -181,7 +181,9 @@ function DatasetModal(props) {
                     }
                   }}
                 >
-                  Edit
+                  {changeDataPoint.create_new_datapoint === true
+                    ? "Confirm"
+                    : "Edit"}
                 </Button>
                 <Button
                   variant="solid"

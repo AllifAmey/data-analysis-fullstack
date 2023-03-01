@@ -10,9 +10,7 @@ from kluster_api.serializers import (
 )
 from kluster_api import models
 
-from rest_framework import serializers
 
-from drf_spectacular.utils import extend_schema, inline_serializer, PolymorphicProxySerializer
 
 # analysis tools. 
 import random
@@ -94,8 +92,11 @@ class KlusterAnalysisAPIView(generics.ListAPIView):
     """Handles data analysis and displaying all the data"""
     
     def list(self, request):
+        # reduce the number of inqueries get_object_404
+        #  look into reducing queries and implementing efficient looping . 
         dataset_1 = models.DataSet.objects.get(id=1)
         dataset_2 = models.DataSet.objects.get(id=2)
+        # TODO: List comphrension have proved inefficient investigate Pandas if unproductive itertools.
         dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_1)] 
         dataset_2_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_2)]
         if len(dataset_1_datapoints) == 0:
