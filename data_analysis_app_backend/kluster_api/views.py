@@ -26,10 +26,9 @@ class DataPointViewset(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
     
     def list(self,request):
-        dataset_1 = models.DataSet.objects.get(id=1)
-        dataset_2 = models.DataSet.objects.get(id=2)
-        dataset_1_datapoints = models.DataPoint.objects.filter(dataset=dataset_1)
-        dataset_2_datapoints = models.DataPoint.objects.filter(dataset=dataset_2)
+
+        dataset_1_datapoints = models.DataPoint.objects.filter(dataset__id__exact=1)
+        dataset_2_datapoints = models.DataPoint.objects.filter(dataset__id__exact=2)
         serializer_dataset_1 = self.serializer_class(dataset_1_datapoints, many=True)
         serializer_dataset_2 = self.serializer_class(dataset_2_datapoints, many=True)
         return Response({"dataset_1": serializer_dataset_1.data,
@@ -85,6 +84,8 @@ class RandomDataPointAPIView(generics.CreateAPIView):
                 return Response({"Message": "Success"})
             
         else:
+            print(f'serializer data is {serializer.data}')
+            print(f'serializer error is {serializer.errors}')
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         
