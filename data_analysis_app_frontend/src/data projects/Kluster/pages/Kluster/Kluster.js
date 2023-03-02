@@ -10,6 +10,7 @@ import {
   getDatasetSpecific,
 } from "../../APIs/DatasetAPI";
 import DatasetModal from "./utility/DatasetModal";
+import Dataset from "./utility/Dataset";
 
 const options = {
   responsive: true,
@@ -85,89 +86,18 @@ function Kluster() {
       ) : (
         <Container sx={containerStyles}>
           <Flex alignItems="center" height="100vh" width="100vw">
-            <Flex alignSelf="start" flexDirection="column" gap="2rem" flex={1}>
-              <Box
-                margin="5rem"
-                display="flex"
-                flexDirection="column"
-                gap="2rem"
-              >
-                <div>Sales Dataset 1</div>
-                <div>{`${dataset1Data}`}</div>
-              </Box>
-              <Flex justifyContent="space-evenly">
-                <Button
-                  variant="ghost"
-                  colorScheme="green"
-                  width="70px"
-                  onClick={() => {
-                    postRandom(
-                      setIsLoading,
-                      1,
-                      "add_5",
-                      setdataset1Data,
-                      setdataset2Data,
-                      setdatasetAnalysis1,
-                      setdatasetAnalysis2
-                    ).then((_) => {});
-                  }}
-                >
-                  Add 5
-                </Button>
-                <Button
-                  variant="ghost"
-                  colorScheme="red"
-                  width="90px"
-                  onClick={() => {
-                    postRandom(
-                      setIsLoading,
-                      1,
-                      "delete_5",
-                      setdataset1Data,
-                      setdataset2Data,
-                      setdatasetAnalysis1,
-                      setdatasetAnalysis2
-                    ).then((_) => {});
-                  }}
-                >
-                  Delete 5
-                </Button>
-                <Button
-                  variant="ghost"
-                  colorScheme="blackAlpha"
-                  width="110px"
-                  onClick={() => {
-                    postRandom(
-                      setIsLoading,
-                      1,
-                      "bulk_delete",
-                      setdataset1Data,
-                      setdataset2Data,
-                      setdatasetAnalysis1,
-                      setdatasetAnalysis2
-                    ).then((_) => {});
-                  }}
-                >
-                  Bulk Delete
-                </Button>
-              </Flex>
-              <Button
-                variant="ghost"
-                colorScheme="blue"
-                width="80px"
-                alignSelf="center"
-                onClick={() => {
-                  getDatasetSpecific(setIsLoading, 1).then((data) => {
-                    setIsOpen(true);
-                    setdatasetDataModalid(1);
-                    setmodalData(data);
-                    console.log(`data is ${data}`);
-                  });
-                }}
-              >
-                CRUD
-              </Button>
-            </Flex>
+            <Dataset
+              datasetNum={1}
+              dataset1Data={dataset1Data}
+              setdataset1Data={setdataset1Data}
+              setdataset2Data={setdataset2Data}
+              setdatasetAnalysis1={setdatasetAnalysis1}
+              setdatasetAnalysis2={setdatasetAnalysis2}
+              setIsOpen={setIsOpen}
+              setdatasetDataModalid={setdatasetDataModalid}
+              setmodalData={setmodalData}
+              setIsLoading={setIsLoading}
+            />
 
             <Flex
               flexDirection="column"
@@ -219,89 +149,19 @@ function Kluster() {
                 Back
               </Button>
             </Flex>
-            <Flex alignSelf="start" flexDirection="column" gap="2rem" flex={1}>
-              <Box
-                margin="5rem"
-                display="flex"
-                flexDirection="column"
-                gap="2rem"
-              >
-                <div>Sales Dataset 2</div>
-                <div>{`${dataset2Data}`}</div>
-              </Box>
-              <Flex justifyContent="space-evenly">
-                <Button
-                  variant="ghost"
-                  colorScheme="green"
-                  width="70px"
-                  onClick={() => {
-                    postRandom(
-                      setIsLoading,
-                      2,
-                      "add_5",
-                      setdataset1Data,
-                      setdataset2Data,
-                      setdatasetAnalysis1,
-                      setdatasetAnalysis2
-                    ).then((_) => {});
-                  }}
-                >
-                  Add 5
-                </Button>
-                <Button
-                  variant="ghost"
-                  colorScheme="red"
-                  width="90px"
-                  onClick={() => {
-                    postRandom(
-                      setIsLoading,
-                      2,
-                      "delete_5",
-                      setdataset1Data,
-                      setdataset2Data,
-                      setdatasetAnalysis1,
-                      setdatasetAnalysis2
-                    ).then((_) => {});
-                  }}
-                >
-                  Delete 5
-                </Button>
-                <Button
-                  variant="ghost"
-                  colorScheme="blackAlpha"
-                  width="110px"
-                  onClick={() => {
-                    postRandom(
-                      setIsLoading,
-                      2,
-                      "bulk_delete",
-                      setdataset1Data,
-                      setdataset2Data,
-                      setdatasetAnalysis1,
-                      setdatasetAnalysis2
-                    ).then((_) => {});
-                  }}
-                >
-                  Bulk Delete
-                </Button>
-              </Flex>
-              <Button
-                variant="ghost"
-                colorScheme="blue"
-                width="80px"
-                alignSelf="center"
-                onClick={() => {
-                  getDatasetSpecific(setIsLoading, 2).then((data) => {
-                    setIsOpen(true);
-                    setdatasetDataModalid(2);
-                    setmodalData(data);
-                    console.log(`data is ${data}`);
-                  });
-                }}
-              >
-                CRUD
-              </Button>
-            </Flex>
+            <Dataset
+              datasetNum={2}
+              dataset1Data={dataset1Data}
+              dataset2Data={dataset2Data}
+              setdataset1Data={setdataset1Data}
+              setdataset2Data={setdataset2Data}
+              setdatasetAnalysis1={setdatasetAnalysis1}
+              setdatasetAnalysis2={setdatasetAnalysis2}
+              setIsOpen={setIsOpen}
+              setdatasetDataModalid={setdatasetDataModalid}
+              setmodalData={setmodalData}
+              setIsLoading={setIsLoading}
+            />
           </Flex>
           <DatasetModal
             setIsLoading={setIsLoading}
