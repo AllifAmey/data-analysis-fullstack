@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import DatasetButtonGroup from "./DatasetButtonGroup";
 
@@ -32,7 +32,7 @@ function Dataset(props) {
         <Box margin="5rem" display="flex" flexDirection="column" gap="2rem">
           <div>Sales Dataset {`${props.datasetNum}`}</div>
           <div>
-            {props.datasetNum == 1
+            {props.datasetNum === 1
               ? `${props.dataset1Data}`
               : `${props.dataset2Data}`}
           </div>
