@@ -84,8 +84,6 @@ class RandomDataPointAPIView(generics.CreateAPIView):
                 return Response({"Message": "Success"})
             
         else:
-            print(f'serializer data is {serializer.data}')
-            print(f'serializer error is {serializer.errors}')
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         
@@ -93,13 +91,9 @@ class KlusterAnalysisAPIView(generics.ListAPIView):
     """Handles data analysis and displaying all the data"""
     
     def list(self, request):
-        # reduce the number of inqueries get_object_404
-        #  look into reducing queries and implementing efficient looping . 
-        dataset_1 = models.DataSet.objects.get(id=1)
-        dataset_2 = models.DataSet.objects.get(id=2)
-        # TODO: List comphrension have proved inefficient investigate Pandas if unproductive itertools.
-        dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_1)] 
-        dataset_2_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset=dataset_2)]
+        
+        dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset__id__exact=1)] 
+        dataset_2_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset__id__exact=2)]
         if len(dataset_1_datapoints) == 0:
             dataset_1_datapoints.append(0)
         if len(dataset_2_datapoints) == 0:
