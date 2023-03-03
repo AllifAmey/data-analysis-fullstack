@@ -52,11 +52,11 @@ class RandomDataPointAPIView(generics.CreateAPIView):
         action_type = request.data.get("action_type")
         dataset_id = request.data.get("dataset_id")
         serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            dataset = models.DataSet.objects.get(pk=dataset_id)
+        if serializer.is_valid():  
             if action_type == "add_5":
                 
                 created_datapoints_data = []
+                dataset = models.DataSet.objects.select_related(None).get(pk=dataset_id)
                 
                 for _ in range(5):
                     random_num = random.randint(0,100)
@@ -66,7 +66,7 @@ class RandomDataPointAPIView(generics.CreateAPIView):
                     
             elif action_type == "delete_5":
                 
-                data = models.DataPoint.objects.filter(dataset=dataset).values_list('id', flat=True)
+                data = models.DataPoint.objects.filter(dataset__id__exact=dataset_id).values_list('id', flat=True)
                 len_data = len(data)
                 if len_data < 5:
                     return Response({"Message": f"Can't delete 5 datapoints as there are {len_data} datapoints"}, status=status.HTTP_400_BAD_REQUEST)
@@ -76,8 +76,7 @@ class RandomDataPointAPIView(generics.CreateAPIView):
                     random_datapoints.delete()
                     return Response({"Message" : f"Datapoints with ids {random_datapoint_ids} have been deleted"}, status=status.HTTP_200_OK)
             elif action_type == "bulk_delete":
-                dataset = models.DataSet.objects.get(id=dataset_id)
-                delete_datapoints = models.DataPoint.objects.filter(dataset=dataset)
+                delete_datapoints = models.DataPoint.objects.filter(dataset__id__exact=dataset_id)
                 delete_datapoints.delete()
                 return Response({"Message": f"All datapoints for {dataset_id} have been deleted"}, status=status.HTTP_200_OK)
             else:
