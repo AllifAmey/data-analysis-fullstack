@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Container,
   Flex,
   Box,
   Button,
@@ -26,18 +25,21 @@ import {
 
 function DatasetModal(props) {
   /*
-    
+    Modal appears after CRUD button has been pressed.
+
+    This shows the data for a particular dataset,
+    Individual pieces of data can be edited or deleted.
+    Datapoints can also be created.
     
     */
   const [changeDataPoint, setchangeDataPoint] = useState(null);
-  const [trackChange, setTrackChange] = useState(null);
+  const [trackInput, setTrackInput] = useState(null);
 
   return (
     <>
       <Modal
         isOpen={props.isOpen}
         onClose={() => {
-          // add get analysis data I guess here.
           props.onClose();
         }}
       >
@@ -110,7 +112,7 @@ function DatasetModal(props) {
                 <NumberInput defaultValue={"empty"}>
                   <NumberInputField
                     onChange={(event) => {
-                      setTrackChange(event.target.value);
+                      setTrackInput(event.target.value);
                     }}
                   />
                   <NumberInputStepper>
@@ -139,9 +141,9 @@ function DatasetModal(props) {
                   colorScheme="green"
                   onClick={() => {
                     console.log(changeDataPoint);
-                    console.log(trackChange);
+                    console.log(trackInput);
                     if (
-                      trackChange != null &&
+                      trackInput != null &&
                       changeDataPoint.data != undefined
                     ) {
                       //patch datapoint
@@ -149,34 +151,34 @@ function DatasetModal(props) {
                         props.setIsLoading,
                         changeDataPoint.id,
                         changeDataPoint.dataset,
-                        trackChange
+                        trackInput
                       ).then((res) => {
                         console.log(res);
                         let currentData = [...props.modalData];
                         const dataIndex = currentData.findIndex(
                           (e) => e.id == changeDataPoint.id
                         );
-                        currentData[dataIndex].data = trackChange;
+                        currentData[dataIndex].data = trackInput;
                         props.setmodalData([...currentData]);
                         setchangeDataPoint(null);
-                        setTrackChange(null);
+                        setTrackInput(null);
                       });
                     } else if (
                       // post datapoint
-                      trackChange != null &&
+                      trackInput != null &&
                       changeDataPoint.create_new_datapoint === true
                     ) {
                       postDatapoint(
                         props.setIsLoading,
                         props.datasetDataModalid,
-                        trackChange
+                        trackInput
                       ).then((res) => {
                         let currentData = [...props.modalData];
                         console.log(res);
                         currentData.push(res);
                         props.setmodalData([...currentData]);
                         setchangeDataPoint(null);
-                        setTrackChange(null);
+                        setTrackInput(null);
                       });
                     }
                   }}
@@ -190,7 +192,7 @@ function DatasetModal(props) {
                   colorScheme="red"
                   onClick={() => {
                     setchangeDataPoint(null);
-                    setTrackChange(null);
+                    setTrackInput(null);
                   }}
                 >
                   Cancel Edit
@@ -204,7 +206,6 @@ function DatasetModal(props) {
                 colorScheme="green"
                 mr={3}
                 onClick={() => {
-                  console.log("hello");
                   setchangeDataPoint({ create_new_datapoint: true });
                 }}
               >

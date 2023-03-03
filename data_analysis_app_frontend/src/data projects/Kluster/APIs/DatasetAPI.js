@@ -37,6 +37,7 @@ export async function postRandom(
   setdatasetAnalysis2
 ) {
   // Allows functionality for the add 5, delete 5 , bulk delete buttons.
+  // by connecting to the Random API
 
   setIsLoading(true);
   const response = await fetch(`http://localhost:8000/api/datapoint/random`, {
@@ -71,8 +72,8 @@ export async function postRandom(
 }
 
 export async function getDatasetSpecific(setIsLoading, dataset_id) {
-  // provides all of the data attached to each datapoint
-  // this allows for the data to be patched or specifically deleted.
+  // grabs all the data points and gives specific dataset data
+  // in the return statement.
   setIsLoading(true);
   const response = await fetch(`http://localhost:8000/api/datapoint/`, {
     method: "GET",
@@ -87,8 +88,7 @@ export async function getDatasetSpecific(setIsLoading, dataset_id) {
 }
 
 export async function postDatapoint(setIsLoading, dataset_id, datapoint_val) {
-  // provides all of the data attached to each datapoint
-  // this allows for the data to be patched or specifically deleted.
+  // A new datapoint is created by sending a POST request.
   const response = await fetch(`http://localhost:8000/api/datapoint/`, {
     method: "POST",
     headers: {
@@ -110,8 +110,7 @@ export async function patchDatapoint(
   dataset_id,
   datapoint_val
 ) {
-  // provides all of the data attached to each datapoint
-  // this allows for the data to be patched or specifically deleted.
+  // A datapoint is edited by sending a patch request with the datapoint id
   const response = await fetch(
     `http://localhost:8000/api/datapoint/${datapoint_id}/`,
     {
@@ -131,8 +130,7 @@ export async function patchDatapoint(
 }
 
 export async function deleteDatapoint(setIsLoading, datapoint_id) {
-  // provides all of the data attached to each datapoint
-  // this allows for the data to be patched or specifically deleted.
+  // Deletes specific datapoints using the datapoint_id
   const response = await fetch(
     `http://localhost:8000/api/datapoint/${datapoint_id}/`,
     {

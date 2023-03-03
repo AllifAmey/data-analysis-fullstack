@@ -6,15 +6,14 @@ import Dataset from "./utility/Dataset";
 import DatasetDisplayData from "./utility/DatasetDisplayData";
 function Kluster() {
   /*
-    For the first phase - 
-    Displaying data for averages,mean and median using numpy.
-    This is to get a feel for data visualisation then to proceed to more complicated,
-    developments. This is the start.  
-    Second phase - 
-    Add 5 button adds 5 random pieces of data to the dataset
-    Delete 5 delets 5 random pieces of data to the dataset. 
-    Custom does the customary CRUD.
-    Delete all
+    This is the Main page for the Kluster data project.
+
+    3 main components:
+
+    1. Dataset with a button group and all its functionalities associated with it
+    2. DatasetDisplayData to display the data
+    3. DatasetModal add more specific data to the dataset.
+    
     */
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

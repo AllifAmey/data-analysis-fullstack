@@ -48,6 +48,8 @@ go to http://localhost:8000/admin to see backend data
 
 ## Phase 3 - Consolidation Of Kluster sales API
 
-- &#9744; Optimise APIs by reducing queries and implementing generators
-- &#9744; Ensure readability, maintainability and sustainability by documenting, refactoring and simplifying logic.
-- &#9744; Code split more on the frontend , restructure folders slightly
+- &#9745; Optimise APIs by reducing queries
+- &#9745; Ensure readability, maintainability and sustainability by documenting, refactoring and simplifying logic.
+- &#9745; Code split more on the frontend , restructure folders slightly
+
+## Phase 4 - TBA
