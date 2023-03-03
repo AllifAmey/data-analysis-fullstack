@@ -91,17 +91,26 @@ class KlusterAnalysisAPIView(generics.ListAPIView):
     """Handles data analysis and displaying all the data"""
     
     def list(self, request):
+        """Grabs the analysis and data for each dataset 1 or 2"""
+        # for batches use prefetch_related
+        datasets = models.DataPoint.objects.prefetch_related('dataset')
+        dataset_1_datapoints = set()
+        dataset_2_datapoints = set()
         
-        dataset_1_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset__id__exact=1)] 
-        dataset_2_datapoints = [datapoint.data for datapoint in models.DataPoint.objects.filter(dataset__id__exact=2)]
+        for datapoint in datasets:
+            if datapoint.dataset.id == 1:
+                dataset_1_datapoints.add(datapoint.data)
+            elif datapoint.dataset.id == 2:
+                dataset_2_datapoints.add(datapoint.data)
         if len(dataset_1_datapoints) == 0:
-            dataset_1_datapoints.append(0)
+            dataset_1_datapoints.add(0)
         if len(dataset_2_datapoints) == 0:
-            dataset_2_datapoints.append(0)
-        dataset_1_avg = numpy.average(dataset_1_datapoints)
-        dataset_2_avg = numpy.average(dataset_2_datapoints)
-        dataset_1_median = numpy.median(dataset_1_datapoints)
-        dataset_2_median = numpy.median(dataset_2_datapoints)
+            dataset_2_datapoints.add(0)
+
+        dataset_1_avg = statistics.mean(dataset_1_datapoints)
+        dataset_2_avg = statistics.mean(dataset_2_datapoints)
+        dataset_1_median = statistics.median(dataset_1_datapoints)
+        dataset_2_median = statistics.median(dataset_2_datapoints)
         dataset_1_mode = statistics.mode(dataset_1_datapoints)
         dataset_2_mode = statistics.mode(dataset_2_datapoints)
 
