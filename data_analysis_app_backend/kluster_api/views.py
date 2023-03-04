@@ -21,22 +21,28 @@ import statistics
 # Create your views here.
 
 class DataPointViewset(viewsets.ModelViewSet):
+    """Handles creating,updating and deleting datapoints"""
     serializer_class = DataPointSerializer
     queryset = models.DataPoint.objects.all()
     http_method_names = ['get', 'post', 'patch', 'delete']
     
     def list(self,request):
-
-        dataset_1_datapoints = models.DataPoint.objects.filter(dataset__id__exact=1)
-        dataset_2_datapoints = models.DataPoint.objects.filter(dataset__id__exact=2)
+        """Provides a list of datapoints for dataset 1 and 2"""
+        # datasets grabs the datapoints models
+        # I do not think the subsequent filtering hits the database.
+        datasets =  models.DataPoint.objects.select_related('dataset')
+        dataset_1_datapoints = datasets.filter(dataset__id__exact=1)
+        dataset_2_datapoints = datasets.filter(dataset__id__exact=2)
         serializer_dataset_1 = self.serializer_class(dataset_1_datapoints, many=True)
         serializer_dataset_2 = self.serializer_class(dataset_2_datapoints, many=True)
         return Response({"dataset_1": serializer_dataset_1.data,
                         "dataset_2": serializer_dataset_2.data}, status=status.HTTP_200_OK)
     
     def destroy(self, request, pk):
+        """Handles deleting datapoints"""
+        
         try:
-            datapoint = models.DataPoint.objects.get(id=pk);
+            datapoint = models.DataPoint.objects.select_related('dataset').get(id=pk)
             datapoint.delete()
             return Response({"Message": "Datapoint delete successfully"})
         except:
@@ -54,29 +60,31 @@ class RandomDataPointAPIView(generics.CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():  
             if action_type == "add_5":
-                
+                # creates 5 models with random numbers between 0, 100
                 created_datapoints_data = []
                 dataset = models.DataSet.objects.select_related(None).get(pk=dataset_id)
                 
                 for _ in range(5):
                     random_num = random.randint(0,100)
-                    datapoint = models.DataPoint.objects.create(dataset=dataset, data=random_num)
+                    models.DataPoint.objects.create(dataset=dataset, data=random_num)
                     created_datapoints_data.append(random_num)
                 return Response({"Message": f'Datapoints created: {created_datapoints_data}'}, status=status.HTTP_200_OK)
                     
             elif action_type == "delete_5":
-                
-                data = models.DataPoint.objects.filter(dataset__id__exact=dataset_id).values_list('id', flat=True)
-                len_data = len(data)
+                # deletes 5 random models from datapoints
+                dataset_data = models.DataPoint.objects.select_related('dataset')
+                data = dataset_data.filter(dataset__id__exact=dataset_id).values_list('id', flat=True)
+                len_data = data.count()
+
                 if len_data < 5:
                     return Response({"Message": f"Can't delete 5 datapoints as there are {len_data} datapoints"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     random_datapoint_ids = random.sample(list(data),5)
-                    random_datapoints = models.DataPoint.objects.filter(pk__in=random_datapoint_ids)
+                    random_datapoints = dataset_data.filter(pk__in=random_datapoint_ids)
                     random_datapoints.delete()
                     return Response({"Message" : f"Datapoints with ids {random_datapoint_ids} have been deleted"}, status=status.HTTP_200_OK)
             elif action_type == "bulk_delete":
-                delete_datapoints = models.DataPoint.objects.filter(dataset__id__exact=dataset_id)
+                delete_datapoints = models.DataPoint.objects.select_related('dataset').filter(dataset__id__exact=dataset_id)
                 delete_datapoints.delete()
                 return Response({"Message": f"All datapoints for {dataset_id} have been deleted"}, status=status.HTTP_200_OK)
             else:

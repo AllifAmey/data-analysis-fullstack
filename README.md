@@ -52,4 +52,8 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Ensure readability, maintainability and sustainability by documenting, refactoring and simplifying logic.
 - &#9745; Code split more on the frontend , restructure folders slightly
 
-## Phase 4 - TBA
+## Phase 4 - Creation of data analytics for a ecommerce and fintech .
+
+- &#9744; Establish the frontend foundation
+- &#9744; Establish the backend foundation
+- &#9744; Know what to target in the fintech space and what to target for ecommerce
