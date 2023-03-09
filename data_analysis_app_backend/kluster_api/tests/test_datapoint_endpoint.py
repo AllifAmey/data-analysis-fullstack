@@ -67,3 +67,26 @@ class TestDatapointEndpoint(TestCase):
         res = client.get("/api/datapoint/")
         self.assertEqual(res.data, {"dataset_1": serializer_dataset_1.data, "dataset_2": []})
     
+    def test_patch_datapoints(self):
+        """
+        Test for PATCH request return model and the status code is correct. 
+        """
+        client, *rest = self.create_test_foundation()
+        
+        res = client.post("/api/datapoint/", {"dataset": 1,"data": 2})
+        self.assertEqual(res.status_code, 201)
+        res = client.patch("/api/datapoint/1/", {"dataset": 1,"data": 2000000})
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.data, {"id": 1,"dataset": 1,"data": 2000000})
+    
+    def test_delete_datapoints(self):
+        """
+        Test for DELETE request deletes model
+        """
+        client, *rest = self.create_test_foundation()
+        res = client.post("/api/datapoint/", {"dataset": 1,"data": 2})
+        self.assertEqual(res.status_code, 201)
+        res = client.delete("/api/datapoint/1/")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.data, {'Message': 'Datapoint delete successfully'})
+        
