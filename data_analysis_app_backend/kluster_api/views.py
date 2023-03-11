@@ -100,7 +100,7 @@ class KlusterAnalysisAPIView(generics.ListAPIView):
     def list(self, request):
         """Grabs the analysis and data for each dataset 1 or 2"""
         # for batches use prefetch_related
-        datasets = models.DataPoint.objects.prefetch_related('dataset')
+        datasets = models.DataPoint.objects.select_related('dataset')
         dataset_1_datapoints = set()
         dataset_2_datapoints = set()
         

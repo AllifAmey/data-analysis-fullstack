@@ -52,7 +52,11 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Ensure readability, maintainability and sustainability by documenting, refactoring and simplifying logic.
 - &#9745; Code split more on the frontend , restructure folders slightly
 
-## Phase 4 - Creation of data analytics for a ecommerce and fintech .
+## Phase 4 - Understanding web scrapping to grab data for analytics
+
+- &#9744; Understand how to web scrap to expand data analytics project beyond just manually inputting data.
+
+## Phase 5 - Creation of data analytics for a ecommerce and fintech .
 
 - &#9744; Establish the frontend foundation
 - &#9744; Establish the backend foundation
