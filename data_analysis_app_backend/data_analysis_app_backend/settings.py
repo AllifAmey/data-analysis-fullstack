@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'profiles_api',
     'kluster_api',
+    'yellowsubhydro_api',
     'debug_toolbar',
 ]
 
