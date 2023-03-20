@@ -1,5 +1,8 @@
 from django.test import SimpleTestCase, TestCase
 from rest_framework.test import APIClient
+import json
+from yellowsubhydro_api import models
+
 
 
 class TestFloodEndpoint(TestCase):
@@ -10,10 +13,10 @@ class TestFloodEndpoint(TestCase):
         Basic test for GET request of flood API.
         """
         client = APIClient()
-        res = client.post("/api/flood/", [{"county": "Oxfordshire", "severity_lvl": 1}])
-        res = client.get("/api/flood/")
+        models.FloodSeverityModel.objects.create(county="Oxfordshire", flood_severity_lvl=1)
+        res = client.get("/api/flood/", format="json")
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(res.data, [{"county": "Oxfordshire", "severity_lvl": 1}])
+        self.assertEqual(json.dumps(res.data), '[{"id": 1, "county": "Oxfordshire", "flood_severity_lvl": 1}]')
     
     def test_post_flood_datapoint_basic(self):
         """
@@ -24,5 +27,3 @@ class TestFloodEndpoint(TestCase):
         res = client.post("/api/flood/", [{"county": "Oxfordshire", "severity_lvl": 1}])
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.data, {"county": "Oxfordshire", "severity_lvl": 1})
-        
-   
