@@ -3,7 +3,8 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework import serializers
+from drf_spectacular.utils import extend_schema, inline_serializer, PolymorphicProxySerializer
 from yellowsubhydro_api import models
 
 from yellowsubhydro_api.serializers import (
@@ -39,5 +40,34 @@ class FloodSeverityViewset(viewsets.ModelViewSet):
 
         serializer = self.serializer_class(floodseverityModels, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-        
     
+    @extend_schema(
+    request=PolymorphicProxySerializer(
+        component_name='flood_data',
+        serializers=[
+            inline_serializer(name="user_orders",fields={
+                "county": serializers.CharField(), 
+                "flood_severity_lvl": serializers.IntegerField(), 
+        }),
+        ],
+        resource_type_field_name='type',
+        many=True
+    ),
+    responses={
+            '2XX': inline_serializer(name='Order_success', fields={"message": serializers.CharField()})
+        }
+    )
+    def create(self, request):
+        """Process the flood severity data and creates models"""
+        print(request.data)
+        processed_data = []
+        for data in request.data:
+            serializer = self.serializer_class(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                processed_data.append(serializer.data)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        return Response(processed_data, status=status.HTTP_201_CREATED)
