@@ -19,13 +19,14 @@ function ProjectCard(props) {
   project_title - title of project
   description - brief description of Kluster
   image - picture representing the project
+  project_url  - the url to the project.
   
   */
   return (
     <>
       <Card
         direction={{ base: "column", sm: "row" }}
-        overflow="hidden"
+        width="auto"
         variant="outline"
       >
         <Image
@@ -47,7 +48,7 @@ function ProjectCard(props) {
               variant="solid"
               colorScheme="blue"
               as={RouterLink}
-              to="/project/kluster"
+              to={`/project/${props.project_url}`}
             >
               See Project
             </Button>
