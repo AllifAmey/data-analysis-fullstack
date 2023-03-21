@@ -11,6 +11,8 @@ from yellowsubhydro_api.serializers import (
     FloodSeveritySerializer,
 )
 
+from datetime import datetime
+
 
 # Create your views here.
 
@@ -59,12 +61,18 @@ class FloodSeverityViewset(viewsets.ModelViewSet):
     )
     def create(self, request):
         """Process the flood severity data and creates models"""
-        print(request.data)
+        
+        now = datetime.now()
+        creation_date = now.strftime("%d/%m/%Y %H:%M:%S")
+        
         processed_data = []
+        
         for data in request.data:
             serializer = self.serializer_class(data=data)
             if serializer.is_valid():
-                serializer.save()
+                validated_data = serializer.validated_data
+                validated_data['creation_date'] = creation_date
+                serializer.create(serializer.validated_data)
                 processed_data.append(serializer.data)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

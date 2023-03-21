@@ -57,10 +57,10 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Documented, tested and created YellowSubHydro API
 - &#9744; Grab data from http://environment.data.gov.uk/flood-monitoring/id/floods ,
   parse revelant data - county and flood severity level
-- &#9744; Funnel the parsed data into YellowSubHydro API
-- &#9744; Attach the data to a graph to display
+- &#9745; Funnel the parsed data into YellowSubHydro API
+- &#9745; Attach the data to a graph to display
 - &#9744; Add a setTimeOut() feature to ensure real-time recording of the data acts accordingly
-- &#9744; Create logic to seperate the data accordingly and allow the correct plotting on the graph
+- &#9745; Create logic to seperate the data accordingly and allow the correct plotting on the graph
 
 ## Phase 4 - Understanding web scrapping to grab data for analytics
 

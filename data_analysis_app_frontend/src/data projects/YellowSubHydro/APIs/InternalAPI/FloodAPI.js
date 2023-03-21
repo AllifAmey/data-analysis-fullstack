@@ -1,5 +1,5 @@
 export async function getFlood(setIsLoading) {
-  // gets the calculated data and data for each dataset
+  // Grabs the stored flood data from the INTERNAL API not the url
   setIsLoading(true);
   const response = await fetch(`http://localhost:8000/api/flood/`, {
     method: "GET",
@@ -13,16 +13,18 @@ export async function getFlood(setIsLoading) {
   return data;
 }
 
-export async function postFlood(setIsLoading) {
-  // Grabs the stored flood data from the INTERNAL API not the url
-  const response = await fetch(`http://localhost:8000/api/datapoint/`, {
+export async function postFlood(setIsLoading, gov_flood_data) {
+  // Post the Gov Flood Data into the INTERNAL API.
+  setIsLoading(true);
+  const response = await fetch(`http://localhost:8000/api/flood/`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
-    body: JSON.stringify({}),
+    body: JSON.stringify(gov_flood_data),
   });
   const data = await response.json();
+  setIsLoading(false);
 
   return data;
 }
