@@ -22,8 +22,13 @@ class TestFloodEndpoint(TestCase):
         """
         Basic test for POST request of flood API.
         """
+        
+        #TODO: Figure out what is going on with ths testing functionality
+        # detail of the problem:
+        # When I try to post data I get a "AttributeError: 'list' object has no attribute 'items'"
+        # there is an error on code line 32 with client.post
         client = APIClient()
         
         res = client.post("/api/flood/", [{"county": "Oxfordshire", "severity_lvl": 1}])
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 201)
         self.assertEqual(res.data, {"county": "Oxfordshire", "severity_lvl": 1})
