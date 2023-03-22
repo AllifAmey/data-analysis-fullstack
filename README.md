@@ -59,8 +59,12 @@ go to http://localhost:8000/admin to see backend data
   parse revelant data - county and flood severity level
 - &#9745; Funnel the parsed data into YellowSubHydro API
 - &#9745; Attach the data to a graph to display
-- &#9744; Add a setTimeOut() feature to ensure real-time recording of the data acts accordingly
+- &#9745; Flood GOV data is called every 15 minutes
 - &#9745; Create logic to seperate the data accordingly and allow the correct plotting on the graph
+- &#9744; Dockerize the django app
+- &#9744; Deploy the dockeckerised django app on AWS
+- &#9744; Deploy the frontend on Netlify
+- &#9744; Maybe look into Mapbox to mimic YellowSub a bit more closely
 
 ## Phase 4 - Understanding web scrapping to grab data for analytics
 

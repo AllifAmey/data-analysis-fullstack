@@ -172,21 +172,13 @@ function YellowSubHydro() {
             <Button
               colorScheme="green"
               onClick={() => {
-                getGovFlood(setIsLoading).then((data) => {
-                  let process_data = [];
-                  for (const item of data.items) {
-                    process_data.push({
-                      county: item.floodArea.county,
-                      flood_severity_lvl: item.severityLevel,
-                    });
-                  }
-                  postFlood(setIsLoading, process_data);
-                  window.location.reload(true);
-                });
+                // Create a bulk delete API to just get rid of a bunch of records,
+                // I greatly fear overnight if I leave the app deployed for long enough,
+                // it will have so much data I will actually have to pay for data.
               }}
               sx={{ marginBottom: "2rem", padding: "20px" }}
             >
-              Grab
+              Bulk_delete
             </Button>
           </Flex>
         </Flex>
