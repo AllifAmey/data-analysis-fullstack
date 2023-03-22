@@ -1,6 +1,6 @@
 FROM python:3.10.8-alpine3.16
 
-LABEL maintainer="ameyshop"
+LABEL maintainer="Data_Analysis_Project"
 
 ENV PYTHONUNBUFFERED 1
 
