@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Flex, Button } from "@chakra-ui/react";
 import {
   Chart as ChartJS,
@@ -20,6 +20,7 @@ function YellowSubHydro() {
   const [isLoading, setIsLoading] = useState(false);
   const [bottomLabel, setBottomLabel] = useState([]);
   const [datasets, setDatasets] = useState([]);
+
   /*
   The way this is going to work:
   https://environment.data.gov.uk/flood-monitoring/doc/reference to get the docs
@@ -50,6 +51,22 @@ function YellowSubHydro() {
   I need to find a way to get unique times in the data
 
   */
+
+  const ref = useRef(null);
+
+  function inputGovData() {
+    getGovFlood(setIsLoading).then((data) => {
+      let process_data = [];
+      for (const item of data.items) {
+        process_data.push({
+          county: item.floodArea.county,
+          flood_severity_lvl: item.severityLevel,
+        });
+      }
+      postFlood(setIsLoading, process_data);
+      window.location.reload(true);
+    });
+  }
 
   useEffect(() => {
     getFlood(setIsLoading).then((data) => {
@@ -97,6 +114,12 @@ function YellowSubHydro() {
       setDatasets(entireDataset);
       setBottomLabel(unique_vals_creation_date);
     });
+    ref.current = setInterval(inputGovData, 15 * 60 * 1000);
+    return () => {
+      if (ref.current) {
+        clearInterval(ref.current);
+      }
+    };
   }, []);
 
   const options = {
