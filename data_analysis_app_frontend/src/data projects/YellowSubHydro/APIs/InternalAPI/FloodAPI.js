@@ -1,7 +1,9 @@
+import domain from "../../../../domain";
+
 export async function getFlood(setIsLoading) {
   // Grabs the stored flood data from the INTERNAL API not the url
   setIsLoading(true);
-  const response = await fetch(`http://localhost:8000/api/flood/`, {
+  const response = await fetch(`${domain}/api/flood/`, {
     method: "GET",
     headers: {
       "Content-type": "application/json",
@@ -16,7 +18,7 @@ export async function getFlood(setIsLoading) {
 export async function postFlood(setIsLoading, gov_flood_data) {
   // Post the Gov Flood Data into the INTERNAL API.
   setIsLoading(true);
-  const response = await fetch(`http://localhost:8000/api/flood/`, {
+  const response = await fetch(`${domain}/api/flood/`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",

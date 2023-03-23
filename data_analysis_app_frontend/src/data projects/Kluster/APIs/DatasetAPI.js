@@ -1,3 +1,5 @@
+import domain from "../../../domain";
+
 export async function getAnalysis(
   setIsLoading,
   setdataset1Data,
@@ -7,15 +9,12 @@ export async function getAnalysis(
 ) {
   // gets the calculated data and data for each dataset
   setIsLoading(true);
-  const Analysisresponse = await fetch(
-    `http://localhost:8000/api/datapoint/analysis`,
-    {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    }
-  );
+  const Analysisresponse = await fetch(`${domain}/api/datapoint/analysis`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
   const analysis = await Analysisresponse.json();
 
   setdatasetAnalysis1(analysis.data.dataset_1_analysis);
@@ -40,7 +39,7 @@ export async function postRandom(
   // by connecting to the Random API
 
   setIsLoading(true);
-  const response = await fetch(`http://localhost:8000/api/datapoint/random`, {
+  const response = await fetch(`${domain}/api/datapoint/random`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -51,15 +50,12 @@ export async function postRandom(
     }),
   });
 
-  const Analysisresponse = await fetch(
-    `http://localhost:8000/api/datapoint/analysis`,
-    {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    }
-  );
+  const Analysisresponse = await fetch(`${domain}/api/datapoint/analysis`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
   const analysis = await Analysisresponse.json();
 
   setdatasetAnalysis1(analysis.data.dataset_1_analysis);
@@ -75,7 +71,7 @@ export async function getDatasetSpecific(setIsLoading, dataset_id) {
   // grabs all the data points and gives specific dataset data
   // in the return statement.
   setIsLoading(true);
-  const response = await fetch(`http://localhost:8000/api/datapoint/`, {
+  const response = await fetch(`${domain}/api/datapoint/`, {
     method: "GET",
     headers: {
       "Content-type": "application/json",
@@ -89,7 +85,7 @@ export async function getDatasetSpecific(setIsLoading, dataset_id) {
 
 export async function postDatapoint(setIsLoading, dataset_id, datapoint_val) {
   // A new datapoint is created by sending a POST request.
-  const response = await fetch(`http://localhost:8000/api/datapoint/`, {
+  const response = await fetch(`${domain}/api/datapoint/`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -111,19 +107,16 @@ export async function patchDatapoint(
   datapoint_val
 ) {
   // A datapoint is edited by sending a patch request with the datapoint id
-  const response = await fetch(
-    `http://localhost:8000/api/datapoint/${datapoint_id}/`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        dataset: dataset_id,
-        data: datapoint_val,
-      }),
-    }
-  );
+  const response = await fetch(`${domain}/api/datapoint/${datapoint_id}/`, {
+    method: "PATCH",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      dataset: dataset_id,
+      data: datapoint_val,
+    }),
+  });
   const data = await response.json();
 
   return data;
@@ -131,15 +124,12 @@ export async function patchDatapoint(
 
 export async function deleteDatapoint(setIsLoading, datapoint_id) {
   // Deletes specific datapoints using the datapoint_id
-  const response = await fetch(
-    `http://localhost:8000/api/datapoint/${datapoint_id}/`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-      },
-    }
-  );
+  const response = await fetch(`${domain}/api/datapoint/${datapoint_id}/`, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
   const data = await response.json();
 
   return data;

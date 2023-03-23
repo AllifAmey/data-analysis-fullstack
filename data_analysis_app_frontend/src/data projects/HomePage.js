@@ -30,7 +30,7 @@ function HomePage() {
   return (
     <>
       <Container maxW="container.sm" sx={containerStyles}>
-        <Flex alignItems="center" height="100vh" gap="4rem" width="100vw">
+        <Flex alignItems="center" height="100vh" gap="4rem" width="100%">
           {ProjectCardData.map((cardData) => {
             return (
               <ProjectCard
