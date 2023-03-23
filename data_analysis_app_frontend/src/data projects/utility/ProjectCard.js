@@ -38,7 +38,7 @@ function ProjectCard(props) {
 
         <Stack>
           <CardBody>
-            <Heading size="md">{props.project_title}</Heading>
+            <Heading size="sm">{props.project_title}</Heading>
 
             <Text py="2">{props.project_description}</Text>
           </CardBody>

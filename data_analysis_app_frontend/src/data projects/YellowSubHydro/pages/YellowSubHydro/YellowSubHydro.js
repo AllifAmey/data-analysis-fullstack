@@ -158,13 +158,14 @@ function YellowSubHydro() {
       }
       setDatasets(entireDataset);
       setBottomLabel(unique_vals_creation_date);
+
+      let interval = setInterval(() => {
+        inputGovData();
+      }, 15 * 60 * 1000);
+      return () => {
+        clearInterval(interval);
+      };
     });
-    ref.current = setInterval(inputGovData, 15 * 60 * 1000);
-    return () => {
-      if (ref.current) {
-        clearInterval(ref.current);
-      }
-    };
   }, []);
 
   const options = {
@@ -222,17 +223,6 @@ function YellowSubHydro() {
               sx={{ marginBottom: "2rem", padding: "20px" }}
             >
               Grab Data Now
-            </Button>
-            <Button
-              colorScheme="green"
-              onClick={() => {
-                // Create a bulk delete API to just get rid of a bunch of records,
-                // I greatly fear overnight if I leave the app deployed for long enough,
-                // it will have so much data I will actually have to pay for data.
-              }}
-              sx={{ marginBottom: "2rem", padding: "20px" }}
-            >
-              Bulk_delete
             </Button>
           </Flex>
         </Flex>

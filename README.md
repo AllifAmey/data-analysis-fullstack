@@ -55,16 +55,30 @@ go to http://localhost:8000/admin to see backend data
 # Current Phase - Creation of YellowSubHydro API/APP Tracking flood severity levels
 
 - &#9745; Documented, tested and created YellowSubHydro API
-- &#9744; Grab data from http://environment.data.gov.uk/flood-monitoring/id/floods ,
+- &#9745; Grab data from http://environment.data.gov.uk/flood-monitoring/id/floods ,
   parse revelant data - county and flood severity level
 - &#9745; Funnel the parsed data into YellowSubHydro API
 - &#9745; Attach the data to a graph to display
 - &#9745; Flood GOV data is called every 15 minutes
 - &#9745; Create logic to seperate the data accordingly and allow the correct plotting on the graph
-- &#9744; Dockerize the django app
-- &#9744; Deploy the dockeckerised django app on AWS
-- &#9744; Deploy the frontend on Netlify
-- &#9744; Maybe look into Mapbox to mimic YellowSub a bit more closely
+- &#9745; Dockerize the django app
+- &#9745; Deploy the dockeckerised django app on AWS
+- &#9745; Deploy the frontend on Netlify
+
+### High priority
+
+- &#9744; Convert this into a far more presentable way - look into dashboards
+- &#9744; Find a way to analyise or parse the data better - change the county if needed.
+- &#9744; Ensure all the components are split as reasonable as possible
+- &#9744; Refactor if needed to allow for long-term maintenance of the code
+
+### Medium priority
+
+- &#9744; Maybe look into Mapbox to mimic YellowSub a bit more closely to plot data on map.
+
+### Low priority
+
+- &#9744; Find different data to implement onto the dashboard
 
 ## Phase 4 - Understanding web scrapping to grab data for analytics
 
