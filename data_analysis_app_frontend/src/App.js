@@ -18,6 +18,10 @@ const routeDefinition = createRoutesFromElements(
     <Route path="/" element={<HomePage />} />
     <Route path="/project/kluster" element={<Kluster />} />
     <Route path="/project/yellowsubhydro" element={<YellowSubHydro />} />
+    <Route
+      path="/project/yellowsubhydro/seperate"
+      element={<YellowSubHydro />}
+    />
   </Route>
 );
 

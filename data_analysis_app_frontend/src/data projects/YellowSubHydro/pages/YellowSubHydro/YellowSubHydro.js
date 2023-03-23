@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { Text } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 
@@ -44,11 +45,37 @@ function YellowSubHydro() {
   */
 
   /*
-  Logic plan/personal note-
+  Advice from Alex -
+  1) Add units to the left Y axis
+2) Date format - you probably don't need all that.
+If you want to keep it use 2023-03-23 10:52:55
 
-  BottomLabel could be the time recorded
-  
-  I need to find a way to get unique times in the data
+But I would probably just go 23/03 10:52 - as the graph isn't covering a very big time period.
+Or whatever you think is best?
+
+3)The grab data button is cool - but the data is injected at the same 'spacing' - so the points could be 30 mins or 30 seconds apart and would look the same.
+Don't know how easy that is to fix though.
+
+4) I'm not exactly sure how - but reduce the number of items in the key? There are too many colours to easily understand.
+What are you really interested in here? I guess it is the change that matters? What I have seen done before is lots keys in grey or the same color.
+And then only the few that matter are in a brighter colour.
+
+Or you could give everything under the same value the same color - (assuming you don't have that many discrete values in this case)
+
+5) Or maybe group into different plots of groups of counties? Again this is probably a bit tricky.
+
+6) I'd make the chart title a bit bigger.
+
+  Priorities:
+  Add units to the left axis 
+
+  Seperate the plots 
+  "Or maybe group into different plots of groups of counties? 
+  Again this is probably a bit tricky."
+
+  Chart title bigger. 
+
+
 
   */
 
@@ -176,7 +203,39 @@ function YellowSubHydro() {
       },
       title: {
         display: true,
-        text: "Flood Severity level",
+        text: "Tracking Flood Severity level across counties",
+        padding: {
+          bottom: 20,
+        },
+        font: {
+          size: 36,
+          style: "bold",
+          family: "Helvetica Neue",
+        },
+      },
+    },
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: "Flood Severity Level",
+          font: {
+            size: 20,
+            style: "italic",
+            family: "Helvetica Neue",
+          },
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Date recorded",
+          font: {
+            size: 20,
+            style: "italic",
+            family: "Helvetica Neue",
+          },
+        },
       },
     },
   };
@@ -201,10 +260,10 @@ function YellowSubHydro() {
           width="100%"
           gap="4rem"
         >
-          <div>
+          <Text fontSize="18px" width="80%" sx={{ textAlign: "center" }}>
             This uses Environment Agency flood and river level data from the
             real-time data API (Beta)
-          </div>
+          </Text>
           <Line options={options} data={data} />
           <Flex width="100%" justifyContent="space-evenly">
             <Button
