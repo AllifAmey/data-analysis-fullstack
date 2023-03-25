@@ -12,7 +12,7 @@ function CountyButton(props) {
         colorScheme="teal"
         variant="link"
         as={RouterLink}
-        to={`/project/yellowsubhydro/seperate${props.county}`}
+        to={`/project/yellowsubhydro/seperate/${props.county}`}
       >
         {props.county}
       </Button>

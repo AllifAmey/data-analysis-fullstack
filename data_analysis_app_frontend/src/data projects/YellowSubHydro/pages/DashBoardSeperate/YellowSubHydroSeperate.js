@@ -1,29 +1,27 @@
 import React, { useState } from "react";
-import YellowSubHydroLineGraph from "./utility/YellowSubHydroLineGraph";
-import { useSelector } from "react-redux";
 import { Button } from "@chakra-ui/react";
 
-function YellowSubHydroSeperate(props) {
+import { useParams } from "react-router-dom";
+
+function YellowSubHydroSeperate() {
   /*
   
-  This page will be about plotting the data on a graph individually for each county. 
-
-  The way it will work is actually quite simple - 
-
+  As each county is by default unique, I can grab the data from the YellowSubHydro,
+  then input it into a graph and then onto a map to further impress the team which should,
+  eviscerate any doubt to my skillset, work ethic and determination.
+  
   */
 
-  const { floodSeverityDataset } = useSelector(
-    (state) => state.YellowSubHydroData
-  );
-
+  const params = useParams();
   return (
     <>
-      <YellowSubHydroLineGraph />
       <Button
         onClick={() => {
-          console.log(floodSeverityDataset);
+          console.log(params.county);
         }}
-      ></Button>
+      >
+        Click me
+      </Button>
     </>
   );
 }
