@@ -8,10 +8,9 @@ import {
 import "./App.css";
 
 import HomePage from "./data projects/HomePage";
-
 import Kluster from "./data projects/Kluster/pages/Kluster/Kluster";
-
 import YellowSubHydro from "./data projects/YellowSubHydro/pages/YellowSubHydro/YellowSubHydro";
+import YellowSubHydroSeperate from "./data projects/YellowSubHydro/pages/DashBoardSeperate/YellowSubHydroSeperate";
 
 const routeDefinition = createRoutesFromElements(
   <Route>
@@ -20,7 +19,7 @@ const routeDefinition = createRoutesFromElements(
     <Route path="/project/yellowsubhydro" element={<YellowSubHydro />} />
     <Route
       path="/project/yellowsubhydro/seperate"
-      element={<YellowSubHydro />}
+      element={<YellowSubHydroSeperate />}
     />
   </Route>
 );

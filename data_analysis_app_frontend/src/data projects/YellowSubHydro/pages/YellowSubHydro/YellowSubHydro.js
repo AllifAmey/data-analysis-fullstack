@@ -14,6 +14,9 @@ import { Text } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 
+import { useDispatch } from "react-redux";
+import { placeInStore } from "../../../../redux/YellowSubHydroData";
+
 import { getFlood, postFlood } from "../../APIs/InternalAPI/FloodAPI";
 import { getGovFlood } from "../../APIs/ExternalAPI/GovFloodAPI";
 
@@ -78,8 +81,7 @@ Or you could give everything under the same value the same color - (assuming you
 
 
   */
-
-  const ref = useRef(null);
+  const dispatch = useDispatch();
 
   function inputGovData() {
     getGovFlood(setIsLoading).then((data) => {
@@ -184,6 +186,7 @@ Or you could give everything under the same value the same color - (assuming you
         });
       }
       setDatasets(entireDataset);
+      dispatch(placeInStore(entireDataset));
       setBottomLabel(unique_vals_creation_date);
 
       let interval = setInterval(() => {
@@ -193,7 +196,7 @@ Or you could give everything under the same value the same color - (assuming you
         clearInterval(interval);
       };
     });
-  }, []);
+  }, [dispatch]);
 
   const options = {
     responsive: true,
@@ -273,6 +276,14 @@ Or you could give everything under the same value the same color - (assuming you
               sx={{ marginBottom: "2rem", padding: "20px" }}
             >
               Back
+            </Button>
+            <Button
+              colorScheme="green"
+              as={RouterLink}
+              to="/project/yellowsubhydro/seperate"
+              sx={{ marginBottom: "2rem", padding: "20px" }}
+            >
+              Seperate Graphs
             </Button>
             <Button
               colorScheme="green"
