@@ -32,8 +32,7 @@ function YellowSubHydroRouting(props) {
       <Container height="auto" width="100%">
         <Flex sx={mainCountyButtonContainerStyles}>
           {floodSeverityDataset.map((data) => {
-            console.log(data);
-            return <CountyButton county={data.label} />;
+            return <CountyButton county={data.label} key={data.label} />;
           })}
           <Button
             colorScheme="green"

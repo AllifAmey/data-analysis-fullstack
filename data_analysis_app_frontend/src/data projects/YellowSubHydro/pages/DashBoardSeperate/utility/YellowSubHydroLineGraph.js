@@ -60,11 +60,7 @@ function YellowSubHydroLineGraph(props) {
     },
   };
 
-  return (
-    <>
-      <div>Hello</div>
-    </>
-  );
+  return <></>;
 }
 
 export default YellowSubHydroLineGraph;

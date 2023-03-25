@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   floodSeverityDataset: [],
+  graphBottomlabel: [],
+  graphOptions: {},
 };
 
 export const YellowSubHydroDataSlice = createSlice({
@@ -15,15 +17,29 @@ export const YellowSubHydroDataSlice = createSlice({
       // immutable state based off those changes
       state.value += 1;
     },
-    placeInStore: (state, action) => {
-      // this just inputs the data into the store
+    placeInfloodSeverityDataset: (state, action) => {
+      // this just inputs the flood severity dataset into the store
       // the list of data is spread using the spread operator.
       state.floodSeverityDataset = [...action.payload];
+    },
+    placeIngraphOptions: (state, action) => {
+      // this inputs the options data into the store
+      // the object data is spread using the spread operator
+      state.graphOptions = { ...action.payload };
+    },
+    placeInBottomlabel: (state, action) => {
+      // this inputs the options data into the store
+      // the object data is spread using the spread operator
+      state.graphBottomlabel = [...action.payload];
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { placeInStore } = YellowSubHydroDataSlice.actions;
+export const {
+  placeInfloodSeverityDataset,
+  placeIngraphOptions,
+  placeInBottomlabel,
+} = YellowSubHydroDataSlice.actions;
 
 export default YellowSubHydroDataSlice.reducer;
