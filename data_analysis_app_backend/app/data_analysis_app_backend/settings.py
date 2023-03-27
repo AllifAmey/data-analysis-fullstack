@@ -178,3 +178,7 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
+
+# probably a bad idea check if this matters security wise
+# I see this as the only solution to balk delete such a large amount of data.
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None

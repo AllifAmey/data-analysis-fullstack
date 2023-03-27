@@ -13,10 +13,10 @@ class TestFloodEndpoint(TestCase):
         Basic test for GET request of flood API.
         """
         client = APIClient()
-        models.FloodSeverityModel.objects.create(county="Oxfordshire", flood_severity_lvl=1)
+        models.FloodSeverityModel.objects.create(floodAreaID="" ,county="Oxfordshire", flood_severity_lvl=1)
         res = client.get("/api/flood/", format="json")
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(json.dumps(res.data), '[{"id": 1, "county": "Oxfordshire", "flood_severity_lvl": 1, "creation_date": ""}]')
+        self.assertEqual(json.dumps(res.data), '[{"id": 1, "floodAreaID": "", "county": "Oxfordshire", "flood_severity_lvl": 1, "creation_date": ""}]')
     
     def test_post_flood_datapoint_basic(self):
         """

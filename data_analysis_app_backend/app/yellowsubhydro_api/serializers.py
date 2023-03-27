@@ -6,4 +6,4 @@ class FloodSeveritySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.FloodSeverityModel
-        fields = ['id', 'county', 'flood_severity_lvl', 'creation_date']
+        fields = ['id', 'floodAreaID', 'county', 'flood_severity_lvl', 'creation_date']

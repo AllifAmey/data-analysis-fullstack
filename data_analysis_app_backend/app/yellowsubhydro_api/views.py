@@ -63,8 +63,7 @@ class FloodSeverityViewset(viewsets.ModelViewSet):
         """Process the flood severity data and creates models"""
         
         now = datetime.now()
-        # date format is different - feedback given to Alex ( he does this stuff so I take it seriously )
-        # looks 23/03 10:52 
+        # date format is 23/03 10:52 
         creation_date = now.strftime("%d/%m %H:%M")
         
         processed_data = []

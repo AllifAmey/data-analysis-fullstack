@@ -67,14 +67,15 @@ go to http://localhost:8000/admin to see backend data
 
 ### High priority
 
-- &#9744; Convert this into a far more presentable way - look into dashboards
-- &#9744; Find a way to analyise or parse the data better - change the county if needed.
+- &#9744; Plot the coordinates on a map
+- &#9744; Plot one polygon on a map
+- &#9744; Integrate Mapbox into the app for further use.
 - &#9744; Ensure all the components are split as reasonable as possible
 - &#9744; Refactor if needed to allow for long-term maintenance of the code
 
 ### Medium priority
 
-- &#9744; Maybe look into Mapbox to mimic YellowSub a bit more closely to plot data on map.
+- &#9744; Look to beautify the look of the data.
 
 ### Low priority
 

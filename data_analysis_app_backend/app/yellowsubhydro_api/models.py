@@ -6,9 +6,11 @@ from django.conf import settings
 class FloodSeverityModel(models.Model):
     """Tracks the flood severity level"""
     
+    floodAreaID = models.CharField(max_length=255)
     county = models.TextField()
     flood_severity_lvl = models.IntegerField()
     creation_date = models.CharField(max_length=255, default="")
+    
 
     def __str__(self):
             """Return the model as a string"""
