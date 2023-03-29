@@ -13,6 +13,12 @@ import {
   getGovFloodAreaPolygons,
 } from "../../APIs/ExternalAPI/GovFloodAPI";
 
+import mapboxgl from "mapbox-gl";
+
+/* eslint import/no-webpack-loader-syntax: off */
+mapboxgl.workerClass =
+  require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
 function YellowSubHydroSeperate() {
   /*
   

@@ -20,7 +20,7 @@ export async function getGovFloodArea(setIsLoading, floodAreaID) {
   // Grabs the GovFloodData using the flood id
   setIsLoading(true);
   const response = await fetch(
-    `http://environment.data.gov.uk/flood-monitoring/id/floodAreas/${floodAreaID}`,
+    `https://environment.data.gov.uk/flood-monitoring/id/floodAreas/${floodAreaID}`,
     {
       method: "GET",
     }
@@ -36,7 +36,7 @@ export async function getGovFloodAreaPolygons(setIsLoading, floodAreaID) {
   // Grabs the GovFloodData using the flood id
   setIsLoading(true);
   const response = await fetch(
-    `http://environment.data.gov.uk/flood-monitoring/id/floodAreas/${floodAreaID}/polygon`,
+    `https://environment.data.gov.uk/flood-monitoring/id/floodAreas/${floodAreaID}/polygon`,
     {
       method: "GET",
     }

@@ -50,6 +50,7 @@ class FloodSeverityViewset(viewsets.ModelViewSet):
             inline_serializer(name="user_orders",fields={
                 "county": serializers.CharField(), 
                 "flood_severity_lvl": serializers.IntegerField(), 
+                "floodAreaID": serializers.CharField(max_length=255),
         }),
         ],
         resource_type_field_name='type',
