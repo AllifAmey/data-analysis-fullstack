@@ -63,6 +63,7 @@ function YellowSubHydroSeperate() {
   const [dataset, setDataset] = useState(null);
   const [coordinates, setCoordinates] = useState(null);
   const [polygon, setPolygon] = useState(null);
+  const [polygonType, setPolygonType] = useState(null);
   const [IsLoading, setIsLoading] = useState(true);
 
   const params = useParams();
@@ -80,38 +81,44 @@ function YellowSubHydroSeperate() {
     });
     console.log(countyDataset[0].recent_floodDataIDs);
     const recent_floodAreaIDs = countyDataset[0].recent_floodDataIDs;
+    console.log(`${recent_floodAreaIDs} is recent`);
 
-    for (const floodDataID of recent_floodAreaIDs) {
-      getGovFloodArea(setIsLoading, floodDataID).then((data) => {
-        setCoordinates({ lat: data.items.lat, long: data.items.long });
-      });
-      getGovFloodAreaPolygons(setIsLoading, floodDataID).then((data) => {
-        const polygonType = data.features[0].geometry.type;
-        const polygonCoordinates = data.features[0].geometry.coordinates;
-        let polygonStore = undefined;
+    if (recent_floodAreaIDs == null) {
+    } else {
+      for (const floodDataID of recent_floodAreaIDs) {
+        getGovFloodArea(setIsLoading, floodDataID).then((data) => {
+          setCoordinates({ lat: data.items.lat, long: data.items.long });
+        });
+        getGovFloodAreaPolygons(setIsLoading, floodDataID).then((data) => {
+          const polygonType = data.features[0].geometry.type;
+          const polygonCoordinates = data.features[0].geometry.coordinates;
+          let polygonStore = undefined;
 
-        // get the first polygon that is less than 20 in length
-        if (polygonType == "MultiPolygon") {
-          for (const polygon of polygonCoordinates) {
-            if (polygon[0].length <= 20) {
-              polygonStore = polygon[0];
-              break;
+          // get the first polygon that is less than 20 in length
+          if (polygonType == "MultiPolygon") {
+            for (const polygon of polygonCoordinates) {
+              if (polygon[0].length <= 20) {
+                polygonStore = polygon[0];
+                break;
+              }
+            }
+          } else if (polygonType == "Polygon") {
+            for (const polygon of polygonCoordinates) {
+              if (polygon.length <= 20) {
+                polygonStore = polygon;
+                break;
+              }
             }
           }
-        } else if (polygonType == "Polygon") {
-          for (const polygon of polygonCoordinates) {
-            if (polygon.length <= 20) {
-              polygonStore = polygon;
-              break;
-            }
-          }
-        }
-        setCoordinates({ lat: polygonStore[0][1], long: polygonStore[0][0] });
-        setPolygon(polygonStore);
-      });
+          setCoordinates({ lat: polygonStore[0][1], long: polygonStore[0][0] });
+          setPolygon(polygonCoordinates);
+          setPolygonType(polygonType);
+        });
+      }
     }
 
     setDataset(countyDataset);
+    setIsLoading(false);
   }, []);
 
   const data = {
@@ -134,47 +141,51 @@ function YellowSubHydroSeperate() {
       ) : (
         <Flex sx={mainFlexStyles}>
           <Line options={graphOptions} data={data} />
-          <Map
-            initialViewState={{
-              latitude: coordinates.lat,
-              longitude: coordinates.long,
-              zoom: 15,
-            }}
-            style={{ width: 800, height: 600 }}
-            mapStyle="mapbox://styles/mapbox/streets-v9"
-            mapboxAccessToken={api_key}
-          >
-            <Source
-              type="geojson"
-              data={{
-                type: "Feature",
-                properties: {},
-                geometry: {
-                  type: "Polygon",
-                  coordinates: [polygon],
-                },
+          {polygon == null ? (
+            ""
+          ) : (
+            <Map
+              initialViewState={{
+                latitude: coordinates.lat,
+                longitude: coordinates.long,
+                zoom: 10,
               }}
+              style={{ width: 800, height: 600 }}
+              mapStyle="mapbox://styles/mapbox/streets-v9"
+              mapboxAccessToken={api_key}
             >
-              <Layer
-                {...{
-                  id: "data",
-                  type: "fill",
-                  paint: {
-                    "fill-color": {
-                      property: "percentile",
-                      stops: [[0, "#3288bd"]],
-                    },
-                    "fill-opacity": 0.5,
+              <Source
+                type="geojson"
+                data={{
+                  type: "Feature",
+                  properties: {},
+                  geometry: {
+                    type: polygonType,
+                    coordinates: polygon,
                   },
                 }}
+              >
+                <Layer
+                  {...{
+                    id: "data",
+                    type: "fill",
+                    paint: {
+                      "fill-color": {
+                        property: "percentile",
+                        stops: [[0, "#3288bd"]],
+                      },
+                      "fill-opacity": 0.5,
+                    },
+                  }}
+                />
+              </Source>
+              <Marker
+                longitude={coordinates.long}
+                latitude={coordinates.lat}
+                color="red"
               />
-            </Source>
-            <Marker
-              longitude={coordinates.long}
-              latitude={coordinates.lat}
-              color="red"
-            />
-          </Map>
+            </Map>
+          )}
           <Button
             width=" 70px"
             as={RouterLink}
