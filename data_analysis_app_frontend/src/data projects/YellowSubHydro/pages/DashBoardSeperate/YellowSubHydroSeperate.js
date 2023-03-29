@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Button, Flex } from "@chakra-ui/react";
 import { Line } from "react-chartjs-2";
-
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
+
+import Map, { Marker, Source, Layer } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 import {
   getGovFloodArea,
@@ -57,11 +59,14 @@ function YellowSubHydroSeperate() {
   8. Else direct the first coordinate of the polygon used to showcase the polygon.
   
   */
-
+  // uses https://github.com/visgl/react-map-gl
   const [dataset, setDataset] = useState(null);
+  const [coordinates, setCoordinates] = useState(null);
+  const [polygon, setPolygon] = useState(null);
   const [IsLoading, setIsLoading] = useState(true);
 
   const params = useParams();
+  const api_key = process.env.REACT_APP_MAPBOX_API_KEY;
 
   const { floodSeverityDataset, graphOptions, graphBottomlabel } = useSelector(
     (state) => state.YellowSubHydroData
@@ -78,9 +83,7 @@ function YellowSubHydroSeperate() {
 
     for (const floodDataID of recent_floodAreaIDs) {
       getGovFloodArea(setIsLoading, floodDataID).then((data) => {
-        let relevantData = {};
-        relevantData.lat = data.items.lat;
-        relevantData.long = data.items.long;
+        setCoordinates({ lat: data.items.lat, long: data.items.long });
       });
       getGovFloodAreaPolygons(setIsLoading, floodDataID).then((data) => {
         const polygonType = data.features[0].geometry.type;
@@ -103,13 +106,12 @@ function YellowSubHydroSeperate() {
             }
           }
         }
-
-        console.log(polygonStore);
+        setCoordinates({ lat: polygonStore[0][1], long: polygonStore[0][0] });
+        setPolygon(polygonStore);
       });
     }
 
     setDataset(countyDataset);
-    setIsLoading(false);
   }, []);
 
   const data = {
@@ -132,6 +134,47 @@ function YellowSubHydroSeperate() {
       ) : (
         <Flex sx={mainFlexStyles}>
           <Line options={graphOptions} data={data} />
+          <Map
+            initialViewState={{
+              latitude: coordinates.lat,
+              longitude: coordinates.long,
+              zoom: 15,
+            }}
+            style={{ width: 800, height: 600 }}
+            mapStyle="mapbox://styles/mapbox/streets-v9"
+            mapboxAccessToken={api_key}
+          >
+            <Source
+              type="geojson"
+              data={{
+                type: "Feature",
+                properties: {},
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [polygon],
+                },
+              }}
+            >
+              <Layer
+                {...{
+                  id: "data",
+                  type: "fill",
+                  paint: {
+                    "fill-color": {
+                      property: "percentile",
+                      stops: [[0, "#3288bd"]],
+                    },
+                    "fill-opacity": 0.5,
+                  },
+                }}
+              />
+            </Source>
+            <Marker
+              longitude={coordinates.long}
+              latitude={coordinates.lat}
+              color="red"
+            />
+          </Map>
           <Button
             width=" 70px"
             as={RouterLink}
