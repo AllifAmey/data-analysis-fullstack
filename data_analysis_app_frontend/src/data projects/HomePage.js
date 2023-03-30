@@ -23,6 +23,26 @@ const ProjectCardData = [
 function HomePage() {
   /*
   
+  List of code earmarked for refactoring : 
+
+  YellowSubHyro component -
+  refactor -  
+  The button's styles are all the same and could be grouped under one variable
+  benefit:
+  allows for easier customisability over all the buttons on that page for the future
+  refactor - 
+  The logic for parsing the data is repeated twice.
+  benefit:
+  greatly improves readability and provides more control over logic handling.
+  refactor -
+  Group the buttons all into one component called a ButtonGroup
+  benefit:
+  codesplitting and localises code which maintains readability
+  refactor - 
+  put the line graph in a seperate component used globally.
+  benefit:
+  solves the issue of constantly importing the package.
+   
   
   */
   //styles

@@ -38,21 +38,6 @@ function YellowSubHydro() {
   
   */
 
-  /*
-  Advice from Alex -
-
-3)The grab data button is cool - but the data is injected at the same 'spacing' - so the points could be 30 mins or 30 seconds apart and would look the same.
-Don't know how easy that is to fix though.
-
-4) I'm not exactly sure how - but reduce the number of items in the key? There are too many colours to easily understand.
-What are you really interested in here? I guess it is the change that matters? What I have seen done before is lots keys in grey or the same color.
-And then only the few that matter are in a brighter colour.
-
-Or you could give everything under the same value the same color - (assuming you don't have that many discrete values in this case)
-
-
-  */
-
   const [isLoading, setIsLoading] = useState(false);
   const [bottomLabel, setBottomLabel] = useState([]);
   const [datasets, setDatasets] = useState([]);
@@ -162,22 +147,6 @@ Or you could give everything under the same value the same color - (assuming you
       },
     },
   };
-  /*
-  Listing out the problem:
-  I need to know the latest data for the latest time. 
-  1. How do I find the latest data 
-  2. I need to get the 
-
-  I have stumbled upon a problem.
-  There are pieces of data that have the same counties resulting in different ids.
-  I must remember the purpose of the project.
-  I want to track flood severity levels across different counties.
-  Here's how I will do it.
-
-  I will grab all the flood ids and check each one's polygon,
-  and if there is one that fits the criteria I want then I will proceed.
-  
-  */
 
   useEffect(() => {
     getFlood(setIsLoading).then((data) => {
