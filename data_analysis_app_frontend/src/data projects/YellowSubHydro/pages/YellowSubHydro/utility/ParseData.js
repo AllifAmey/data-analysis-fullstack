@@ -3,6 +3,40 @@ export function ParseData(data) {
   let unique_vals_creation_date = [
     ...new Set(data.map((x) => x.creation_date)),
   ];
+  // new Date( Date.parse(`03/29/${new Date().getFullYear()} 11:11`) )
+  unique_vals_creation_date.sort((a, b) => {
+    // due to the way I formatted time in the backend,
+    // I have to use a bit more of a complicated way to sort the data correctly.
+    // extract the key informtion and place it into Date then sort it
+    const aTime = {
+      day: a.substr(0, 2),
+      month: a.substr(3, 2),
+      hour: a.substr(6, 2),
+      minute: a.substr(9, 2),
+    };
+    const bTime = {
+      day: b.substr(0, 2),
+      month: b.substr(3, 2),
+      hour: b.substr(6, 2),
+      minute: b.substr(9, 2),
+    };
+    const dateA = new Date(
+      Date.parse(
+        `${aTime.month}/${aTime.day}/${new Date().getFullYear()} ${
+          aTime.hour
+        }:${aTime.minute}`
+      )
+    );
+    const dateB = new Date(
+      Date.parse(
+        `${bTime.month}/${bTime.day}/${new Date().getFullYear()} ${
+          bTime.hour
+        }:${bTime.minute}`
+      )
+    );
+    return dateA - dateB;
+  });
+
   let unique_vals_counties = [...new Set(data.map((x) => x.county))];
 
   const entireDataset = [];
