@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import YellowSubHydroLineGraph from "./utility/YellowSubHydroLineGraph";
 import { useSelector } from "react-redux";
 import CountyButton from "./utility/CountyButton";
 import { Container, Flex, Button } from "@chakra-ui/react";
@@ -28,7 +27,6 @@ function YellowSubHydroRouting(props) {
 
   return (
     <>
-      <YellowSubHydroLineGraph />
       <Container height="auto" width="100%">
         <Flex sx={mainCountyButtonContainerStyles}>
           {floodSeverityDataset.map((data) => {

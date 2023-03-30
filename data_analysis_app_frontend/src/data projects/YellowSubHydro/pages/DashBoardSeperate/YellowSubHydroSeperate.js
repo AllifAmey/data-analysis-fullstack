@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Button, Flex } from "@chakra-ui/react";
-import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 import Map, { Marker, Source, Layer } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import CustomLineGraph from "../../../VisualizationTools/CustomLineGraph";
 
 import {
   getGovFloodArea,
@@ -57,7 +57,6 @@ function YellowSubHydroSeperate() {
           if (polygonType == "MultiPolygon") {
             polygonStore = polygonCoordinates[0][0];
           } else if (polygonType == "Polygon") {
-            console.log("hello");
             polygonStore = polygonCoordinates[0];
           }
           setCoordinates({ lat: polygonStore[0][1], long: polygonStore[0][0] });
@@ -90,7 +89,7 @@ function YellowSubHydroSeperate() {
         <div>Loading</div>
       ) : (
         <Flex sx={mainFlexStyles}>
-          <Line options={graphOptions} data={data} />
+          <CustomLineGraph options={graphOptions} data={data} />
           {polygon == null ? (
             ""
           ) : (
