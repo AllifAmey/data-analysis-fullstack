@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Flex } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";

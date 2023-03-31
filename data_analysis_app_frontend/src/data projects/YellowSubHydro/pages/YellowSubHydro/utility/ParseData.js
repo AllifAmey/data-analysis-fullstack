@@ -3,7 +3,6 @@ export function ParseData(data) {
   let unique_vals_creation_date = [
     ...new Set(data.map((x) => x.creation_date)),
   ];
-  // new Date( Date.parse(`03/29/${new Date().getFullYear()} 11:11`) )
   unique_vals_creation_date.sort((a, b) => {
     // due to the way I formatted time in the backend,
     // I have to use a bit more of a complicated way to sort the data correctly.
