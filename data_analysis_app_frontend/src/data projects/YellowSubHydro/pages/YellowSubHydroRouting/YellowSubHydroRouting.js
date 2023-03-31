@@ -46,8 +46,6 @@ function YellowSubHydroRouting(props) {
     }
   });
 
-  console.log(recent_datasets);
-
   return (
     <>
       <Flex

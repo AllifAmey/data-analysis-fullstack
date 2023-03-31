@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ import mapboxgl from "mapbox-gl";
 mapboxgl.workerClass =
   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-function YellowSubHydroSeperate() {
+function YellowSubHydroIndividual() {
   const [dataset, setDataset] = useState(null);
   const [coordinates, setCoordinates] = useState(null);
   const [polygon, setPolygon] = useState(null);
@@ -39,12 +39,25 @@ function YellowSubHydroSeperate() {
         return true;
       }
     });
-    console.log(countyDataset[0].recent_floodDataIDs);
     const recent_floodAreaIDs = countyDataset[0].recent_floodDataIDs;
-    console.log(`${recent_floodAreaIDs} is recent`);
 
     if (recent_floodAreaIDs == null) {
     } else {
+      // potential error
+      // Explanation:
+      /*
+      The logic states that it will loop over the floodareaids,
+      then constantly update the state polygons yet at the same time
+      if there are more than 1 floodareaids only the last one with its polygons are ,
+      placed. 
+      If my aim is to place all polygons found at each id then I should place every single one ,
+      in a list not just one. 
+      confirmed there is a bug. 
+      
+      */
+      console.log(`recent_floodAreaIds below`);
+      console.log(recent_floodAreaIDs);
+      console.log("recent_floodAreaID above");
       for (const floodDataID of recent_floodAreaIDs) {
         getGovFloodArea(setIsLoading, floodDataID).then((data) => {
           setCoordinates({ lat: data.items.lat, long: data.items.long });
@@ -60,15 +73,19 @@ function YellowSubHydroSeperate() {
             polygonStore = polygonCoordinates[0];
           }
           setCoordinates({ lat: polygonStore[0][1], long: polygonStore[0][0] });
+          console.log("polygonCoordinates is ");
+          console.log(polygonCoordinates);
+          console.log("polygonCoordinates above");
           setPolygon(polygonCoordinates);
           setPolygonType(polygonType);
         });
       }
     }
-
     setDataset(countyDataset);
     setIsLoading(false);
   }, []);
+
+  console.log(polygon);
 
   const data = {
     labels: graphBottomlabel,
@@ -90,8 +107,14 @@ function YellowSubHydroSeperate() {
       ) : (
         <Flex sx={mainFlexStyles}>
           <CustomLineGraph options={graphOptions} data={data} />
+          {polygon !== null && (
+            <Text fontSize="2xl">
+              Look at where the flood severity data is on the map.
+            </Text>
+          )}
+
           {polygon == null ? (
-            ""
+            <Text fontSize="2xl">No recent data to plot onto a map.</Text>
           ) : (
             <Map
               initialViewState={{
@@ -148,4 +171,4 @@ function YellowSubHydroSeperate() {
   );
 }
 
-export default YellowSubHydroSeperate;
+export default YellowSubHydroIndividual;

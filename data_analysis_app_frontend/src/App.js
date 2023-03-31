@@ -9,9 +9,9 @@ import "./App.css";
 
 import HomePage from "./data projects/HomePage";
 import Kluster from "./data projects/Kluster/pages/Kluster/Kluster";
-import YellowSubHydroMain from "./data projects/YellowSubHydro/pages/YellowSubHydro/YellowSubHydroMain";
-import YellowSubHydroSeperate from "./data projects/YellowSubHydro/pages/DashBoardSeperate/YellowSubHydroSeperate";
-import YellowSubHydroRouting from "./data projects/YellowSubHydro/pages/DashBoardSeperate/YellowSubHydroRouting";
+import YellowSubHydroMain from "./data projects/YellowSubHydro/pages/YellowSubHydroMain/YellowSubHydroMain";
+import YellowSubHydroIndividual from "./data projects/YellowSubHydro/pages/YellowSubHydroIndividual/YellowSubHydroIndividual";
+import YellowSubHydroRouting from "./data projects/YellowSubHydro/pages/YellowSubHydroRouting/YellowSubHydroRouting";
 
 const routeDefinition = createRoutesFromElements(
   <Route>
@@ -24,7 +24,7 @@ const routeDefinition = createRoutesFromElements(
     />
     <Route
       path="/project/yellowsubhydro/seperate/:county"
-      element={<YellowSubHydroSeperate />}
+      element={<YellowSubHydroIndividual />}
     />
   </Route>
 );
