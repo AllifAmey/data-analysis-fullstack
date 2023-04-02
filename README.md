@@ -2,10 +2,10 @@ This will be a full stack application with a backend/data analysis focus.
 
 The frontend will be React and the backend Django Rest Framework.
 
-The aim of this app is to practice data analysis with Numpy/Panda and to see ,
-it's viablity in Django. As well as to explore Python on a much deeper level.
+The aim of this app is to provide different ways to analyise data and making it much ,
+more digestible for the end user.
 
-Another crucial aim is to allow me to get a deeper understanding of data analytics and backend development.
+I also created this website to combine my interest in data and frontend.
 
 # Setup instructions:
 
@@ -23,7 +23,7 @@ Backend -
 
 cd data_analysis_app_backend
 
-python manage.py runserver
+docker-compose up
 
 go to http://localhost:8000/admin to see backend data
 
@@ -70,12 +70,12 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Plot the coordinates on a map
 - &#9745; Plot one polygon on a map
 - &#9745; Integrate Mapbox into the app for further use.
-- &#9744; Ensure all the components are split as reasonable as possible
-- &#9744; Refactor if needed to allow for long-term maintenance of the code
+- &#9745; Ensure all the components are split as reasonable as possible
+- &#9745; Refactor if needed to allow for long-term maintenance of the code
 
 ### Medium priority
 
-- &#9744; Look to beautify the look of the data.
+- &#9744; Beautify the routing,seperate page.
 
 ### Low priority
 
