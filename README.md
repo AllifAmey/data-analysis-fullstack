@@ -72,14 +72,16 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Integrate Mapbox into the app for further use.
 - &#9745; Ensure all the components are split as reasonable as possible
 - &#9745; Refactor if needed to allow for long-term maintenance of the code
+- &#9744; Fix edge case time formatting
+- &#9744; Work on current web design.
 
 ### Medium priority
 
-- &#9744; Beautify the routing,seperate page.
+- &#9744; Convert the project to TypeScript
 
 ### Low priority
 
-- &#9744; Find different data to implement onto the dashboard
+- &#9744; Add Hydrology API data
 
 ## Phase 4 - Understanding web scrapping to grab data for analytics
 

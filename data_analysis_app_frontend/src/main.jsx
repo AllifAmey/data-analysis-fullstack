@@ -5,10 +5,11 @@ import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
 import { store } from "./components/redux/store";
 import { Provider } from "react-redux";
+import theme from "./theme";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
   </Provider>

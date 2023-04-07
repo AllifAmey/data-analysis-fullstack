@@ -6,6 +6,7 @@ from django.conf import settings
 class FloodSeverityModel(models.Model):
     """Tracks the flood severity level"""
     
+    # TODO: change to datetime field or look into it
     floodAreaID = models.CharField(max_length=255)
     county = models.TextField()
     flood_severity_lvl = models.IntegerField()

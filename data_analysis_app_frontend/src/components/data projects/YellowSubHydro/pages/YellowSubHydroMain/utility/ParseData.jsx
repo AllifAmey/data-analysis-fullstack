@@ -7,6 +7,7 @@ export function ParseData(data) {
     // due to the way I formatted time in the backend,
     // I have to use a bit more of a complicated way to sort the data correctly.
     // extract the key informtion and place it into Date then sort it
+    // momentjs dayjs
     const aTime = {
       day: a.substr(0, 2),
       month: a.substr(3, 2),

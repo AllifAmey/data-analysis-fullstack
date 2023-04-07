@@ -1,27 +1,17 @@
 import React from "react";
-import { Container } from "@chakra-ui/react";
 import ProjectCard from "./utility/ProjectCard";
-import {
-  Flex,
-  Box,
-  Text,
-  Heading,
-  Card,
-  Image,
-  Stack,
-  CardBody,
-  CardFooter,
-  Button,
-} from "@chakra-ui/react";
+import { Flex, Box, Text, Heading } from "@chakra-ui/react";
 
 const ProjectCardData = [
   {
     project_type: "Greentech",
     project_title: "YellowSubHydro",
-    project_description: "Displaying Water Levels",
+    project_description: "Tracking flood severity levels",
     project_image:
       "https://yellowsubhydro.com/wp-content/uploads/2023/02/YSH_wordmark_yellow-1536x520.png",
     project_url: "yellowsubhydro",
+    project_has_more_info: true,
+    project_technology_info: ["Gov flood API", "MapboxGL"],
   },
   {
     project_type: "Fintech",
@@ -30,6 +20,7 @@ const ProjectCardData = [
     project_image:
       "https://global-uploads.webflow.com/600b54556937c46a1c61ed30/600e06dadeb2b054991710e9_Kluster%20Logo%20Blue%20-%20144-p-500.png",
     project_url: "kluster",
+    project_has_more_info: false,
   },
 ];
 
@@ -37,8 +28,6 @@ function HomePage() {
   /*
   
   // https://nicepage.com/website-design/preview/features-section-1770415?device=desktop
-  
-   
   
   */
   const FintechProjects = ProjectCardData.filter((project) => {
@@ -82,6 +71,8 @@ function HomePage() {
                       project_description={project.project_description}
                       project_image={project.project_image}
                       project_url={project.project_url}
+                      project_has_more_info={project.project_has_more_info}
+                      project_technology_info={project.project_technology_info}
                     />
                   );
                 })}
@@ -104,6 +95,8 @@ function HomePage() {
                       project_description={project.project_description}
                       project_image={project.project_image}
                       project_url={project.project_url}
+                      project_has_more_info={project.project_has_more_info}
+                      project_technology_info={project.project_technology_info}
                     />
                   );
                 })}
