@@ -7,7 +7,7 @@ import { store } from "./components/redux/store";
 import { Provider } from "react-redux";
 import theme from "./theme";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
     <ChakraProvider theme={theme}>
       <App />

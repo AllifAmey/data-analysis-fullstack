@@ -18,10 +18,12 @@ function YellowSubHydroIndividual() {
 
   const params = useParams();
 
+  // TODO: define state instead of any
   const { floodSeverityDataset, graphOptions, graphBottomlabel } = useSelector(
-    (state) => state.YellowSubHydroData
+    (state: any) => state.YellowSubHydroData
   );
-  const countyDataset = floodSeverityDataset.filter((data) => {
+  // TODO: define data instead of any
+  const countyDataset = floodSeverityDataset.filter((data: any) => {
     console.log(params.county);
     if (data.label == params.county) {
       console.log(data);
@@ -31,7 +33,8 @@ function YellowSubHydroIndividual() {
   const recent_floodAreaIDs = countyDataset[0].recent_floodDataIDs;
 
   useEffect(() => {
-    const countyDataset = floodSeverityDataset.filter((data) => {
+    // TODO: define data instead of any
+    const countyDataset = floodSeverityDataset.filter((data: any) => {
       if (data.label == params.county) {
         return true;
       }

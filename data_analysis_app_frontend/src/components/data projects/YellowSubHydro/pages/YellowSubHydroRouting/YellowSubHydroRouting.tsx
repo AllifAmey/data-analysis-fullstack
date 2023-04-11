@@ -4,7 +4,16 @@ import CountyButton from "./utility/CountyButton";
 import { Flex, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-function YellowSubHydroRouting(props) {
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
+
+const YellowSubHydroRouting = ({ example }: props) => {
+*/
+
+function YellowSubHydroRouting(props: any) {
   /*
   
   This page will be about plotting the data on a graph individually for each county. 
@@ -15,8 +24,9 @@ function YellowSubHydroRouting(props) {
 
   */
 
+  // TODO: define state instead of any
   const { floodSeverityDataset } = useSelector(
-    (state) => state.YellowSubHydroData
+    (state: any) => state.YellowSubHydroData
   );
 
   const mainFlexContainerStyles = {
@@ -30,15 +40,16 @@ function YellowSubHydroRouting(props) {
     gap: 4,
     justifyContent: "space-evenly",
   };
-
-  const recent_datasets = floodSeverityDataset.filter((data) => {
+  // TODO: define data instead of any
+  const recent_datasets = floodSeverityDataset.filter((data: any) => {
     if (data.data[data.data.length - 1] == null) {
       return false;
     } else {
       return true;
     }
   });
-  const no_recent_datasets = floodSeverityDataset.filter((data) => {
+  // TODO: define data instead of any
+  const no_recent_datasets = floodSeverityDataset.filter((data: any) => {
     if (data.data[data.data.length - 1] == null) {
       return true;
     } else {
@@ -57,7 +68,8 @@ function YellowSubHydroRouting(props) {
         <Flex sx={mainFlexContainerStyles} width="90vw">
           <Flex sx={sideFlexContainerStyles}>
             <div>Recent Data</div>
-            {recent_datasets.map((data) => {
+            {recent_datasets.map((data: any) => {
+              // TODO: define data instead of any
               return (
                 <CountyButton
                   county={data.label}
@@ -73,7 +85,8 @@ function YellowSubHydroRouting(props) {
           </Flex>
           <Flex sx={sideFlexContainerStyles}>
             <div>Historic Data</div>
-            {no_recent_datasets.map((data) => {
+            {no_recent_datasets.map((data: any) => {
+              // TODO: define data instead of any
               return (
                 <CountyButton
                   county={data.label}

@@ -2,7 +2,17 @@ import React from "react";
 import ProjectCard from "./utility/ProjectCard";
 import { Flex, Box, Text, Heading } from "@chakra-ui/react";
 
-const ProjectCardData = [
+type ProjectData = {
+  project_type: string;
+  project_title: string;
+  project_description: string;
+  project_image: string;
+  project_url: string;
+  project_has_more_info: boolean;
+  project_technology_info: any;
+};
+
+const ProjectCardData: ProjectData[] = [
   {
     project_type: "Greentech",
     project_title: "YellowSubHydro",
@@ -21,10 +31,11 @@ const ProjectCardData = [
       "https://global-uploads.webflow.com/600b54556937c46a1c61ed30/600e06dadeb2b054991710e9_Kluster%20Logo%20Blue%20-%20144-p-500.png",
     project_url: "kluster",
     project_has_more_info: false,
+    project_technology_info: null,
   },
 ];
 
-function HomePage() {
+const HomePage = () => {
   /*
   
   // https://nicepage.com/website-design/preview/features-section-1770415?device=desktop
@@ -110,6 +121,6 @@ function HomePage() {
       </Box>
     </>
   );
-}
+};
 
 export default HomePage;

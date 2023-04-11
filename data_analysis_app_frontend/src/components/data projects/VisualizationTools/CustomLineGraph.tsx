@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
 
-function CustomLineGraph(props) {
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
+
+const CustomLineGraph = ({ example }: props) => {
+*/
+
+function CustomLineGraph(props: any) {
   /*
   Custom Line Graph using ChartJS
   

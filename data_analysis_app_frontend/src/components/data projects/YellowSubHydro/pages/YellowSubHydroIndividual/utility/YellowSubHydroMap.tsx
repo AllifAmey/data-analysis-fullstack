@@ -12,23 +12,29 @@ import mapboxgl from "mapbox-gl";
 
 //mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-function YellowSubHydroMap(props) {
+// TODO: define props
+
+function YellowSubHydroMap(props: any) {
   /*
     flood severity level displayed on a map and marking different locations,
     of the areas with flood severity.
     */
-  const [storeGeoJSON, setStoreGeoJSON] = useState(null);
-  const [initialViewState, setInitialViewState] = useState(null);
+  // TODO: define state instead of <any>
+  const [storeGeoJSON, setStoreGeoJSON] = useState<any>(null);
+  const [initialViewState, setInitialViewState] = useState<any>(null);
 
   const params = useParams();
   const api_key = import.meta.env.VITE_MAPBOX_API_KEY;
 
+  // TODO: define state instead of <any>
+
   const { floodSeverityDataset } = useSelector(
-    (state) => state.YellowSubHydroData
+    (state: any) => state.YellowSubHydroData
   );
 
   useEffect(() => {
-    const countyDataset = floodSeverityDataset.filter((data) => {
+    // TODO: define data instead of <any>
+    const countyDataset = floodSeverityDataset.filter((data: any) => {
       console.log(params.county);
       if (data.label == params.county) {
         console.log(data);
@@ -36,7 +42,9 @@ function YellowSubHydroMap(props) {
       }
     });
     const recent_floodAreaIDs = countyDataset[0].recent_floodDataIDs;
-    let temp_store = [];
+    // TODO: define temp_store
+    let temp_store: any[];
+    temp_store = [];
 
     if (recent_floodAreaIDs == null) {
     } else {
@@ -89,7 +97,8 @@ function YellowSubHydroMap(props) {
           mapStyle="mapbox://styles/mapbox/streets-v9"
           mapboxAccessToken={api_key}
         >
-          {storeGeoJSON.map((geoJSON) => {
+          {storeGeoJSON.map((geoJSON: any) => {
+            // TODO: define geoJSON instead of any
             return (
               <Source
                 key={geoJSON.key}
@@ -119,7 +128,8 @@ function YellowSubHydroMap(props) {
               </Source>
             );
           })}
-          {storeGeoJSON.map((geoJSON) => {
+          {storeGeoJSON.map((geoJSON: any) => {
+            // TODO: define geoJSON instead of any
             return (
               <Marker
                 longitude={geoJSON.long}

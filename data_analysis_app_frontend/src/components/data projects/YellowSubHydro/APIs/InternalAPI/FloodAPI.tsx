@@ -1,6 +1,8 @@
 import domain from "../../../../../domain";
 
-export async function getFlood(setIsLoading) {
+// TODO: define all the functions and maybe return of the function
+
+export async function getFlood(setIsLoading: any): Promise<any> {
   // Grabs the stored flood data from the INTERNAL API not the url
   setIsLoading(true);
   const response = await fetch(`${domain}/api/flood/`, {
@@ -15,7 +17,10 @@ export async function getFlood(setIsLoading) {
   return data;
 }
 
-export async function postFlood(setIsLoading, gov_flood_data) {
+export async function postFlood(
+  setIsLoading: any,
+  gov_flood_data: any
+): Promise<any> {
   // Post the Gov Flood Data into the INTERNAL API.
   setIsLoading(true);
   const response = await fetch(`${domain}/api/flood/`, {

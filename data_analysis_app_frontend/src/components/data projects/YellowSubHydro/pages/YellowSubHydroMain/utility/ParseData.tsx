@@ -1,13 +1,18 @@
-export function ParseData(data) {
+// TODO: define data
+
+export function ParseData(data: any) {
   // parse the data for now it's on the client side.
+
+  // TODO: define x
   let unique_vals_creation_date = [
-    ...new Set(data.map((x) => x.creation_date)),
+    ...new Set(data.map((x: any) => x.creation_date)),
   ];
-  unique_vals_creation_date.sort((a, b) => {
+  // TODO: define a and b, use date-fns
+  unique_vals_creation_date.sort((a: any, b: any) => {
     // due to the way I formatted time in the backend,
     // I have to use a bit more of a complicated way to sort the data correctly.
     // extract the key informtion and place it into Date then sort it
-    // momentjs dayjs
+
     const aTime = {
       day: a.substr(0, 2),
       month: a.substr(3, 2),
@@ -34,14 +39,16 @@ export function ParseData(data) {
         }:${bTime.minute}`
       )
     );
-    return dateA - dateB;
+    return +dateA - +dateB;
   });
 
-  let unique_vals_counties = [...new Set(data.map((x) => x.county))];
+  // TODO: define x
+  let unique_vals_counties = [...new Set(data.map((x: any) => x.county))];
 
   const entireDataset = [];
   for (const county of unique_vals_counties) {
-    const filtered_county = data.filter((datapoint) => {
+    // TODO: define datapoint
+    const filtered_county = data.filter((datapoint: any) => {
       return datapoint.county == county;
     });
     // initial_data_time are filled with arrays up to the length of creation-date
@@ -72,7 +79,9 @@ export function ParseData(data) {
     if (has_recent_data != null) {
       // grab the recent filtered_county filter.
       recent_floodDataIDs = [];
-      const recent_data = filtered_county.filter((e) => {
+
+      //TODO: define e
+      const recent_data = filtered_county.filter((e: any) => {
         return e.creation_date == recent_time;
       });
 

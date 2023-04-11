@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-function CountyButton(props) {
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
+
+const CountyButton = ({ example }: props) => {
+*/
+
+function CountyButton(props: any) {
   /*
   
   */

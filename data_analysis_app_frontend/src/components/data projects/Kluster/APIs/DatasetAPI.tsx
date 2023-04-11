@@ -1,12 +1,15 @@
+import React from "react";
 import domain from "../../../../domain";
 
+// TODO: define all the functions and maybe return of the function
+
 export async function getAnalysis(
-  setIsLoading,
-  setdataset1Data,
-  setdataset2Data,
-  setdatasetAnalysis1,
-  setdatasetAnalysis2
-) {
+  setIsLoading: any,
+  setdataset1Data: any,
+  setdataset2Data: any,
+  setdatasetAnalysis1: any,
+  setdatasetAnalysis2: any
+): Promise<any> {
   // gets the calculated data and data for each dataset
   setIsLoading(true);
   const Analysisresponse = await fetch(`${domain}/api/datapoint/analysis`, {
@@ -15,6 +18,7 @@ export async function getAnalysis(
       "Content-type": "application/json",
     },
   });
+
   const analysis = await Analysisresponse.json();
 
   setdatasetAnalysis1(analysis.data.dataset_1_analysis);
@@ -27,14 +31,14 @@ export async function getAnalysis(
 }
 
 export async function postRandom(
-  setIsLoading,
-  dataset_id,
-  action_type,
-  setdataset1Data,
-  setdataset2Data,
-  setdatasetAnalysis1,
-  setdatasetAnalysis2
-) {
+  setIsLoading: any,
+  dataset_id: any,
+  action_type: any,
+  setdataset1Data: any,
+  setdataset2Data: any,
+  setdatasetAnalysis1: any,
+  setdatasetAnalysis2: any
+): Promise<any> {
   // Allows functionality for the add 5, delete 5 , bulk delete buttons.
   // by connecting to the Random API
 
@@ -67,7 +71,10 @@ export async function postRandom(
   return analysis;
 }
 
-export async function getDatasetSpecific(setIsLoading, dataset_id) {
+export async function getDatasetSpecific(
+  setIsLoading: any,
+  dataset_id: any
+): Promise<any> {
   // grabs all the data points and gives specific dataset data
   // in the return statement.
   setIsLoading(true);
@@ -83,7 +90,11 @@ export async function getDatasetSpecific(setIsLoading, dataset_id) {
   return data[`dataset_${dataset_id}`];
 }
 
-export async function postDatapoint(setIsLoading, dataset_id, datapoint_val) {
+export async function postDatapoint(
+  setIsLoading: any,
+  dataset_id: any,
+  datapoint_val: any
+): Promise<any> {
   // A new datapoint is created by sending a POST request.
   const response = await fetch(`${domain}/api/datapoint/`, {
     method: "POST",
@@ -101,11 +112,11 @@ export async function postDatapoint(setIsLoading, dataset_id, datapoint_val) {
 }
 
 export async function patchDatapoint(
-  setIsLoading,
-  datapoint_id,
-  dataset_id,
-  datapoint_val
-) {
+  setIsLoading: any,
+  datapoint_id: any,
+  dataset_id: any,
+  datapoint_val: any
+): Promise<any> {
   // A datapoint is edited by sending a patch request with the datapoint id
   const response = await fetch(`${domain}/api/datapoint/${datapoint_id}/`, {
     method: "PATCH",
@@ -122,7 +133,10 @@ export async function patchDatapoint(
   return data;
 }
 
-export async function deleteDatapoint(setIsLoading, datapoint_id) {
+export async function deleteDatapoint(
+  setIsLoading: any,
+  datapoint_id: any
+): Promise<any> {
   // Deletes specific datapoints using the datapoint_id
   const response = await fetch(`${domain}/api/datapoint/${datapoint_id}/`, {
     method: "DELETE",

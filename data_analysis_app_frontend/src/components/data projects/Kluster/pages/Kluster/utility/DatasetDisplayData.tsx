@@ -1,11 +1,21 @@
 import React from "react";
 // do not remove code line 3 or there will be a canvas error.
 import Chart from "chart.js/auto";
+import { CategoryScale } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { Flex, Box, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-function DatasetDisplayData(props) {
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
+
+const DatasetDisplayData = ({ example }: props) => {
+*/
+Chart.register(CategoryScale);
+function DatasetDisplayData(props: any) {
   /*
   This is the component to display data.
   
@@ -20,7 +30,7 @@ function DatasetDisplayData(props) {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "top",
+        position: "top" as const,
       },
       title: {
         display: true,
@@ -46,12 +56,10 @@ function DatasetDisplayData(props) {
               labels: ["Average", "Medium", "Mode"],
               datasets: [
                 {
-                  id: 1,
                   label: "Dataset 1",
                   data: [...props.datasetAnalysis1],
                 },
                 {
-                  id: 2,
                   label: "Dataset 2",
                   data: [...props.datasetAnalysis2],
                 },

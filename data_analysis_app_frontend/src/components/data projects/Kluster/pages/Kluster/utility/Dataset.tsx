@@ -1,8 +1,15 @@
 import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import DatasetButtonGroup from "./DatasetButtonGroup";
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
 
-function Dataset(props) {
+const Dataset = ({ example }: props) => {
+*/
+function Dataset(props: any) {
   /*
     opinion:
     Debating whether it's right to pass data through 3 components.

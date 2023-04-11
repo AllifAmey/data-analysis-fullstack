@@ -4,7 +4,8 @@ import { getAnalysis } from "../../APIs/DatasetAPI";
 import DatasetModal from "./utility/DatasetModal";
 import Dataset from "./utility/Dataset";
 import DatasetDisplayData from "./utility/DatasetDisplayData";
-function Kluster() {
+
+const Kluster = () => {
   /*
     This is the Main page for the Kluster data project.
 
@@ -15,6 +16,7 @@ function Kluster() {
     3. DatasetModal add more specific data to the dataset.
     
     */
+  // TODO: Define the useState like useState<string>
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [datasetDataModalid, setdatasetDataModalid] = useState(false);
@@ -106,6 +108,6 @@ function Kluster() {
       )}
     </>
   );
-}
+};
 
 export default Kluster;

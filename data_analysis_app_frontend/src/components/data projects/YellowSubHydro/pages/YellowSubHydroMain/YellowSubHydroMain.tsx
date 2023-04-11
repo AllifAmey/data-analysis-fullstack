@@ -29,9 +29,10 @@ function YellowSubHydroMain() {
   
   */
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [bottomLabel, setBottomLabel] = useState([]);
-  const [datasets, setDatasets] = useState([]);
+  // TODO: Define the useState instead of <any>
+  const [isLoading, setIsLoading] = useState<any>(false);
+  const [bottomLabel, setBottomLabel] = useState<any>([]);
+  const [datasets, setDatasets] = useState<any>([]);
 
   const dispatch = useDispatch();
 

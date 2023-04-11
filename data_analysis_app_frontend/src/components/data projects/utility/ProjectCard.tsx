@@ -19,22 +19,41 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-function ProjectCard(props) {
+
+type props = {
+  project_type: string;
+  project_title: string;
+  project_description: string;
+  project_image: string;
+  project_url: string;
+  project_has_more_info: boolean;
+  project_technology_info: any;
+};
+
+const ProjectCard = ({
+  project_type,
+  project_title,
+  project_description,
+  project_image,
+  project_url,
+  project_has_more_info,
+  project_technology_info,
+}: props) => {
   /*
   These are cards to display what each project card is.
   This will consist of the follow data:
   
+  project_type - the type of project.
   project_title - title of project
   project_description - brief description of Kluster
   project_image - picture representing the project
   project_url  - the url to the project.
-  project_type - the type of project.
   project_has_more_info - Booleon dictating whether extra info is needed.
   project_technology_info - different technologies uses
   
   */
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
+  const btnRef = useRef<HTMLButtonElement>(null);
   return (
     <>
       <Card
@@ -46,14 +65,14 @@ function ProjectCard(props) {
           objectFit="contain"
           maxW={{ base: "100%", sm: "200px" }}
           h="200px"
-          src={`${props.project_image}`}
+          src={`${project_image}`}
           alt="YellowSubHydro"
         />
 
         <Stack>
           <CardBody>
-            <Heading size="md">{`${props.project_title}`}</Heading>
-            <Text py="2">{`${props.project_description}`}</Text>
+            <Heading size="md">{`${project_title}`}</Heading>
+            <Text py="2">{`${project_description}`}</Text>
           </CardBody>
 
           <CardFooter>
@@ -67,18 +86,18 @@ function ProjectCard(props) {
               <Button
                 variant="solid"
                 colorScheme={
-                  props.project_type === "Fintech" ? "blackAlpha" : "whatsapp"
+                  project_type === "Fintech" ? "blackAlpha" : "whatsapp"
                 }
                 as={RouterLink}
-                to={`/project/${props.project_url}`}
+                to={`/project/${project_url}`}
               >
                 See project
               </Button>
-              {props.project_has_more_info && (
+              {project_has_more_info && (
                 <Button
                   variant="link"
                   colorScheme={
-                    props.project_type === "Fintech" ? "blackAlpha" : "whatsapp"
+                    project_type === "Fintech" ? "blackAlpha" : "whatsapp"
                   }
                   ref={btnRef}
                   onClick={onOpen}
@@ -97,14 +116,14 @@ function ProjectCard(props) {
                   <DrawerCloseButton />
                   <DrawerHeader>Extra info</DrawerHeader>
                   <DrawerBody>
-                    <Heading size="md">{`${props.project_title}`}</Heading>
+                    <Heading size="md">{`${project_title}`}</Heading>
 
-                    <Text py="2">{`${props.project_description}`}</Text>
+                    <Text py="2">{`${project_description}`}</Text>
                     <Heading size="md">Technologies used</Heading>
 
                     <Text py="2">
-                      {props.project_has_more_info
-                        ? props.project_technology_info.join(", ")
+                      {project_has_more_info
+                        ? project_technology_info.join(", ")
                         : ""}
                     </Text>
                   </DrawerBody>
@@ -121,6 +140,6 @@ function ProjectCard(props) {
       </Card>
     </>
   );
-}
+};
 
 export default ProjectCard;

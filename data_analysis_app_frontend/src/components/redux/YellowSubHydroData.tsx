@@ -5,19 +5,19 @@ const initialState = {
   graphBottomlabel: [],
   graphOptions: {},
 };
-
+// TODO: define state instead of any
 export const YellowSubHydroDataSlice = createSlice({
   name: "YellowSubHydroData",
   initialState,
   reducers: {
-    referenceCode: (state) => {
+    referenceCode: (state: any) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.value += 1;
     },
-    placeInfloodSeverityDataset: (state, action) => {
+    placeInfloodSeverityDataset: (state: any, action) => {
       // this just inputs the flood severity dataset into the store
       // the list of data is spread using the spread operator.
       state.floodSeverityDataset = [...action.payload];
@@ -27,7 +27,7 @@ export const YellowSubHydroDataSlice = createSlice({
       // the object data is spread using the spread operator
       state.graphOptions = { ...action.payload };
     },
-    placeInBottomlabel: (state, action) => {
+    placeInBottomlabel: (state: any, action) => {
       // this inputs the options data into the store
       // the object data is spread using the spread operator
       state.graphBottomlabel = [...action.payload];

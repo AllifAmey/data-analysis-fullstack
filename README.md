@@ -77,7 +77,7 @@ go to http://localhost:8000/admin to see backend data
 
 ### Medium priority
 
-- &#9744; Convert the project to TypeScript
+- &#9745; Convert the project to TypeScript
 
 ### Low priority
 

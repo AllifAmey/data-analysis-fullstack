@@ -23,7 +23,16 @@ import {
   deleteDatapoint,
 } from "../../../APIs/DatasetAPI";
 
-function DatasetModal(props) {
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
+
+const DatasetModal = ({ example }: props) => {
+*/
+
+function DatasetModal(props: any) {
   /*
     Modal appears after CRUD button has been pressed.
 
@@ -32,8 +41,10 @@ function DatasetModal(props) {
     Datapoints can also be created.
     
     */
-  const [changeDataPoint, setchangeDataPoint] = useState(null);
-  const [trackInput, setTrackInput] = useState(null);
+
+  // TODO: Define the useState instead of <any>
+  const [changeDataPoint, setchangeDataPoint] = useState<any>(null);
+  const [trackInput, setTrackInput] = useState<any>(null);
 
   return (
     <>
@@ -53,7 +64,11 @@ function DatasetModal(props) {
             <Flex flexDirection="column" gap="1rem">
               {props.modalData == false
                 ? ""
-                : props.modalData.map((datapoint) => {
+                : props.modalData.map((datapoint: any) => {
+                    /*
+                  TODO: define datapoint
+                  */
+
                     // Here is where the ids come along
                     return (
                       <Flex justifyContent="space-evenly" key={datapoint.id}>

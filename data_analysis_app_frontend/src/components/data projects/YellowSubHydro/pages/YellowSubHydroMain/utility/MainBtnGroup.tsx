@@ -2,7 +2,16 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Button } from "@chakra-ui/react";
 
-function MainBtnGroup(props) {
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
+
+const MainBtnGroup = ({ example }: props) => {
+*/
+
+function MainBtnGroup(props: any) {
   /*
   Button group on the main
   

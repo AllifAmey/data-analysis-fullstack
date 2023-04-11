@@ -4,7 +4,16 @@ import { Flex, Button } from "@chakra-ui/react";
 
 import { postRandom, getDatasetSpecific } from "../../../APIs/DatasetAPI";
 
-function DatasetButtonGroup(props) {
+/*
+TODO: define the props 
+type props = {
+  example: string;
+};
+
+const DatasetButtonGroup = ({ example }: props) => {
+*/
+
+function DatasetButtonGroup(props: any) {
   /*
   Group of buttons for each dataset and their intended functionality.
   The props inherits from the dataset props which itself gets its data,
