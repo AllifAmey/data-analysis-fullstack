@@ -2,6 +2,8 @@ import React from "react";
 import ProjectCard from "./utility/ProjectCard";
 import { Flex, Box, Text, Heading } from "@chakra-ui/react";
 
+// ? is optional but when given it has to be as defined.
+
 type ProjectData = {
   project_type: string;
   project_title: string;
@@ -9,7 +11,7 @@ type ProjectData = {
   project_image: string;
   project_url: string;
   project_has_more_info: boolean;
-  project_technology_info: any;
+  project_technology_info?: string[];
 };
 
 const ProjectCardData: ProjectData[] = [
@@ -31,7 +33,6 @@ const ProjectCardData: ProjectData[] = [
       "https://global-uploads.webflow.com/600b54556937c46a1c61ed30/600e06dadeb2b054991710e9_Kluster%20Logo%20Blue%20-%20144-p-500.png",
     project_url: "kluster",
     project_has_more_info: false,
-    project_technology_info: null,
   },
 ];
 
