@@ -1,14 +1,12 @@
 import React from "react";
 import domain from "../../../../domain";
 
-// TODO: define all the functions and maybe return of the function
-
 export async function getAnalysis(
-  setIsLoading: any,
-  setdataset1Data: any,
-  setdataset2Data: any,
-  setdatasetAnalysis1: any,
-  setdatasetAnalysis2: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setdataset1Data: React.Dispatch<React.SetStateAction<number[] | null>>,
+  setdataset2Data: React.Dispatch<React.SetStateAction<number[] | null>>,
+  setdatasetAnalysis1: React.Dispatch<React.SetStateAction<number[] | null>>,
+  setdatasetAnalysis2: React.Dispatch<React.SetStateAction<number[] | null>>
 ): Promise<any> {
   // gets the calculated data and data for each dataset
   setIsLoading(true);
@@ -31,13 +29,13 @@ export async function getAnalysis(
 }
 
 export async function postRandom(
-  setIsLoading: any,
-  dataset_id: any,
-  action_type: any,
-  setdataset1Data: any,
-  setdataset2Data: any,
-  setdatasetAnalysis1: any,
-  setdatasetAnalysis2: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  dataset_id: number,
+  action_type: string,
+  setdataset1Data: React.Dispatch<React.SetStateAction<number[] | null>>,
+  setdataset2Data: React.Dispatch<React.SetStateAction<number[] | null>>,
+  setdatasetAnalysis1: React.Dispatch<React.SetStateAction<number[] | null>>,
+  setdatasetAnalysis2: React.Dispatch<React.SetStateAction<number[] | null>>
 ): Promise<any> {
   // Allows functionality for the add 5, delete 5 , bulk delete buttons.
   // by connecting to the Random API
@@ -72,8 +70,8 @@ export async function postRandom(
 }
 
 export async function getDatasetSpecific(
-  setIsLoading: any,
-  dataset_id: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  dataset_id: number
 ): Promise<any> {
   // grabs all the data points and gives specific dataset data
   // in the return statement.
@@ -87,13 +85,16 @@ export async function getDatasetSpecific(
   const data = await response.json();
 
   setIsLoading(false);
+  // the returned data is {"dataset_1" : number[], "dataset_2": number[]}
+  // That is why data[`dataset_${dataset_id}`] is called ,
+  // to get the specific dataset I want
   return data[`dataset_${dataset_id}`];
 }
 
 export async function postDatapoint(
-  setIsLoading: any,
-  dataset_id: any,
-  datapoint_val: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  dataset_id: number | boolean,
+  datapoint_val: string
 ): Promise<any> {
   // A new datapoint is created by sending a POST request.
   const response = await fetch(`${domain}/api/datapoint/`, {
@@ -112,10 +113,10 @@ export async function postDatapoint(
 }
 
 export async function patchDatapoint(
-  setIsLoading: any,
-  datapoint_id: any,
-  dataset_id: any,
-  datapoint_val: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  datapoint_id: number | undefined,
+  dataset_id: number | undefined,
+  datapoint_val: string
 ): Promise<any> {
   // A datapoint is edited by sending a patch request with the datapoint id
   const response = await fetch(`${domain}/api/datapoint/${datapoint_id}/`, {
@@ -134,8 +135,8 @@ export async function patchDatapoint(
 }
 
 export async function deleteDatapoint(
-  setIsLoading: any,
-  datapoint_id: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  datapoint_id: number
 ): Promise<any> {
   // Deletes specific datapoints using the datapoint_id
   const response = await fetch(`${domain}/api/datapoint/${datapoint_id}/`, {

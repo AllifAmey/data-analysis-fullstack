@@ -4,16 +4,29 @@ import { Flex, Button } from "@chakra-ui/react";
 
 import { postRandom, getDatasetSpecific } from "../../../APIs/DatasetAPI";
 
-/*
-TODO: define the props 
 type props = {
-  example: string;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  datasetNum: number;
+  setdataset1Data: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setdataset2Data: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setdatasetAnalysis1: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setdatasetAnalysis2: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setdatasetDataModalid: React.Dispatch<React.SetStateAction<number | boolean>>;
+  setmodalData: React.Dispatch<React.SetStateAction<number[] | boolean>>;
 };
 
-const DatasetButtonGroup = ({ example }: props) => {
-*/
-
-function DatasetButtonGroup(props: any) {
+const DatasetButtonGroup = ({
+  setIsLoading,
+  setIsOpen,
+  datasetNum,
+  setdataset1Data,
+  setdataset2Data,
+  setdatasetAnalysis1,
+  setdatasetAnalysis2,
+  setdatasetDataModalid,
+  setmodalData,
+}: props) => {
   /*
   Group of buttons for each dataset and their intended functionality.
   The props inherits from the dataset props which itself gets its data,
@@ -29,14 +42,14 @@ function DatasetButtonGroup(props: any) {
           width="70px"
           onClick={() => {
             postRandom(
-              props.setIsLoading,
-              props.datasetNum,
+              setIsLoading,
+              datasetNum,
               "add_5",
-              props.setdataset1Data,
-              props.setdataset2Data,
-              props.setdatasetAnalysis1,
-              props.setdatasetAnalysis2
-            ).then((_) => {});
+              setdataset1Data,
+              setdataset2Data,
+              setdatasetAnalysis1,
+              setdatasetAnalysis2
+            );
           }}
         >
           Add 5
@@ -47,14 +60,14 @@ function DatasetButtonGroup(props: any) {
           width="90px"
           onClick={() => {
             postRandom(
-              props.setIsLoading,
-              props.datasetNum,
+              setIsLoading,
+              datasetNum,
               "delete_5",
-              props.setdataset1Data,
-              props.setdataset2Data,
-              props.setdatasetAnalysis1,
-              props.setdatasetAnalysis2
-            ).then((_) => {});
+              setdataset1Data,
+              setdataset2Data,
+              setdatasetAnalysis1,
+              setdatasetAnalysis2
+            );
           }}
         >
           Delete 5
@@ -65,14 +78,14 @@ function DatasetButtonGroup(props: any) {
           width="110px"
           onClick={() => {
             postRandom(
-              props.setIsLoading,
-              props.datasetNum,
+              setIsLoading,
+              datasetNum,
               "bulk_delete",
-              props.setdataset1Data,
-              props.setdataset2Data,
-              props.setdatasetAnalysis1,
-              props.setdatasetAnalysis2
-            ).then((_) => {});
+              setdataset1Data,
+              setdataset2Data,
+              setdatasetAnalysis1,
+              setdatasetAnalysis2
+            );
           }}
         >
           Bulk Delete
@@ -84,20 +97,18 @@ function DatasetButtonGroup(props: any) {
         width="80px"
         alignSelf="center"
         onClick={() => {
-          getDatasetSpecific(props.setIsLoading, props.datasetNum).then(
-            (data) => {
-              props.setIsOpen(true);
-              props.setdatasetDataModalid(props.datasetNum);
-              props.setmodalData(data);
-              console.log(`data is ${data}`);
-            }
-          );
+          getDatasetSpecific(setIsLoading, datasetNum).then((data) => {
+            setIsOpen(true);
+            setdatasetDataModalid(datasetNum);
+            setmodalData(data);
+            console.log(`data is ${data}`);
+          });
         }}
       >
         CRUD
       </Button>
     </>
   );
-}
+};
 
 export default DatasetButtonGroup;

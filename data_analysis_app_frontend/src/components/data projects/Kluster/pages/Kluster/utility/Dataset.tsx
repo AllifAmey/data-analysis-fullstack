@@ -2,25 +2,8 @@ import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import DatasetButtonGroup from "./DatasetButtonGroup";
 /*
-TODO: define the props 
-type props = {
-  example: string;
-};
 
-const Dataset = ({ example }: props) => {
-*/
-function Dataset(props: any) {
-  /*
-    opinion:
-    Debating whether it's right to pass data through 3 components.
-    Would seperating the component be good long-term if I want to customise,
-    the dataset.
-    
-    future outlook:
-    Think about adding customisation but perhaps implementing a seperate,
-    component later.
-
-    props:
+ props:
     props.datasetNum, - what is the dataset number
     props.dataset1Data = dataset data for data 1
     props.dataset2Data = dataset data for data 2
@@ -31,33 +14,55 @@ function Dataset(props: any) {
     props.setIsOpen(true); - sets whether modal is open
     props.setdatasetDataModalid(props.datasetNum); - sets the dataset id for the modal
     props.setmodalData(data); - sets the modal data.
-    
-    */
+*/
+type props = {
+  datasetNum: number;
+  dataset1Data: number[] | null;
+  dataset2Data: number[] | null;
+  setdataset1Data: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setdataset2Data: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setdatasetAnalysis1: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setdatasetAnalysis2: React.Dispatch<React.SetStateAction<number[] | null>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setdatasetDataModalid: React.Dispatch<React.SetStateAction<number | boolean>>;
+  setmodalData: React.Dispatch<React.SetStateAction<number[] | boolean>>;
+};
+
+const Dataset = ({
+  datasetNum,
+  dataset1Data,
+  dataset2Data,
+  setdataset1Data,
+  setdataset2Data,
+  setdatasetAnalysis1,
+  setdatasetAnalysis2,
+  setIsLoading,
+  setIsOpen,
+  setdatasetDataModalid,
+  setmodalData,
+}: props) => {
   return (
     <>
       <Flex alignSelf="start" flexDirection="column" gap="2rem" flex={1}>
         <Box margin="5rem" display="flex" flexDirection="column" gap="2rem">
-          <div>Sales Dataset {`${props.datasetNum}`}</div>
-          <div>
-            {props.datasetNum === 1
-              ? `${props.dataset1Data}`
-              : `${props.dataset2Data}`}
-          </div>
+          <div>Sales Dataset {`${datasetNum}`}</div>
+          <div>{datasetNum === 1 ? `${dataset1Data}` : `${dataset2Data}`}</div>
         </Box>
         <DatasetButtonGroup
-          setdataset1Data={props.setdataset1Data}
-          setdataset2Data={props.setdataset2Data}
-          setdatasetAnalysis1={props.setdatasetAnalysis1}
-          setdatasetAnalysis2={props.setdatasetAnalysis2}
-          setIsOpen={props.setIsOpen}
-          setdatasetDataModalid={props.setdatasetDataModalid}
-          setmodalData={props.setmodalData}
-          setIsLoading={props.setIsLoading}
-          datasetNum={props.datasetNum}
+          setdataset1Data={setdataset1Data}
+          setdataset2Data={setdataset2Data}
+          setdatasetAnalysis1={setdatasetAnalysis1}
+          setdatasetAnalysis2={setdatasetAnalysis2}
+          setIsOpen={setIsOpen}
+          setdatasetDataModalid={setdatasetDataModalid}
+          setmodalData={setmodalData}
+          setIsLoading={setIsLoading}
+          datasetNum={datasetNum}
         />
       </Flex>
     </>
   );
-}
+};
 
 export default Dataset;

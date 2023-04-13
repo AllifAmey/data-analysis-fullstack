@@ -40,6 +40,13 @@ const HomePage = () => {
   /*
   
   // https://nicepage.com/website-design/preview/features-section-1770415?device=desktop
+
+  Coding philosophy reminder:
+
+  Explicit over implicit . 
+
+  https://stackoverflow.com/questions/65993004/how-to-use-usestate-hook-in-react-with-typescript-correctly
+  
   
   */
   const FintechProjects = ProjectCardData.filter((project) => {

@@ -16,15 +16,16 @@ const Kluster = () => {
     3. DatasetModal add more specific data to the dataset.
     
     */
-  // TODO: Define the useState like useState<string>
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [datasetDataModalid, setdatasetDataModalid] = useState(false);
-  const [modalData, setmodalData] = useState(false);
-  const [dataset1Data, setdataset1Data] = useState([]);
-  const [dataset2Data, setdataset2Data] = useState([]);
-  const [datasetAnalysis1, setdatasetAnalysis1] = useState([]);
-  const [datasetAnalysis2, setdatasetAnalysis2] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [datasetDataModalid, setdatasetDataModalid] = useState<
+    number | boolean
+  >(false);
+  const [modalData, setmodalData] = useState<number[] | boolean>(false);
+  const [dataset1Data, setdataset1Data] = useState<number[] | null>([]);
+  const [dataset2Data, setdataset2Data] = useState<number[] | null>([]);
+  const [datasetAnalysis1, setdatasetAnalysis1] = useState<number[] | null>([]);
+  const [datasetAnalysis2, setdatasetAnalysis2] = useState<number[] | null>([]);
 
   useEffect(() => {
     getAnalysis(
@@ -33,9 +34,7 @@ const Kluster = () => {
       setdataset2Data,
       setdatasetAnalysis1,
       setdatasetAnalysis2
-    ).then((analysis) => {
-      console.log(analysis);
-    });
+    );
   }, []);
 
   function onClose() {
@@ -45,8 +44,7 @@ const Kluster = () => {
       setdataset2Data,
       setdatasetAnalysis1,
       setdatasetAnalysis2
-    ).then((analysis) => {
-      console.log(analysis);
+    ).then((_) => {
       setIsOpen(false);
     });
   }
@@ -68,6 +66,7 @@ const Kluster = () => {
             <Dataset
               datasetNum={1}
               dataset1Data={dataset1Data}
+              dataset2Data={dataset2Data}
               setdataset1Data={setdataset1Data}
               setdataset2Data={setdataset2Data}
               setdatasetAnalysis1={setdatasetAnalysis1}

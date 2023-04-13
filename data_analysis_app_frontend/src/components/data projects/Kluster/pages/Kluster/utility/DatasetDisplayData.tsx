@@ -6,16 +6,13 @@ import { Bar } from "react-chartjs-2";
 import { Flex, Box, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-/*
-TODO: define the props 
+Chart.register(CategoryScale);
 type props = {
-  example: string;
+  datasetAnalysis1: any;
+  datasetAnalysis2: any;
 };
 
-const DatasetDisplayData = ({ example }: props) => {
-*/
-Chart.register(CategoryScale);
-function DatasetDisplayData(props: any) {
+const DatasetDisplayData = ({ datasetAnalysis1, datasetAnalysis2 }: props) => {
   /*
   This is the component to display data.
   
@@ -57,11 +54,11 @@ function DatasetDisplayData(props: any) {
               datasets: [
                 {
                   label: "Dataset 1",
-                  data: [...props.datasetAnalysis1],
+                  data: [...datasetAnalysis1],
                 },
                 {
                   label: "Dataset 2",
-                  data: [...props.datasetAnalysis2],
+                  data: [...datasetAnalysis2],
                 },
               ],
             }}
@@ -91,6 +88,6 @@ function DatasetDisplayData(props: any) {
       </Flex>
     </>
   );
-}
+};
 
 export default DatasetDisplayData;

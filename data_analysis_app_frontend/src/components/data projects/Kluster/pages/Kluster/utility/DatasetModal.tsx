@@ -23,16 +23,23 @@ import {
   deleteDatapoint,
 } from "../../../APIs/DatasetAPI";
 
-/*
-TODO: define the props 
 type props = {
-  example: string;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  modalData: any;
+  setmodalData: React.Dispatch<React.SetStateAction<boolean | number[]>>;
+  datasetDataModalid: number | boolean;
+  onClose: Function;
 };
 
-const DatasetModal = ({ example }: props) => {
-*/
-
-function DatasetModal(props: any) {
+const DatasetModal = ({
+  setIsLoading,
+  isOpen,
+  modalData,
+  setmodalData,
+  datasetDataModalid,
+  onClose,
+}: props) => {
   /*
     Modal appears after CRUD button has been pressed.
 
@@ -42,33 +49,41 @@ function DatasetModal(props: any) {
     
     */
 
-  // TODO: Define the useState instead of <any>
-  const [changeDataPoint, setchangeDataPoint] = useState<any>(null);
-  const [trackInput, setTrackInput] = useState<any>(null);
+  type datapoint = {
+    id: number;
+    dataset: number;
+    data: number;
+  };
+  type changeDataPointTypes = {
+    id?: number;
+    dataset?: number;
+    data?: number;
+    create_new_datapoint?: boolean;
+  };
+
+  const [changeDataPoint, setchangeDataPoint] =
+    useState<changeDataPointTypes | null>(null);
+  const [trackInput, setTrackInput] = useState<string | null>(null);
 
   return (
     <>
       <Modal
-        isOpen={props.isOpen}
+        isOpen={isOpen}
         onClose={() => {
-          props.onClose();
+          onClose();
         }}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center">
-            Dataset Data: {props.datasetDataModalid}
+            Dataset Data: {datasetDataModalid}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex flexDirection="column" gap="1rem">
-              {props.modalData == false
+              {modalData == false
                 ? ""
-                : props.modalData.map((datapoint: any) => {
-                    /*
-                  TODO: define datapoint
-                  */
-
+                : modalData.map((datapoint: datapoint) => {
                     // Here is where the ids come along
                     return (
                       <Flex justifyContent="space-evenly" key={datapoint.id}>
@@ -83,6 +98,8 @@ function DatasetModal(props: any) {
                           <GoTools
                             color="green"
                             onClick={() => {
+                              console.log("this is datapoint");
+                              console.log(datapoint);
                               setchangeDataPoint(datapoint);
                             }}
                           />
@@ -97,18 +114,17 @@ function DatasetModal(props: any) {
                           <GoTrashcan
                             color="red"
                             onClick={() => {
-                              deleteDatapoint(
-                                props.setIsLoading,
-                                datapoint.id
-                              ).then((res) => {
-                                console.log(res);
-                                let currentData = [...props.modalData];
-                                const dataIndex = currentData.findIndex(
-                                  (e) => e.id == datapoint.id
-                                );
-                                currentData.splice(dataIndex, 1);
-                                props.setmodalData([...currentData]);
-                              });
+                              deleteDatapoint(setIsLoading, datapoint.id).then(
+                                (res) => {
+                                  console.log(res);
+                                  let currentData = [...modalData];
+                                  const dataIndex = currentData.findIndex(
+                                    (e) => e.id == datapoint.id
+                                  );
+                                  currentData.splice(dataIndex, 1);
+                                  setmodalData([...currentData]);
+                                }
+                              );
                             }}
                           />
                         </Flex>
@@ -126,7 +142,7 @@ function DatasetModal(props: any) {
               {changeDataPoint !== null && (
                 <NumberInput defaultValue={"empty"}>
                   <NumberInputField
-                    onChange={(event) => {
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                       setTrackInput(event.target.value);
                     }}
                   />
@@ -163,18 +179,18 @@ function DatasetModal(props: any) {
                     ) {
                       //patch datapoint
                       patchDatapoint(
-                        props.setIsLoading,
+                        setIsLoading,
                         changeDataPoint.id,
                         changeDataPoint.dataset,
                         trackInput
                       ).then((res) => {
                         console.log(res);
-                        let currentData = [...props.modalData];
+                        let currentData = [...modalData];
                         const dataIndex = currentData.findIndex(
                           (e) => e.id == changeDataPoint.id
                         );
                         currentData[dataIndex].data = trackInput;
-                        props.setmodalData([...currentData]);
+                        setmodalData([...currentData]);
                         setchangeDataPoint(null);
                         setTrackInput(null);
                       });
@@ -184,14 +200,14 @@ function DatasetModal(props: any) {
                       changeDataPoint.create_new_datapoint === true
                     ) {
                       postDatapoint(
-                        props.setIsLoading,
-                        props.datasetDataModalid,
+                        setIsLoading,
+                        datasetDataModalid,
                         trackInput
                       ).then((res) => {
-                        let currentData = [...props.modalData];
+                        let currentData = [...modalData];
                         console.log(res);
                         currentData.push(res);
-                        props.setmodalData([...currentData]);
+                        setmodalData([...currentData]);
                         setchangeDataPoint(null);
                         setTrackInput(null);
                       });
@@ -231,7 +247,7 @@ function DatasetModal(props: any) {
                 colorScheme="blue"
                 mr={3}
                 onClick={() => {
-                  props.onClose();
+                  onClose();
                 }}
               >
                 Close
@@ -242,6 +258,6 @@ function DatasetModal(props: any) {
       </Modal>
     </>
   );
-}
+};
 
 export default DatasetModal;
