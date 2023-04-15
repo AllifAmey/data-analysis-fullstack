@@ -12,74 +12,100 @@ import mapboxgl from "mapbox-gl";
 
 //mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-// TODO: define props
+type props = {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-function YellowSubHydroMap(props: any) {
+type floodSeverityDatasetTypes = {
+  recent_floodDataIDs: string[] | null;
+  label: string;
+  data: (number | null)[];
+  borderColor: string;
+  backgroundColor: string;
+};
+type initialStateType = {
+  floodSeverityDataset: floodSeverityDatasetTypes[];
+  graphBottomlabel: string[];
+  graphOptions: any;
+};
+type stateType = {
+  YellowSubHydroData: initialStateType;
+};
+// note on type decision coordinate is unpredictable
+// everything else is predictable.
+type geoJsonType = {
+  key: string;
+  type: "Polygon" | "MultiPolygon";
+  coordinates: any;
+  lat: number;
+  long: number;
+};
+
+type initialCoordinateType = {
+  lat: number;
+  long: number;
+};
+
+const YellowSubHydroMap = ({ setIsLoading }: props) => {
   /*
     flood severity level displayed on a map and marking different locations,
     of the areas with flood severity.
     */
-  // TODO: define state instead of <any>
-  const [storeGeoJSON, setStoreGeoJSON] = useState<any>(null);
-  const [initialViewState, setInitialViewState] = useState<any>(null);
+  const [storeGeoJSON, setStoreGeoJSON] = useState<geoJsonType[] | null>(null);
+  const [initialViewState, setInitialViewState] =
+    useState<initialCoordinateType | null>(null);
 
   const params = useParams();
   const api_key = import.meta.env.VITE_MAPBOX_API_KEY;
 
-  // TODO: define state instead of <any>
-
   const { floodSeverityDataset } = useSelector(
-    (state: any) => state.YellowSubHydroData
+    (state: stateType) => state.YellowSubHydroData
   );
 
   useEffect(() => {
-    // TODO: define data instead of <any>
-    const countyDataset = floodSeverityDataset.filter((data: any) => {
-      console.log(params.county);
-      if (data.label == params.county) {
-        console.log(data);
-        return true;
+    const countyDataset = floodSeverityDataset.filter(
+      (data: floodSeverityDatasetTypes) => {
+        if (data.label == params.county) {
+          return true;
+        }
       }
-    });
+    );
     const recent_floodAreaIDs = countyDataset[0].recent_floodDataIDs;
-    // TODO: define temp_store
-    let temp_store: any[];
+
+    let temp_store: geoJsonType[];
     temp_store = [];
 
     if (recent_floodAreaIDs == null) {
     } else {
       for (const floodDataID of recent_floodAreaIDs) {
-        getGovFloodAreaPolygons(props.setIsLoading, floodDataID).then(
-          (data) => {
-            const polygonType = data.features[0].geometry.type;
-            const polygonCoordinates = data.features[0].geometry.coordinates;
-            let polygonStore = undefined;
-            if (polygonType == "MultiPolygon") {
-              polygonStore = polygonCoordinates[0][0];
-            } else if (polygonType == "Polygon") {
-              polygonStore = polygonCoordinates[0];
-            }
-
-            temp_store.push({
-              key: temp_store.length.toString(),
-              type: polygonType,
-              coordinates: polygonCoordinates,
-              lat: polygonStore[0][1],
-              long: polygonStore[0][0],
-            });
-
-            setInitialViewState({
-              lat: polygonStore[0][1],
-              long: polygonStore[0][0],
-            });
+        getGovFloodAreaPolygons(setIsLoading, floodDataID).then((data) => {
+          const polygonType = data.features[0].geometry.type;
+          const polygonCoordinates = data.features[0].geometry.coordinates;
+          let polygonStore = undefined;
+          if (polygonType == "MultiPolygon") {
+            polygonStore = polygonCoordinates[0][0];
+          } else if (polygonType == "Polygon") {
+            polygonStore = polygonCoordinates[0];
           }
-        );
+
+          temp_store.push({
+            key: temp_store.length.toString(),
+            type: polygonType,
+            coordinates: polygonCoordinates,
+            lat: polygonStore[0][1],
+            long: polygonStore[0][0],
+          });
+
+          setInitialViewState({
+            lat: polygonStore[0][1],
+            long: polygonStore[0][0],
+          });
+        });
       }
     }
-
     setStoreGeoJSON(temp_store);
-    props.setIsLoading(false);
-  }, [floodSeverityDataset, props, params.county]);
+    setIsLoading(false);
+  }, [floodSeverityDataset, setIsLoading, params.county]);
   /*
   
   
@@ -97,8 +123,7 @@ function YellowSubHydroMap(props: any) {
           mapStyle="mapbox://styles/mapbox/streets-v9"
           mapboxAccessToken={api_key}
         >
-          {storeGeoJSON.map((geoJSON: any) => {
-            // TODO: define geoJSON instead of any
+          {storeGeoJSON.map((geoJSON: geoJsonType) => {
             return (
               <Source
                 key={geoJSON.key}
@@ -128,10 +153,10 @@ function YellowSubHydroMap(props: any) {
               </Source>
             );
           })}
-          {storeGeoJSON.map((geoJSON: any) => {
-            // TODO: define geoJSON instead of any
+          {storeGeoJSON.map((geoJSON: geoJsonType) => {
             return (
               <Marker
+                key={geoJSON.key}
                 longitude={geoJSON.long}
                 latitude={geoJSON.lat}
                 color="red"
@@ -142,6 +167,6 @@ function YellowSubHydroMap(props: any) {
       )}
     </>
   );
-}
+};
 
 export default YellowSubHydroMap;

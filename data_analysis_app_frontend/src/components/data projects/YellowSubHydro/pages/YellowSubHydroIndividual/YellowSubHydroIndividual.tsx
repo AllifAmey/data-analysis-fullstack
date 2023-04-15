@@ -32,7 +32,7 @@ const YellowSubHydroIndividual = () => {
   const [dataset, setDataset] = useState<floodSeverityDatasetTypes[] | null>(
     null
   );
-  const [IsLoading, setIsLoading] = useState(true);
+  const [IsLoading, setIsLoading] = useState<boolean>(true);
 
   const params = useParams();
 
@@ -42,8 +42,6 @@ const YellowSubHydroIndividual = () => {
 
   const countyDataset = floodSeverityDataset.filter(
     (data: floodSeverityDatasetTypes) => {
-      console.log("county dataset is ");
-      console.log(data);
       if (data.label == params.county) {
         return true;
       }
