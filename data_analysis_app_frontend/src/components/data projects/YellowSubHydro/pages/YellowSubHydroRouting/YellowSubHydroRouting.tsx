@@ -4,16 +4,7 @@ import CountyButton from "./utility/CountyButton";
 import { Flex, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-/*
-TODO: define the props 
-type props = {
-  example: string;
-};
-
-const YellowSubHydroRouting = ({ example }: props) => {
-*/
-
-function YellowSubHydroRouting(props: any) {
+const YellowSubHydroRouting = () => {
   /*
   
   This page will be about plotting the data on a graph individually for each county. 
@@ -24,10 +15,25 @@ function YellowSubHydroRouting(props: any) {
 
   */
 
-  // TODO: define state instead of any
-  const { floodSeverityDataset } = useSelector(
-    (state: any) => state.YellowSubHydroData
-  );
+  // TODO: the 2 types below (not third ) are repeated turn it into a model
+  type floodSeverityDatasetTypes = {
+    recent_floodDataIDs: string[] | null;
+    label: string;
+    data: (number | null)[];
+    borderColor: string;
+    backgroundColor: string;
+  };
+  type initialStateType = {
+    floodSeverityDataset: floodSeverityDatasetTypes[];
+    graphBottomlabel: string[];
+    graphOptions: any;
+  };
+  type stateType = {
+    YellowSubHydroData: initialStateType;
+  };
+  const { floodSeverityDataset } = useSelector((state: stateType) => {
+    return state.YellowSubHydroData;
+  });
 
   const mainFlexContainerStyles = {
     justifyContent: "space-evenly",
@@ -40,22 +46,24 @@ function YellowSubHydroRouting(props: any) {
     gap: 4,
     justifyContent: "space-evenly",
   };
-  // TODO: define data instead of any
-  const recent_datasets = floodSeverityDataset.filter((data: any) => {
-    if (data.data[data.data.length - 1] == null) {
-      return false;
-    } else {
-      return true;
+  const recent_datasets = floodSeverityDataset.filter(
+    (data: floodSeverityDatasetTypes) => {
+      if (data.data[data.data.length - 1] == null) {
+        return false;
+      } else {
+        return true;
+      }
     }
-  });
-  // TODO: define data instead of any
-  const no_recent_datasets = floodSeverityDataset.filter((data: any) => {
-    if (data.data[data.data.length - 1] == null) {
-      return true;
-    } else {
-      return false;
+  );
+  const no_recent_datasets = floodSeverityDataset.filter(
+    (data: floodSeverityDatasetTypes) => {
+      if (data.data[data.data.length - 1] == null) {
+        return true;
+      } else {
+        return false;
+      }
     }
-  });
+  );
 
   return (
     <>
@@ -68,8 +76,7 @@ function YellowSubHydroRouting(props: any) {
         <Flex sx={mainFlexContainerStyles} width="90vw">
           <Flex sx={sideFlexContainerStyles}>
             <div>Recent Data</div>
-            {recent_datasets.map((data: any) => {
-              // TODO: define data instead of any
+            {recent_datasets.map((data: floodSeverityDatasetTypes) => {
               return (
                 <CountyButton
                   county={data.label}
@@ -85,8 +92,7 @@ function YellowSubHydroRouting(props: any) {
           </Flex>
           <Flex sx={sideFlexContainerStyles}>
             <div>Historic Data</div>
-            {no_recent_datasets.map((data: any) => {
-              // TODO: define data instead of any
+            {no_recent_datasets.map((data: floodSeverityDatasetTypes) => {
               return (
                 <CountyButton
                   county={data.label}
@@ -116,6 +122,6 @@ function YellowSubHydroRouting(props: any) {
       </Flex>
     </>
   );
-}
+};
 
 export default YellowSubHydroRouting;

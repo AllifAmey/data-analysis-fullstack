@@ -1,6 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+type floodSeverityDatasetTypes = {
+  recent_floodDataIDs: string[] | null;
+  label: string;
+  data: (number | null)[];
+  borderColor: string;
+  backgroundColor: string;
+};
+
+// note on type decision:
+// I put graphOptions to any as I can't control future Chartjs requirements.
+type initialStateType = {
+  floodSeverityDataset: floodSeverityDatasetTypes[];
+  graphBottomlabel: string[];
+  graphOptions: any;
+};
+
+const initialState: initialStateType = {
   floodSeverityDataset: [],
   graphBottomlabel: [],
   graphOptions: {},

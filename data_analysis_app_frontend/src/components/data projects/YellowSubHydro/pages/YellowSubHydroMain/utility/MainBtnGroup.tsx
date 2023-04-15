@@ -11,7 +11,11 @@ type props = {
 const MainBtnGroup = ({ example }: props) => {
 */
 
-function MainBtnGroup(props: any) {
+type props = {
+  inputGovData: () => void;
+};
+
+const MainBtnGroup = ({ inputGovData }: props) => {
   /*
   Button group on the main
   
@@ -35,7 +39,7 @@ function MainBtnGroup(props: any) {
       <Button
         colorScheme="green"
         onClick={() => {
-          props.inputGovData();
+          inputGovData();
         }}
         sx={btnStyles}
       >
@@ -43,6 +47,6 @@ function MainBtnGroup(props: any) {
       </Button>
     </>
   );
-}
+};
 
 export default MainBtnGroup;

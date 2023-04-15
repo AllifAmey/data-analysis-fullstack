@@ -43,7 +43,7 @@ const YellowSubHydroMain = () => {
 
   const dispatch = useDispatch();
 
-  function inputGovData() {
+  function inputGovData(): void {
     getGovFlood(setIsLoading).then((data) => {
       interface PostFloodData {
         floodAreaID: string;
