@@ -1,8 +1,20 @@
 import domain from "../../../../../domain";
 
-// TODO: define all the functions and maybe return of the function
+// PostFloodData is repeated add to models
+interface PostFloodData {
+  floodAreaID: string;
+  county: string;
+  flood_severity_lvl: number;
+}
 
-export async function getFlood(setIsLoading: any): Promise<any> {
+interface internalFloodData extends PostFloodData {
+  id: number;
+  creation_date: string;
+}
+
+export async function getFlood(
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+): Promise<internalFloodData[]> {
   // Grabs the stored flood data from the INTERNAL API not the url
   setIsLoading(true);
   const response = await fetch(`${domain}/api/flood/`, {
@@ -11,16 +23,16 @@ export async function getFlood(setIsLoading: any): Promise<any> {
       "Content-type": "application/json",
     },
   });
-  const data = await response.json();
+  const data: internalFloodData[] = await response.json();
 
   setIsLoading(false);
   return data;
 }
 
 export async function postFlood(
-  setIsLoading: any,
-  gov_flood_data: any
-): Promise<any> {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  gov_flood_data: PostFloodData[]
+): Promise<void> {
   // Post the Gov Flood Data into the INTERNAL API.
   setIsLoading(true);
   const response = await fetch(`${domain}/api/flood/`, {
@@ -32,6 +44,4 @@ export async function postFlood(
   });
   const data = await response.json();
   setIsLoading(false);
-
-  return data;
 }

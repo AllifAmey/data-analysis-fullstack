@@ -15,7 +15,15 @@ import { ParseData } from "./utility/ParseData";
 import { getFlood, postFlood } from "../../APIs/InternalAPI/FloodAPI";
 import { getGovFlood } from "../../APIs/ExternalAPI/GovFloodAPI";
 
-function YellowSubHydroMain() {
+type dataset = {
+  recent_floodDataIDs: any[] | null;
+  label: string;
+  data: any[];
+  borderColor: string;
+  backgroundColor: string;
+};
+
+const YellowSubHydroMain = () => {
   /*
   The way this is going to work:
   https://environment.data.gov.uk/flood-monitoring/doc/reference to get the docs
@@ -25,20 +33,25 @@ function YellowSubHydroMain() {
 
   The goal here is to track severity levels across different parts of the country - 
   this will allow the government or other planners to know when to evacuate people,
-  in the event of severe floading as they can easily see it on 
+  in the event of severe floading as they can easily see it on the map.
   
   */
 
-  // TODO: Define the useState instead of <any>
-  const [isLoading, setIsLoading] = useState<any>(false);
-  const [bottomLabel, setBottomLabel] = useState<any>([]);
-  const [datasets, setDatasets] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [bottomLabel, setBottomLabel] = useState<string[]>([]);
+  const [datasets, setDatasets] = useState<dataset[]>([]);
 
   const dispatch = useDispatch();
 
   function inputGovData() {
     getGovFlood(setIsLoading).then((data) => {
-      let process_data = [];
+      interface PostFloodData {
+        floodAreaID: string;
+        county: string;
+        flood_severity_lvl: number;
+      }
+      let process_data: PostFloodData[] = [];
+
       for (const item of data.items) {
         process_data.push({
           floodAreaID: item.floodAreaID,
@@ -46,7 +59,7 @@ function YellowSubHydroMain() {
           flood_severity_lvl: item.severityLevel,
         });
       }
-      postFlood(setIsLoading, process_data).then((_) => {
+      postFlood(setIsLoading, process_data).then(() => {
         getFlood(setIsLoading).then((data) => {
           const [unique_vals_creation_date, entireDataset] = ParseData(data);
           setDatasets(entireDataset);
@@ -148,6 +161,6 @@ function YellowSubHydroMain() {
       )}
     </>
   );
-}
+};
 
 export default YellowSubHydroMain;

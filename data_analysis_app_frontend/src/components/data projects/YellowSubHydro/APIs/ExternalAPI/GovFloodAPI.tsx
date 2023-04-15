@@ -1,6 +1,12 @@
-// TODO: define all the functions and maybe return of the function
+import React from "react";
 
-export async function getGovFlood(setIsLoading: any): Promise<any> {
+// note on types decision:
+// I have absolutely no control over external api so can't guarantee,
+// the data structure. Typescript will have no choice but to infer.
+
+export async function getGovFlood(
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+): Promise<any> {
   // Grabs the GovFloodData
   setIsLoading(true);
   const response = await fetch(
@@ -19,8 +25,8 @@ export async function getGovFlood(setIsLoading: any): Promise<any> {
 }
 // `http://environment.data.gov.uk/flood-monitoring/id/floodAreas/${floodAreaID}`
 export async function getGovFloodArea(
-  setIsLoading: any,
-  floodAreaID: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  floodAreaID: string
 ): Promise<any> {
   // Grabs the GovFloodData using the flood id
   setIsLoading(true);
@@ -38,8 +44,8 @@ export async function getGovFloodArea(
 }
 
 export async function getGovFloodAreaPolygons(
-  setIsLoading: any,
-  floodAreaID: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  floodAreaID: string
 ): Promise<any> {
   // Grabs the GovFloodData using the flood id
   setIsLoading(true);

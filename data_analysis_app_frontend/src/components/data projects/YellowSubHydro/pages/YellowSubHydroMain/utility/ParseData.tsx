@@ -1,12 +1,25 @@
-// TODO: define data
+// TODO: seperate this into models it's repeated.
+type dataset = {
+  recent_floodDataIDs: string[] | null;
+  label: string;
+  data: any[];
+  borderColor: string;
+  backgroundColor: string;
+};
+// TODO: seperate this into models it's repeated.
+interface internalFloodData {
+  id: number;
+  floodAreaID: string;
+  county: string;
+  flood_severity_lvl: number;
+  creation_date: string;
+}
 
-export function ParseData(data: any) {
+export function ParseData(data: internalFloodData[]): [string[], dataset[]] {
   // parse the data for now it's on the client side.
-
-  // TODO: define x
-  let unique_vals_creation_date = [
-    ...new Set(data.map((x: any) => x.creation_date)),
-  ];
+  const unique_vals_creation_date: string[] = Array.from(
+    new Set(data.map((x: internalFloodData) => x.creation_date))
+  );
   // TODO: define a and b, use date-fns
   unique_vals_creation_date.sort((a: any, b: any) => {
     // due to the way I formatted time in the backend,
@@ -42,13 +55,14 @@ export function ParseData(data: any) {
     return +dateA - +dateB;
   });
 
-  // TODO: define x
-  let unique_vals_counties = [...new Set(data.map((x: any) => x.county))];
+  let unique_vals_counties: string[];
+  unique_vals_counties = Array.from(
+    new Set(data.map((x: internalFloodData) => x.county))
+  );
 
-  const entireDataset = [];
+  const entireDataset: dataset[] = [];
   for (const county of unique_vals_counties) {
-    // TODO: define datapoint
-    const filtered_county = data.filter((datapoint: any) => {
+    const filtered_county = data.filter((datapoint: internalFloodData) => {
       return datapoint.county == county;
     });
     // initial_data_time are filled with arrays up to the length of creation-date
@@ -80,8 +94,7 @@ export function ParseData(data: any) {
       // grab the recent filtered_county filter.
       recent_floodDataIDs = [];
 
-      //TODO: define e
-      const recent_data = filtered_county.filter((e: any) => {
+      const recent_data = filtered_county.filter((e: internalFloodData) => {
         return e.creation_date == recent_time;
       });
 

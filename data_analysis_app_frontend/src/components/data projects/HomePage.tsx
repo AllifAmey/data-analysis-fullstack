@@ -47,6 +47,30 @@ const HomePage = () => {
 
   https://stackoverflow.com/questions/65993004/how-to-use-usestate-hook-in-react-with-typescript-correctly
   
+  Design change - 
+
+  I envision using tabs example code -
+
+    <Tabs variant='unstyled'>
+    <TabList>
+      <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Tab 1</Tab>
+      <Tab _selected={{ color: 'white', bg: 'green.400' }}>Tab 2</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel>
+        <p>one!</p>
+      </TabPanel>
+      <TabPanel>
+        <p>two!</p>
+      </TabPanel>
+    </TabPanels>
+  </Tabs>
+
+  Greentech and fintech. Make things more stylist and orderly. This should do.
+
+  take inspiration from and mimic design closely:
+  https://yellowsubhydro.com/wp-content/uploads/2023/02/Screenshot-2023-02-03-at-15.10.03-1536x891.png
+  use fontawesome for the tabs
   
   */
   const FintechProjects = ProjectCardData.filter((project) => {
