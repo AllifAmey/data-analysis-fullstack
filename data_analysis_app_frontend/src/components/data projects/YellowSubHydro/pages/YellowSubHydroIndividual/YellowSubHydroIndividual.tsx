@@ -8,37 +8,57 @@ import CustomLineGraph from "../../../VisualizationTools/CustomLineGraph";
 
 import YellowSubHydroMap from "./utility/YellowSubHydroMap";
 
-function YellowSubHydroIndividual() {
+const YellowSubHydroIndividual = () => {
   /*
   Individual display of the flood severity data.
   */
 
-  const [dataset, setDataset] = useState(null);
+  type floodSeverityDatasetTypes = {
+    recent_floodDataIDs: string[] | null;
+    label: string;
+    data: (number | null)[];
+    borderColor: string;
+    backgroundColor: string;
+  };
+  type initialStateType = {
+    floodSeverityDataset: floodSeverityDatasetTypes[];
+    graphBottomlabel: string[];
+    graphOptions: any;
+  };
+  type stateType = {
+    YellowSubHydroData: initialStateType;
+  };
+
+  const [dataset, setDataset] = useState<floodSeverityDatasetTypes[] | null>(
+    null
+  );
   const [IsLoading, setIsLoading] = useState(true);
 
   const params = useParams();
 
-  // TODO: define state instead of any
   const { floodSeverityDataset, graphOptions, graphBottomlabel } = useSelector(
-    (state: any) => state.YellowSubHydroData
+    (state: stateType) => state.YellowSubHydroData
   );
-  // TODO: define data instead of any
-  const countyDataset = floodSeverityDataset.filter((data: any) => {
-    console.log(params.county);
-    if (data.label == params.county) {
-      console.log(data);
-      return true;
-    }
-  });
-  const recent_floodAreaIDs = countyDataset[0].recent_floodDataIDs;
 
-  useEffect(() => {
-    // TODO: define data instead of any
-    const countyDataset = floodSeverityDataset.filter((data: any) => {
+  const countyDataset = floodSeverityDataset.filter(
+    (data: floodSeverityDatasetTypes) => {
+      console.log("county dataset is ");
+      console.log(data);
       if (data.label == params.county) {
         return true;
       }
-    });
+    }
+  );
+  const recent_floodAreaIDs = countyDataset[0].recent_floodDataIDs;
+
+  useEffect(() => {
+    const countyDataset = floodSeverityDataset.filter(
+      (data: floodSeverityDatasetTypes) => {
+        if (data.label == params.county) {
+          return true;
+        }
+      }
+    );
     setDataset(countyDataset);
     setIsLoading(false);
   }, []);
@@ -84,6 +104,6 @@ function YellowSubHydroIndividual() {
       )}
     </>
   );
-}
+};
 
 export default YellowSubHydroIndividual;

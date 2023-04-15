@@ -16,6 +16,7 @@ const YellowSubHydroRouting = () => {
   */
 
   // TODO: the 2 types below (not third ) are repeated turn it into a model
+  // TODO: the third type below is repeated turn it into a model
   type floodSeverityDatasetTypes = {
     recent_floodDataIDs: string[] | null;
     label: string;
