@@ -1,5 +1,3 @@
-This will be a full stack application with a backend/data analysis focus.
-
 The frontend will be React and the backend Django Rest Framework.
 
 The aim of this app is to provide different ways to analyise data and making it much ,
@@ -72,16 +70,18 @@ go to http://localhost:8000/admin to see backend data
 - &#9745; Integrate Mapbox into the app for further use.
 - &#9745; Ensure all the components are split as reasonable as possible
 - &#9745; Refactor if needed to allow for long-term maintenance of the code
+- &#9745; Convert the project to TypeScript
+- &#9744; Convert a page from Periscope into frontend code.
 - &#9744; Fix edge case time formatting
 - &#9744; Work on current web design.
 
 ### Medium priority
 
-- &#9745; Convert the project to TypeScript
+- &#9744; Add Hydrology API data
 
 ### Low priority
 
-- &#9744; Add Hydrology API data
+TBA
 
 ## Phase 4 - Understanding web scrapping to grab data for analytics
 
