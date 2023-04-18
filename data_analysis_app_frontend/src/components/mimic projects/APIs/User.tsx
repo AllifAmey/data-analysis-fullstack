@@ -29,7 +29,10 @@ export async function Login(
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   loginDetails: any
 ): Promise<any> {
-  const response = await fetch(`${domain}/api/user/login`, {
+  setIsLoading(true);
+  console.log(loginDetails.email);
+  console.log(loginDetails.pass);
+  const response = await fetch(`${domain}/api/user/login/`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -40,6 +43,6 @@ export async function Login(
     }),
   });
   const data = await response.json();
-
+  setIsLoading(false);
   return data;
 }
