@@ -1,6 +1,7 @@
 import React from "react";
-import ProjectCard from "./utility/ProjectCard";
-import { Flex, Box, Text, Heading } from "@chakra-ui/react";
+import ProjectCard from "./data projects/utility/ProjectCard";
+import { Flex, Box, Text, Heading, Button } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 // ? is optional but when given it has to be as defined.
 
@@ -146,6 +147,14 @@ const HomePage = () => {
               </Flex>
             </Box>
           </Flex>
+          <Button
+            variant="text"
+            colorScheme="cyan"
+            as={RouterLink}
+            to={"/mimics"}
+          >
+            Mimics
+          </Button>
           <Text fontSize="xl" w="350px" textAlign="center">
             Made by Al-lif https://github.com/AllifAmey
           </Text>

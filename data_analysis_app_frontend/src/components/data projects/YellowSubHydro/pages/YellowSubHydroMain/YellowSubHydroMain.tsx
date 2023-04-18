@@ -3,6 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import CustomLineGraph from "../../../VisualizationTools/CustomLineGraph";
 import MainBtnGroup from "./utility/MainBtnGroup";
+import PeriscopeModal from "./utility/PeriscipeModal";
 
 import { useDispatch } from "react-redux";
 import {
@@ -38,10 +39,15 @@ const YellowSubHydroMain = () => {
   */
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [bottomLabel, setBottomLabel] = useState<string[]>([]);
   const [datasets, setDatasets] = useState<dataset[]>([]);
 
   const dispatch = useDispatch();
+
+  function onClose(): void {
+    setIsOpen(false);
+  }
 
   function inputGovData(): void {
     getGovFlood(setIsLoading).then((data) => {
@@ -155,8 +161,9 @@ const YellowSubHydroMain = () => {
           </Text>
           <CustomLineGraph options={options} data={data} />
           <Flex width="100%" justifyContent="space-evenly">
-            <MainBtnGroup inputGovData={inputGovData} />
+            <MainBtnGroup inputGovData={inputGovData} setIsOpen={setIsOpen} />
           </Flex>
+          <PeriscopeModal isOpen={isOpen} onClose={onClose} />
         </Flex>
       )}
     </>

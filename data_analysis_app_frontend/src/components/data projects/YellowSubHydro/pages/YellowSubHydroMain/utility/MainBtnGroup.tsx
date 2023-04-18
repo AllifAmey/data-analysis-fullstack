@@ -12,9 +12,10 @@ const MainBtnGroup = ({ example }: props) => {
 
 type props = {
   inputGovData: () => void;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const MainBtnGroup = ({ inputGovData }: props) => {
+const MainBtnGroup = ({ inputGovData, setIsOpen }: props) => {
   /*
   Button group on the main
   
@@ -26,6 +27,15 @@ const MainBtnGroup = ({ inputGovData }: props) => {
     <>
       <Button colorScheme="green" as={RouterLink} to="/" sx={btnStyles}>
         Back
+      </Button>
+      <Button
+        colorScheme="pink"
+        onClick={() => {
+          setIsOpen(true);
+        }}
+        sx={btnStyles}
+      >
+        Periscope inspiration
       </Button>
       <Button
         colorScheme="green"
