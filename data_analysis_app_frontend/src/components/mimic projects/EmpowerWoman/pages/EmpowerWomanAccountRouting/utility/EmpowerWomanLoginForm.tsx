@@ -69,8 +69,19 @@ const EmpowerWomanLoginForm = () => {
               <Button w="100px" as={RouterLink} to={"/mimics/EmpowerWomanHome"}>
                 Back
               </Button>
-              <Button w="100px" as={RouterLink} to={"/mimics/EmpowerWomanHome"}>
-                Login
+              <Button
+                w="100px"
+                as={RouterLink}
+                to={"/mimics/EmpowerWomanHome/user"}
+              >
+                Login User
+              </Button>
+              <Button
+                w="100px"
+                as={RouterLink}
+                to={"/mimics/EmpowerWomanHome/admin"}
+              >
+                Login Admin
               </Button>
             </Flex>
           </Flex>

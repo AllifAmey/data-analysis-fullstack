@@ -12,8 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-// ? is optional but when given it has to be as defined.
-
 const MimicMain = () => {
   /*
   The purpose of this is to mimic what companies want
