@@ -2,15 +2,27 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import EmpowerWomanSignUpForm from "./utility/EmpowerWomanSignUpForm";
 import EmpowerWomanLoginForm from "./utility/EmpowerWomanLoginForm";
-import EmpowerWomanAdmin from "./utility/EmpowerWomanAdmin";
-import EmpowerWomanUser from "./utility/EmpowerWomanUser";
 
 const EmpowerWomanAccountRouting = () => {
   /*
   
-  
-  */
+  Note for myself:
 
+  1. Users can successfully login including the "admin" (She's not really admin thank fuck).
+  2. The login and Signup pages both work but routing to the next stage is an issue
+  
+  To fix:
+
+  backend and apis associated with that ( check if it's her or not) -
+  Create event model
+  Create event default
+
+  frontend - 
+
+  
+
+
+  */
   //styles
 
   const params = useParams();
@@ -27,22 +39,6 @@ const EmpowerWomanAccountRouting = () => {
     return (
       <>
         <EmpowerWomanSignUpForm />
-      </>
-    );
-  }
-
-  if (params.accessAccount == "admin") {
-    return (
-      <>
-        <EmpowerWomanAdmin />
-      </>
-    );
-  }
-
-  if (params.accessAccount == "user") {
-    return (
-      <>
-        <EmpowerWomanUser />
       </>
     );
   }

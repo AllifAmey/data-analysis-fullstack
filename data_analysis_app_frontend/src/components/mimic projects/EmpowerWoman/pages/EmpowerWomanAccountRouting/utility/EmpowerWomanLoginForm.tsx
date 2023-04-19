@@ -13,7 +13,7 @@ import {
   FormHelperText,
   Spinner,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Login } from "../../../../APIs/User";
 import { GoSmiley } from "react-icons/go";
 
@@ -28,6 +28,8 @@ const EmpowerWomanLoginForm = () => {
     password: "",
   });
   const [isError, setIsError] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   //styles
 
@@ -122,29 +124,31 @@ const EmpowerWomanLoginForm = () => {
                   w="100px"
                   onClick={() => {
                     Login(setIsLoading, loginDetails).then((data) => {
-                      if (data.token === undefined) {
+                      if (
+                        data.token === undefined &&
+                        data.boss_woman === undefined
+                      ) {
                         setIsError(true);
                         setLoginDetails({ email: "", password: "" });
-                      } else {
+                      } else if (data.boss_woman) {
+                        navigate(
+                          `/mimics/EmpowerWomanHome/account/admin/${loginDetails.email}`,
+                          {
+                            replace: true,
+                          }
+                        );
+                      } else if (data.token !== undefined) {
+                        navigate(
+                          `/mimics/EmpowerWomanHome/account/member/${loginDetails.email}`,
+                          {
+                            replace: true,
+                          }
+                        );
                       }
                     });
                   }}
                 >
                   Login
-                </Button>
-                <Button
-                  w="100px"
-                  as={RouterLink}
-                  to={"/mimics/EmpowerWomanHome/user"}
-                >
-                  Login User
-                </Button>
-                <Button
-                  w="100px"
-                  as={RouterLink}
-                  to={"/mimics/EmpowerWomanHome/admin"}
-                >
-                  Login Admin
                 </Button>
               </Flex>
             </Flex>

@@ -13,7 +13,7 @@ import {
   InputGroup,
   Spinner,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { SignUp } from "../../../../APIs/User";
 
 const EmpowerWomanSignUpForm = () => {
@@ -21,6 +21,7 @@ const EmpowerWomanSignUpForm = () => {
   
   
   */
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [NoValidEmail, showNoValidEmail] = useState<boolean>(true);
   const [show, setShow] = React.useState(false);
@@ -30,7 +31,14 @@ const EmpowerWomanSignUpForm = () => {
     pass: "",
     email: "",
   });
+  const [fNameError, setFNameError] = useState<boolean>(false);
+  const [lNameError, setLNameError] = useState<boolean>(false);
+  const [passError, setPassError] = useState<boolean>(false);
+  const [emailEmptyError, setEmailEmptyError] = useState<boolean>(false);
+
   const handleClick = () => setShow(!show);
+
+  const navigate = useNavigate();
 
   //styles
 
@@ -61,10 +69,7 @@ const EmpowerWomanSignUpForm = () => {
             >
               <Heading>Personal Details</Heading>
               <Flex gap="3rem">
-                <FormControl
-                  isRequired
-                  isInvalid={signUpDetails.firstName === ""}
-                >
+                <FormControl isRequired isInvalid={fNameError}>
                   <FormLabel>First name</FormLabel>
                   <Input
                     placeholder="First name"
@@ -76,6 +81,7 @@ const EmpowerWomanSignUpForm = () => {
                         ...signUpDetails,
                         firstName: e.target.value,
                       });
+                      setFNameError(false);
                     }}
                   />
                   {signUpDetails.firstName !== "" ? (
@@ -85,10 +91,7 @@ const EmpowerWomanSignUpForm = () => {
                   )}
                 </FormControl>
 
-                <FormControl
-                  isRequired
-                  isInvalid={signUpDetails.lastName === ""}
-                >
+                <FormControl isRequired isInvalid={lNameError}>
                   <FormLabel>Last name</FormLabel>
                   <Input
                     placeholder="Last name"
@@ -100,6 +103,7 @@ const EmpowerWomanSignUpForm = () => {
                         ...signUpDetails,
                         lastName: e.target.value,
                       });
+                      setLNameError(false);
                     }}
                   />
                   {signUpDetails.lastName !== "" ? (
@@ -110,11 +114,7 @@ const EmpowerWomanSignUpForm = () => {
                 </FormControl>
               </Flex>
               <Flex gap="2rem">
-                <FormControl
-                  isRequired
-                  w="500px"
-                  isInvalid={signUpDetails.email === "" || !NoValidEmail}
-                >
+                <FormControl isRequired w="500px" isInvalid={!NoValidEmail}>
                   <FormLabel>Email</FormLabel>
                   <Input
                     placeholder="Email"
@@ -149,11 +149,7 @@ const EmpowerWomanSignUpForm = () => {
                 </FormControl>
               </Flex>
               <Flex gap="2rem">
-                <FormControl
-                  isRequired
-                  w="500px"
-                  isInvalid={signUpDetails.pass === ""}
-                >
+                <FormControl isRequired w="500px" isInvalid={passError}>
                   <FormLabel>Password</FormLabel>
                   <InputGroup>
                     <Input
@@ -167,6 +163,7 @@ const EmpowerWomanSignUpForm = () => {
                           ...signUpDetails,
                           pass: e.target.value,
                         });
+                        setPassError(false);
                       }}
                     />
                     <InputRightElement width="4.5rem">
@@ -193,8 +190,34 @@ const EmpowerWomanSignUpForm = () => {
                 <Button
                   w="100px"
                   onClick={() => {
-                    SignUp(setIsLoading, signUpDetails).then((data) => {
-                      console.log(data);
+                    let errorDetected = false;
+                    if (signUpDetails.firstName == "") {
+                      errorDetected = true;
+                      setFNameError(true);
+                    }
+                    if (signUpDetails.lastName == "") {
+                      errorDetected = true;
+                      setLNameError(true);
+                    }
+                    if (signUpDetails.pass == "") {
+                      errorDetected = true;
+                      setPassError(true);
+                    }
+                    if (signUpDetails.email == "") {
+                      errorDetected = true;
+                      setEmailEmptyError(true);
+                    }
+                    if (errorDetected) {
+                      return;
+                    }
+
+                    SignUp(setIsLoading, signUpDetails).then((_) => {
+                      navigate(
+                        `/mimics/EmpowerWomanHome/account/member/${signUpDetails.email}`,
+                        {
+                          replace: true,
+                        }
+                      );
                     });
                   }}
                 >

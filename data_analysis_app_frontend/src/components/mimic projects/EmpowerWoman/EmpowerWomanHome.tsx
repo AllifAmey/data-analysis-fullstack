@@ -51,7 +51,7 @@ const EmpowerWomanHome = () => {
               _hover={{ bg: "#e8590c" }}
               size="lg"
               as={RouterLink}
-              to={"/mimics/EmpowerWomanHome/login"}
+              to={"/mimics/EmpowerWomanHome/account/login"}
             >
               Login
             </Button>
@@ -61,7 +61,7 @@ const EmpowerWomanHome = () => {
               _hover={{ bg: "#e8590c" }}
               size="lg"
               as={RouterLink}
-              to={"/mimics/EmpowerWomanHome/signup"}
+              to={"/mimics/EmpowerWomanHome/account/signup"}
             >
               Sign Up
             </Button>

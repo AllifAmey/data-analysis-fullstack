@@ -62,7 +62,7 @@ const EmpowerWomanUser = () => {
             <Button
               w="100px"
               as={RouterLink}
-              to={"/mimics/EmpowerWomanHome/login"}
+              to={"/mimics/EmpowerWomanHome/account/login"}
             >
               Logout
             </Button>

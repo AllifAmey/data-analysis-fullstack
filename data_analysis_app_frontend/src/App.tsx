@@ -13,6 +13,8 @@ import YellowSubHydroRouting from "./components/data projects/YellowSubHydro/pag
 import MimicMain from "./components/mimic projects/MimicMain";
 import EmpowerWomanHome from "./components/mimic projects/EmpowerWoman/EmpowerWomanHome";
 import EmpowerWomanAccountRouting from "./components/mimic projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/EmpowerWomanAccountRouting";
+import EmpowerWomanUser from "./components/mimic projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/utility/EmpowerWomanUser";
+import EmpowerWomanAdmin from "./components/mimic projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/utility/EmpowerWomanAdmin";
 
 const routeDefinition = createRoutesFromElements(
   <Route>
@@ -20,8 +22,16 @@ const routeDefinition = createRoutesFromElements(
     <Route path="/mimics" element={<MimicMain />} />
     <Route path="/mimics/EmpowerWomanHome" element={<EmpowerWomanHome />} />
     <Route
-      path="/mimics/EmpowerWomanHome/:accessAccount"
+      path="/mimics/EmpowerWomanHome/account/:accessAccount"
       element={<EmpowerWomanAccountRouting />}
+    />
+    <Route
+      path="/mimics/EmpowerWomanHome/account/member/:accountName"
+      element={<EmpowerWomanUser />}
+    />
+    <Route
+      path="/mimics/EmpowerWomanHome/account/admin/:accountName"
+      element={<EmpowerWomanAdmin />}
     />
     <Route path="/project/kluster" element={<Kluster />} />
     <Route path="/project/yellowsubhydro" element={<YellowSubHydroMain />} />
