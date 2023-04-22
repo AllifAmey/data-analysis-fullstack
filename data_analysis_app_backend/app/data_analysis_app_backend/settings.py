@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'profiles_api',
     'kluster_api',
     'yellowsubhydro_api',
+    'empowerwoman_api'
 ]
 
 MIDDLEWARE = [

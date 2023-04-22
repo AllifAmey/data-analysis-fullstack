@@ -1,6 +1,7 @@
 from django.test import SimpleTestCase, TestCase
 from rest_framework.test import APIClient
 import json
+from datetime import datetime
 from yellowsubhydro_api import models
 
 
@@ -22,13 +23,10 @@ class TestFloodEndpoint(TestCase):
         """
         Basic test for POST request of flood API.
         """
-        
-        #TODO: Figure out what is going on with ths testing functionality
-        # detail of the problem:
-        # When I try to post data I get a "AttributeError: 'list' object has no attribute 'items'"
-        # there is an error on code line 32 with client.post
         client = APIClient()
-        
-        res = client.post("/api/flood/", [{"county": "Oxfordshire", "severity_lvl": 1}])
+        data = [{"county": "Oxfordshire", "flood_severity_lvl": 1, "floodAreaID": "d2"}]
+        res = client.post("/api/flood/", data=json.dumps(data), content_type='application/json')
+        now = datetime.now()
+        creation_date = now.strftime("%d/%m %H:%M")
         self.assertEqual(res.status_code, 201)
-        self.assertEqual(res.data, {"county": "Oxfordshire", "severity_lvl": 1})
+        self.assertEqual(res.data, [{"county": "Oxfordshire", "flood_severity_lvl": 1, "floodAreaID": "d2", "creation_date": creation_date}])

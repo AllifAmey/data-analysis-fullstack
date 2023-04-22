@@ -44,7 +44,7 @@ const EmpowerWomanHome = () => {
             </Text>
           </Box>
 
-          <Flex width="80%" justifyContent="center">
+          <Flex width="80%" justifyContent="center" color="white">
             <Button
               margin="0 4rem"
               bg="#ff922b"

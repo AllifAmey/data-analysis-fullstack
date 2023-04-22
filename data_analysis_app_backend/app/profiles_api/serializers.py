@@ -23,6 +23,38 @@ class UserSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         
         return user
+
+class EmpowerWomanUserSerializer(serializers.ModelSerializer):
+    """Serializes User data"""
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'password', 'first_name', 'last_name')
+        extra_kwargs = {'password': {'write_only': True}}
+        
+    def validate(self, data):
+        """
+        Make sure no field is empty.
+        """
+        if len(data['username']) == 0:
+            raise serializers.ValidationError("You can not have empty username")
+        if len(data['first_name']) == 0:
+            raise serializers.ValidationError("You can not have empty first name")
+        if len(data['last_name']) == 0:
+            raise serializers.ValidationError("You can not have empty last name")
+        if len(data['password']) == 0:
+            raise serializers.ValidationError("You can not have a empty password")
+        return data
+
+    def create(self, validated_data):
+        """Handles creating User"""
+        user = User.objects.create_user(validated_data['username'], password=validated_data['password'], first_name=validated_data['first_name'], last_name=validated_data['last_name'])
+        user.set_password(validated_data['password'])
+        # authenticated the moment user is created.
+        Token.objects.create(user=user)
+        
+        
+        return user
     
 class AuthTokenSerializer(serializers.Serializer):
     """Serializer for the user auth token."""

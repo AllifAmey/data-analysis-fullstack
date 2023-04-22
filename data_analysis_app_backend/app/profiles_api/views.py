@@ -25,6 +25,25 @@ class SignUpAPIView(generics.CreateAPIView):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+class SignUpEmpowerWomanAPIView(generics.CreateAPIView):
+    """Handle creating users"""
+    serializer_class = serializers.EmpowerWomanUserSerializer
+    queryset = User.objects.all()
+    
+    def post(self, request):
+        """Signs ups users to EmpowerWoman"""
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
     
     
 class UserLoginApiView(ObtainAuthToken):
@@ -38,6 +57,9 @@ class UserLoginApiView(ObtainAuthToken):
                                            context={'request': request})
         if serializer.is_valid():
             user = serializer.validated_data['user']
+            if user.username == "Rokhsareh@empoweredwomen-mcr.org":
+                # she's da boss what can I say
+                return Response({"boss_woman" : True}, status=status.HTTP_200_OK)
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,

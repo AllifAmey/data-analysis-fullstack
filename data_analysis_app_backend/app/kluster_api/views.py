@@ -6,7 +6,7 @@ from rest_framework import status
 
 from kluster_api.serializers import (
     DataPointSerializer,
-    RandomDataPointSerializer
+    RandomDataPointSerializer,
 )
 from kluster_api import models
 
@@ -93,9 +93,12 @@ class RandomDataPointAPIView(generics.CreateAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        
+# maybe serialize this to ensure the data is in the correct format.    
 class KlusterAnalysisAPIView(generics.ListAPIView):
     """Handles data analysis and displaying all the data"""
+    
+    def get_serializer_class(self):
+        return None
     
     def list(self, request):
         """Grabs the analysis and data for each dataset 1 or 2"""
