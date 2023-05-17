@@ -133,7 +133,7 @@ const YellowSubHydroMain = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [dispatch]);
+  }, []);
 
   const labels = bottomLabel;
 

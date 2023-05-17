@@ -7,7 +7,9 @@ app_name = 'yellowsubhydro_api'
 
 router = DefaultRouter()
 # as referance
-router.register("flood", views.FloodSeverityViewset, basename='floodseverity-viewset')
+router.register("flood",
+                views.FloodSeverityViewset,
+                basename='floodseverity-viewset')
 
 urlpatterns = [
     path('', include(router.urls)),

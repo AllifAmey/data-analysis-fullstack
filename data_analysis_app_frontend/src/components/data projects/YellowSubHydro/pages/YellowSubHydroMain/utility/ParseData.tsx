@@ -63,7 +63,7 @@ export function ParseData(data: internalFloodData[]): [string[], dataset[]] {
   const entireDataset: dataset[] = [];
   for (const county of unique_vals_counties) {
     const filtered_county = data.filter((datapoint: internalFloodData) => {
-      return datapoint.county == county;
+      return datapoint.county === county;
     });
     // initial_data_time are filled with arrays up to the length of creation-date
     // this is so that data can be plotted in the next piece of logic.
@@ -95,7 +95,7 @@ export function ParseData(data: internalFloodData[]): [string[], dataset[]] {
       recent_floodDataIDs = [];
 
       const recent_data = filtered_county.filter((e: internalFloodData) => {
-        return e.creation_date == recent_time;
+        return e.creation_date === recent_time;
       });
 
       for (const data of recent_data) {

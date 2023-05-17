@@ -16,5 +16,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('user/signup/', views.SignUpAPIView.as_view(), name='create'),
     path('user/login/', views.UserLoginApiView.as_view(), name="login"),
-    path('user/EmpowerWoman/signup', views.SignUpEmpowerWomanAPIView.as_view(), name="Empowerwoman login"),
+    path(
+        'user/EmpowerWoman/signup',
+        views.SignUpEmpowerWomanAPIView.as_view(),
+        name="Empowerwoman login"),
 ]
