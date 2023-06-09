@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import HomePage from "./components/HomePage";
+import YFinance from "./components/data projects/Yfinance/YFinance";
 import Kluster from "./components/data projects/Kluster/pages/Kluster/Kluster";
 import YellowSubHydroMain from "./components/data projects/YellowSubHydro/pages/YellowSubHydroMain/YellowSubHydroMain";
 import YellowSubHydroIndividual from "./components/data projects/YellowSubHydro/pages/YellowSubHydroIndividual/YellowSubHydroIndividual";
@@ -34,6 +35,7 @@ const routeDefinition = createRoutesFromElements(
       element={<EmpowerWomanAdmin />}
     />
     <Route path="/project/kluster" element={<Kluster />} />
+    <Route path="/project/yfinance" element={<YFinance />} />
     <Route path="/project/yellowsubhydro" element={<YellowSubHydroMain />} />
     <Route
       path="/project/yellowsubhydro/seperate"

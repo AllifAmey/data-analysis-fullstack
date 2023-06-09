@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import {
   Card,
   CardBody,
@@ -60,13 +60,14 @@ const ProjectCard = ({
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
         variant="outline"
+        width="100%"
       >
         <Image
           objectFit="contain"
           maxW={{ base: "100%", sm: "200px" }}
           h="200px"
           src={`${project_image}`}
-          alt="YellowSubHydro"
+          alt={`${project_title}`}
         />
 
         <Stack>

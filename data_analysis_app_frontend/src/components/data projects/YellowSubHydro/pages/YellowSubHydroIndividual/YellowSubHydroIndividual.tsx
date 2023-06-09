@@ -52,7 +52,7 @@ const YellowSubHydroIndividual = () => {
   useEffect(() => {
     const countyDataset = floodSeverityDataset.filter(
       (data: floodSeverityDatasetTypes) => {
-        if (data.label == params.county) {
+        if (data.label === params.county) {
           return true;
         }
       }
