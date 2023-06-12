@@ -36,11 +36,11 @@ const ProjectCardData: ProjectData[] = [
   },
   {
     project_type: "Fintech",
-    project_title: "YFinance",
-    project_description: "Displaying financial data using Yahoo Finance",
+    project_title: "CryptoFinance",
+    project_description: "Displaying crypto finance data using Binance",
     project_image:
       "https://media.microbilt.com/Cms_Data/Contents/MBNewsBlogs/Media/MB/FinancialData23.jpg?width=730&height=335&mode=carve",
-    project_url: "yfinance",
+    project_url: "CryptoFinance",
     project_has_more_info: false,
   },
 ];
@@ -109,10 +109,11 @@ const HomePage = () => {
 
           <Text>
             I created AmeyDataWorld because I want others to understand raw data
-            into a more digestible form. <br />
+            more easily.
             <br />
-            There is so much data out there waiting to be understood and that is
-            where I come in. Here are my projects
+            <br />
+            There is so much valuable information out waiting to be processed
+            and transformed. That is where I am in. Here are my projects
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="1em"
