@@ -121,13 +121,25 @@ const names = [
 const params = symbols.map((val) => {
   return `${val}usdt@trade`;
 });
+
+interface initial_priceInterFace {
+  icon: JSX.Element;
+  name: string;
+  symbol: string;
+  price: string | number;
+  priceDiff: string | number;
+  quantity: string | number;
+  quantityDiff: string | number;
+}
 const intialPricesState = symbols.map((val: string, idx: number) => {
-  var initial_price = {
+  var initial_price: initial_priceInterFace = {
     icon: icons[idx],
     name: names[idx],
     symbol: `${val.toUpperCase()}USDT`,
-    price: 0,
-    quantity: 0,
+    price: "waiting..",
+    priceDiff: "waiting..",
+    quantity: "waiting..",
+    quantityDiff: "waiting..",
   };
   return initial_price;
 });
@@ -174,8 +186,34 @@ const CryptoFinance = () => {
           return;
         }
         var new_price = prices;
+
+        if (typeof new_price[new_price_idx].price === "number") {
+          // find the percentage difference between new number and old.
+          // TODO: Try to round it 0.9999 to 0.99, .toFixed(2) doesn't allow that.
+          // nor does Math.Round()
+          // @ts-ignore
+          let priceDiff =
+            // @ts-ignore
+            parseFloat(data.p) / (new_price[new_price_idx].price as number);
+          // @ts-ignore
+          priceDiff = priceDiff.toFixed(2);
+          new_price[new_price_idx].priceDiff = priceDiff;
+        }
+        if (typeof new_price[new_price_idx].quantity === "number") {
+          // old is 1 new is 2
+          // 1 / 2 = 0.5
+          // old is 2, new is 1
+          // 2 / 1 = 2
+          const quantityDiff = // @ts-ignore
+            (
+              parseFloat(data.q) / (new_price[new_price_idx].quantity as number)
+            ).toFixed(2);
+          new_price[new_price_idx].quantityDiff = quantityDiff;
+        }
         new_price[new_price_idx].price = parseFloat(data.p);
         new_price[new_price_idx].quantity = parseFloat(data.q);
+        console.log(data.q);
+
         setPrices([...new_price]);
       };
     }
@@ -197,8 +235,49 @@ const CryptoFinance = () => {
     },
     { field: "name" },
     { field: "symbol" },
-    { field: "price" },
-    { field: "quantity" },
+    {
+      field: "price",
+      cellRenderer: (props: any) => {
+        if (props.data.price === "waiting..") {
+          return <div>Waiting...</div>;
+        } else if (props.data.priceDiff === "waiting..") {
+          return <div>{`$${props.data.price}`}</div>;
+        } else {
+          return (
+            <div>
+              {`$${props.data.price}`}{" "}
+              <span
+                style={{ color: props.data.priceDiff > 0 ? "green" : "red" }}
+              >{`${props.data.priceDiff > 0 ? "+" : "-"}${
+                props.data.priceDiff
+              }%`}</span>
+            </div>
+          );
+        }
+      },
+    },
+
+    {
+      field: "quantity",
+      cellRenderer: (props: any) => {
+        if (props.data.quantity === "waiting..") {
+          return <div>Waiting...</div>;
+        } else if (props.data.quantityDiff === "waiting..") {
+          return <div>{`$${props.data.quantity}`}</div>;
+        } else {
+          return (
+            <div>
+              {`${props.data.quantity}`}{" "}
+              <span
+                style={{ color: props.data.quantityDiff > 0 ? "green" : "red" }}
+              >{`${props.data.quantityDiff > 0 ? "+" : "-"}${
+                props.data.quantityDiff
+              }%`}</span>
+            </div>
+          );
+        }
+      },
+    },
   ];
 
   const getRowId: any = useCallback((params: any) => {
