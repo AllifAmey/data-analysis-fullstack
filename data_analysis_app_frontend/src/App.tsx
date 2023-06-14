@@ -11,11 +11,11 @@ import Kluster from "./components/data projects/Kluster/pages/Kluster/Kluster";
 import YellowSubHydroMain from "./components/data projects/YellowSubHydro/pages/YellowSubHydroMain/YellowSubHydroMain";
 import YellowSubHydroIndividual from "./components/data projects/YellowSubHydro/pages/YellowSubHydroIndividual/YellowSubHydroIndividual";
 import YellowSubHydroRouting from "./components/data projects/YellowSubHydro/pages/YellowSubHydroRouting/YellowSubHydroRouting";
-import MimicMain from "./components/mimic projects/MimicMain";
-import EmpowerWomanHome from "./components/mimic projects/EmpowerWoman/EmpowerWomanHome";
-import EmpowerWomanAccountRouting from "./components/mimic projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/EmpowerWomanAccountRouting";
-import EmpowerWomanUser from "./components/mimic projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/utility/EmpowerWomanUser";
-import EmpowerWomanAdmin from "./components/mimic projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/utility/EmpowerWomanAdmin";
+import MimicMain from "./components/frontend projects/MimicMain";
+import EmpowerWomanHome from "./components/frontend projects/EmpowerWoman/EmpowerWomanHome";
+import EmpowerWomanAccountRouting from "./components/frontend projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/EmpowerWomanAccountRouting";
+import EmpowerWomanUser from "./components/frontend projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/utility/EmpowerWomanUser";
+import EmpowerWomanAdmin from "./components/frontend projects/EmpowerWoman/pages/EmpowerWomanAccountRouting/utility/EmpowerWomanAdmin";
 
 const routeDefinition = createRoutesFromElements(
   <Route>

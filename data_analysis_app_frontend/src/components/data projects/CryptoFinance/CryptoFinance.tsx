@@ -1,9 +1,10 @@
-import { useEffect, useState, useRef, useCallback } from "react";
-import { Flex, Button } from "@chakra-ui/react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import { Flex, Button, Text } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import styles from "./CryptoFinance.module.css";
 
 const URL_WEB_SOCKET = "wss://stream.binance.com:9443/ws";
 // 8 coins for now.
@@ -159,6 +160,11 @@ const CryptoFinance = () => {
    *
    * specs:
    * show how it can be paged, sorted, filtered, grouped easily
+   *
+   * List of features:
+   * 1. Copy look of https://www.livecoinwatch.com/
+   * 2. Add graph and plot the data, not changes. Look at the "weekly" section.
+   *
    */
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [prices, setPrices] = useState(intialPricesState);
@@ -192,8 +198,6 @@ const CryptoFinance = () => {
 
         if (typeof new_price[new_price_idx].price === "number") {
           // find the percentage difference between new number and old.
-          // TODO: Try to round it 0.9999 to 0.99, .toFixed(2) doesn't allow that.
-          // nor does Math.Round()
           const old_value = new_price[new_price_idx].price as number;
           const new_value = parseFloat(data.p);
           const priceDiff = // @ts-ignore
@@ -280,6 +284,13 @@ const CryptoFinance = () => {
     return params.data.name;
   }, []);
 
+  const defaultColDef = useMemo(
+    () => ({
+      flex: 1,
+    }),
+    []
+  );
+
   return (
     <>
       <Flex
@@ -287,16 +298,21 @@ const CryptoFinance = () => {
         alignItems="center"
         flexDirection="column"
         h="100vh"
+        backgroundColor="#293143"
+        color="#fff"
       >
-        <div className="ag-theme-alpine" style={{ height: 500, width: "80%" }}>
+        <Text fontSize="44">CryptoFinance</Text>
+        <div className={"ag-theme-alpine-dark"} style={{ width: "60%" }}>
           <AgGridReact
+            domLayout="autoHeight"
             getRowId={getRowId}
             ref={gridRef}
             rowData={prices}
+            defaultColDef={defaultColDef}
             columnDefs={columnDefs}
           />
         </div>
-        <Button colorScheme="green" as={RouterLink} to="/">
+        <Button colorScheme="cyan" as={RouterLink} to="/">
           Back
         </Button>
       </Flex>

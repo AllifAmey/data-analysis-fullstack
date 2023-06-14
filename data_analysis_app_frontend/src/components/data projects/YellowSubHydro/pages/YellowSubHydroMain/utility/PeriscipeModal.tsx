@@ -19,8 +19,6 @@ import {
 import { BsCheckSquare } from "react-icons/bs";
 import { RxCrossCircled } from "react-icons/rx";
 
-import React from "react";
-
 type props = {
   isOpen: boolean;
   onClose: () => void;

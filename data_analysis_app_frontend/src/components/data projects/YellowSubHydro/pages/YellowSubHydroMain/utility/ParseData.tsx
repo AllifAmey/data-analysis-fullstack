@@ -17,6 +17,16 @@ interface internalFloodData {
 
 export function ParseData(data: internalFloodData[]): [string[], dataset[]] {
   // parse the data for now it's on the client side.
+  // brief description of parsing logic:
+  /* 1. Order the creation_date appropaitely so it can be accurately set
+   * on the graph.
+   * 2. Create a list with each item containing :
+   * - Area affected
+   * - data containing if the flood severity level of each unique creation date.
+   * - then random colours to distinguish each county.
+   * 3. Send the parsed data to the visualisation tool to visualise it.
+   *
+   */
   const unique_vals_creation_date: string[] = Array.from(
     new Set(data.map((x: internalFloodData) => x.creation_date))
   );

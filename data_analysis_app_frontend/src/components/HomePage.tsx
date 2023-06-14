@@ -203,7 +203,7 @@ const HomePage = () => {
             as={RouterLink}
             to={"/mimics"}
           >
-            Mimics
+            Frontend Projects
           </Button>
         </Flex>
       </Flex>

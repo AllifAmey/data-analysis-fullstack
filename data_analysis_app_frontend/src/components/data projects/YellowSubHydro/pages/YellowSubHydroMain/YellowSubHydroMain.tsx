@@ -49,7 +49,9 @@ const YellowSubHydroMain = () => {
     setIsOpen(false);
   }
 
+  // This is where the ETL pipeline begins.
   function inputGovData(): void {
+    // grab data and EXTRACT floodAreaID, count and flood severity level
     getGovFlood(setIsLoading).then((data) => {
       interface PostFloodData {
         floodAreaID: string;
@@ -65,6 +67,9 @@ const YellowSubHydroMain = () => {
           flood_severity_lvl: item.severityLevel,
         });
       }
+      // LOAD the data to the database
+      // Then grab the data from database to TRANSFORM
+      // on frontend.
       postFlood(setIsLoading, process_data).then(() => {
         getFlood(setIsLoading).then((data) => {
           const [unique_vals_creation_date, entireDataset] = ParseData(data);
