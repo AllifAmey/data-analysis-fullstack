@@ -156,6 +156,9 @@ const CryptoFinance = () => {
    * First attach the data to ag-grid with icons for each coin.
    * Second attempt to explore the data and understand each bit
    * Lastly, explore more potential features.
+   *
+   * specs:
+   * show how it can be paged, sorted, filtered, grouped easily
    */
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [prices, setPrices] = useState(intialPricesState);
@@ -191,28 +194,21 @@ const CryptoFinance = () => {
           // find the percentage difference between new number and old.
           // TODO: Try to round it 0.9999 to 0.99, .toFixed(2) doesn't allow that.
           // nor does Math.Round()
-          // @ts-ignore
-          let priceDiff =
-            // @ts-ignore
-            parseFloat(data.p) / (new_price[new_price_idx].price as number);
-          // @ts-ignore
-          priceDiff = priceDiff.toFixed(2);
+          const old_value = new_price[new_price_idx].price as number;
+          const new_value = parseFloat(data.p);
+          const priceDiff = // @ts-ignore
+            (((new_value - old_value) / old_value) * 100).toFixed(2);
           new_price[new_price_idx].priceDiff = priceDiff;
         }
         if (typeof new_price[new_price_idx].quantity === "number") {
-          // old is 1 new is 2
-          // 1 / 2 = 0.5
-          // old is 2, new is 1
-          // 2 / 1 = 2
+          const old_value = new_price[new_price_idx].quantity as number;
+          const new_value = parseFloat(data.q);
           const quantityDiff = // @ts-ignore
-            (
-              parseFloat(data.q) / (new_price[new_price_idx].quantity as number)
-            ).toFixed(2);
+            (((new_value - old_value) / old_value) * 100).toFixed(2);
           new_price[new_price_idx].quantityDiff = quantityDiff;
         }
         new_price[new_price_idx].price = parseFloat(data.p);
         new_price[new_price_idx].quantity = parseFloat(data.q);
-        console.log(data.q);
 
         setPrices([...new_price]);
       };
