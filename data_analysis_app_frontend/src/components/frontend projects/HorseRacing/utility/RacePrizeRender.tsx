@@ -4,7 +4,6 @@ const RacePrizeRender = (props: any) => {
    *
    *
    */
-  console.log("may local string yo");
   const prize = Number(props.data.race_prize).toLocaleString("en-GB");
   return (
     <>

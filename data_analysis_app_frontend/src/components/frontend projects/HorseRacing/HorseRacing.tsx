@@ -84,6 +84,7 @@ const HorseRacing = () => {
         {!isLoading && (
           <>
             <Text fontSize="44">HorseRacing Data</Text>
+            <Text fontSize="20">Using https://www.theracingapi.com/</Text>
             <div
               className={"ag-theme-material"}
               style={{ height: 600, width: "80%" }}
@@ -100,14 +101,6 @@ const HorseRacing = () => {
             <Flex gap="4rem" justifyItems="space-between" alignItems="center">
               <Button colorScheme="cyan" as={RouterLink} to="/frontend">
                 Back
-              </Button>
-              <Button
-                colorScheme="cyan"
-                onClick={(_) => {
-                  console.log(horseRaceData);
-                }}
-              >
-                Print Horse Data
               </Button>
             </Flex>
           </>

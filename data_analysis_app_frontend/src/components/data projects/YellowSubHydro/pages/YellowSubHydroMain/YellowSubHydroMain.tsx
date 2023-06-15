@@ -92,7 +92,7 @@ const YellowSubHydroMain = () => {
           bottom: 20,
         },
         font: {
-          size: 36,
+          size: 30,
           family: "Helvetica Neue",
         },
       },
