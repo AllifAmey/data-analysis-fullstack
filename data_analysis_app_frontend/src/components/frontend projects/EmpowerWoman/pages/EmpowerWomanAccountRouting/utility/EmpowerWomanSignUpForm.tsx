@@ -14,7 +14,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { SignUp } from "../../../../APIs/User";
+import { SignUp } from "../../../APIs/User";
 
 const EmpowerWomanSignUpForm = () => {
   /*
@@ -183,7 +183,7 @@ const EmpowerWomanSignUpForm = () => {
                 <Button
                   w="100px"
                   as={RouterLink}
-                  to={"/mimics/EmpowerWomanHome"}
+                  to={"/frontend/EmpowerWomanHome"}
                 >
                   Back
                 </Button>

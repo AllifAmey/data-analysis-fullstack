@@ -201,7 +201,7 @@ const HomePage = () => {
             variant="text"
             colorScheme="cyan"
             as={RouterLink}
-            to={"/mimics"}
+            to={"/frontend"}
           >
             Frontend Projects
           </Button>

@@ -27,7 +27,7 @@ const EmpowerWomanAccountRouting = () => {
 
   const params = useParams();
 
-  if (params.accessAccount == "login") {
+  if (params.accessAccount === "login") {
     return (
       <>
         <EmpowerWomanLoginForm />
@@ -35,7 +35,7 @@ const EmpowerWomanAccountRouting = () => {
     );
   }
 
-  if (params.accessAccount == "signup") {
+  if (params.accessAccount === "signup") {
     return (
       <>
         <EmpowerWomanSignUpForm />

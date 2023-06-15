@@ -4,7 +4,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import styles from "./CryptoFinance.module.css";
 
 const URL_WEB_SOCKET = "wss://stream.binance.com:9443/ws";
 // 8 coins for now.

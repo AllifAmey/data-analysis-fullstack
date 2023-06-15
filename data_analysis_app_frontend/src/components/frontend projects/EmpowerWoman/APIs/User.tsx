@@ -1,5 +1,5 @@
 import React from "react";
-import domain from "../../../domain";
+import domain from "../../../../domain";
 
 // template to create apis
 

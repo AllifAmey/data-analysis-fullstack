@@ -14,7 +14,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { Login } from "../../../../APIs/User";
+import { Login } from "../../../APIs/User";
 import { GoSmiley } from "react-icons/go";
 
 const EmpowerWomanLoginForm = () => {
@@ -116,7 +116,7 @@ const EmpowerWomanLoginForm = () => {
                 <Button
                   w="100px"
                   as={RouterLink}
-                  to={"/mimics/EmpowerWomanHome"}
+                  to={"/frontend/EmpowerWomanHome"}
                 >
                   Back
                 </Button>
@@ -132,14 +132,14 @@ const EmpowerWomanLoginForm = () => {
                         setLoginDetails({ email: "", password: "" });
                       } else if (data.boss_woman) {
                         navigate(
-                          `/mimics/EmpowerWomanHome/account/admin/${loginDetails.email}`,
+                          `/frontend/EmpowerWomanHome/account/admin/${loginDetails.email}`,
                           {
                             replace: true,
                           }
                         );
                       } else if (data.token !== undefined) {
                         navigate(
-                          `/mimics/EmpowerWomanHome/account/member/${loginDetails.email}`,
+                          `/frontend/EmpowerWomanHome/account/member/${loginDetails.email}`,
                           {
                             replace: true,
                           }
