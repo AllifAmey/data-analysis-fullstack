@@ -17,10 +17,10 @@ class HorseRacingTestProduct(TestCase):
         print(LIST_HORSE_RACE_URL)
         res = self.client.get(LIST_HORSE_RACE_URL)
         data = res.data
-        data_keys = dict.keys(data)
+        data_keys = dict.keys(data[0])
         # check if there is certain keys and no other ones.
-        self.assertTrue("course_name" in data_keys)
-        self.assertTrue("course_prize" in data_keys)
+        self.assertTrue("race_name" in data_keys)
+        self.assertTrue("race_prize" in data_keys)
         self.assertTrue("runners" in data_keys)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         

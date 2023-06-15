@@ -34,7 +34,13 @@ class HorseRacingViewSet(viewsets.ViewSet):
         the_racing_api_pass = os.environ.get('THE_RACING_API_PASS')
         base_url = "https://api.theracingapi.com"
         horse_racing_endpoint = base_url + "/v1/racecards/free"
-        params = {}
+        # we're only interested in GB
+        
+        params = {
+            "region_codes": [
+                "gb"
+            ]
+            }
         response = requests.request(
             "GET",
             horse_racing_endpoint,
@@ -45,5 +51,38 @@ class HorseRacingViewSet(viewsets.ViewSet):
         
         horse_data = response.json()
         
+        #generator = ( item['racecards']['courses'] for item in horse_data )
         
-        return Response(horse_data, status=status.HTTP_200_OK)
+        #for i in generator:
+            #print(i)
+        # crap way optimising later
+        
+        
+        horse_data_parsed = []
+        for race_card in horse_data['racecards']:
+            race_name = race_card['race_name']
+            race_prize = race_card['prize']
+            horses = race_card['runners']
+            parsed_horses = []
+            for horse in horses:
+                horse_name = horse['horse']
+                trainer = horse['trainer']
+                jockey_weight = horse['lbs']
+                parsed_horses.append({
+                    "horse_name": horse_name,
+                    "trainer": trainer,
+                    "jockey_weight": f'{jockey_weight}lb'
+                    })
+            horse_data_parsed.append(
+                {
+                    "race_name": race_name,
+                    "race_prize": race_prize,
+                    "runners": parsed_horses
+                }
+            )
+        print(horse_data_parsed)
+           
+        # optimised way
+        
+        
+        return Response(horse_data_parsed, status=status.HTTP_200_OK)
