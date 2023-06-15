@@ -21,6 +21,8 @@ services:
       - DB_USER=devuser
       - DB_PASS=changeme
       - DEBUG=1
+      - THE_RACING_API_USER=${THE_RACING_API_USER}
+      - THE_RACING_API_PASS=${THE_RACING_API_PASS}
     depends_on:
       - db
 

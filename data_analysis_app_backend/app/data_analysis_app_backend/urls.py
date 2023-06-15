@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/', include('kluster_api.urls')),
     path('api/', include('yellowsubhydro_api.urls')),
     path('api/', include('empowerwoman_api.urls')),
+    path('api/', include('horse_racing_api.urls')),
 ]
 
 

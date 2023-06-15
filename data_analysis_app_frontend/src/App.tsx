@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import HomePage from "./components/HomePage";
+import NewHomePage from "./components/SophiaHomePage";
 import CryptoFinance from "./components/data projects/CryptoFinance/CryptoFinance";
 import Kluster from "./components/data projects/Kluster/pages/Kluster/Kluster";
 import YellowSubHydroMain from "./components/data projects/YellowSubHydro/pages/YellowSubHydroMain/YellowSubHydroMain";
@@ -20,6 +21,7 @@ import EmpowerWomanAdmin from "./components/frontend projects/EmpowerWoman/pages
 const routeDefinition = createRoutesFromElements(
   <Route>
     <Route path="/" element={<HomePage />} />
+    <Route path="/NewHome" element={<NewHomePage />} />
     <Route path="/mimics" element={<MimicMain />} />
     <Route path="/mimics/EmpowerWomanHome" element={<EmpowerWomanHome />} />
     <Route
