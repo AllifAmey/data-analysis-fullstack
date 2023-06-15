@@ -10,9 +10,26 @@ from requests.auth import HTTPBasicAuth
 # Create your views here.
 
 class HorseRacingViewSet(viewsets.ViewSet):
+    """Handles the external API for horse racing"""
     
     def list(self, request):
+        """List all the necessary information for horse racing"""
+        """
+        Laying out a plan, 
+        it seems there are courses with prizes attached.
+        What would be useful is extracting the following pieces of data:
+        From Course -
+        Course Name, Prize
+        From Individual Horses in each Course -
+        Horse Name, Trainer name
         
+        Reasons:
+        It would be useful for others to know the prizes,
+        It will also be useful to know the horse name and the trainer.
+        A trainer can help understand betters understand if that horse,
+        is safe to bet on. I assume trainers are used to gauge safety of ,
+        bet. 
+        """
         the_racing_api_user = os.environ.get('THE_RACING_API_USER')
         the_racing_api_pass = os.environ.get('THE_RACING_API_PASS')
         base_url = "https://api.theracingapi.com"
@@ -26,6 +43,7 @@ class HorseRacingViewSet(viewsets.ViewSet):
                 the_racing_api_pass),
             params=params)
         
+        horse_data = response.json()
         
         
-        return Response(response.json(), status=status.HTTP_200_OK)
+        return Response(horse_data, status=status.HTTP_200_OK)

@@ -11,7 +11,7 @@ router = DefaultRouter()
 router.register(
     "horse-racing",
     views.HorseRacingViewSet, basename='horseracing-viewset')
-# RandomDataPointAPIView
+
 
 urlpatterns = [
     path('', include(router.urls)),
