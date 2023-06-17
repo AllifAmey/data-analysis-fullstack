@@ -12,7 +12,6 @@ from kluster_api import models
 
 # analysis tools.
 import random
-import numpy
 import statistics
 
 

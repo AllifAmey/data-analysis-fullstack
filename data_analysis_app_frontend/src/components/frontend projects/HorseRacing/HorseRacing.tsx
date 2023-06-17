@@ -46,6 +46,7 @@ const HorseRacing = () => {
     () => ({
       resizeable: true,
       sortable: true,
+      editable: true,
       flex: 1,
     }),
     []
