@@ -1,14 +1,18 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from requests.auth import HTTPBasicAuth
+
 import os
 import requests
 
-from requests.auth import HTTPBasicAuth
+from horse_racing_api import serializers
 
 
 class HorseRacingViewSet(viewsets.ViewSet):
     """Handles the external API for horse racing"""
+
+    serializer_class = serializers.HorseRacingSerializer
 
     def extract_horse_data(self, horse):
         """Grabs relevant horse data and returns it"""
@@ -41,6 +45,26 @@ class HorseRacingViewSet(viewsets.ViewSet):
         }
         return racecard_data_parsed
 
+    def call_racing_api_racecard(self, region_code="gb"):
+        """Calls the racecard endpoint in the racing api"""
+        the_racing_api_user = os.environ.get('THE_RACING_API_USER')
+        the_racing_api_pass = os.environ.get('THE_RACING_API_PASS')
+        base_url = "https://api.theracingapi.com"
+        horse_racing_endpoint = base_url + "/v1/racecards/free"
+        params = {
+            "region_codes": [
+                region_code
+            ]}
+        response = requests.request(
+            "GET",
+            horse_racing_endpoint,
+            auth=HTTPBasicAuth(
+                the_racing_api_user,
+                the_racing_api_pass),
+            params=params)
+        racecard_data = response.json()
+        return racecard_data
+
     def list(self, request):
         """List all the necessary information for horse racing"""
         """
@@ -59,26 +83,8 @@ class HorseRacingViewSet(viewsets.ViewSet):
         is safe to bet on. I assume trainers are used to gauge safety of ,
         bet.
         """
-        the_racing_api_user = os.environ.get('THE_RACING_API_USER')
-        the_racing_api_pass = os.environ.get('THE_RACING_API_PASS')
-        base_url = "https://api.theracingapi.com"
-        horse_racing_endpoint = base_url + "/v1/racecards/free"
-        # we're only interested in GB
 
-        params = {
-            "region_codes": [
-                "gb"
-            ]
-            }
-        response = requests.request(
-            "GET",
-            horse_racing_endpoint,
-            auth=HTTPBasicAuth(
-                the_racing_api_user,
-                the_racing_api_pass),
-            params=params)
-
-        racecard_data = response.json()
+        racecard_data = self.call_racing_api_racecard()
 
         # crap way optimising later
         """
@@ -133,5 +139,18 @@ class HorseRacingViewSet(viewsets.ViewSet):
         to the region code in the parameter
         Then the data is parsed and returned.
         """
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            valid_region_code = serializer.validated_data.get('region_code')
 
-        return Response({"message": "data"}, status=status.HTTP_201_CREATED)
+            racecard_data = self.call_racing_api_racecard(valid_region_code)
+            racecard_data_parsed = [
+                {"region_code": valid_region_code,
+                 **self.extract_racecard_data(racecard)}
+                for racecard in racecard_data['racecards']]
+
+            return Response(racecard_data_parsed,
+                            status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)

@@ -5,6 +5,7 @@ from django.urls import reverse
 
 HORSE_RACE_URL = reverse("horse_racing_api:horseracing-viewset-list")
 
+
 class HorseRacingTestProduct(TestCase):
     """Test the horse racing API"""
 
@@ -22,11 +23,11 @@ class HorseRacingTestProduct(TestCase):
         self.assertTrue("race_prize" in data_keys)
         self.assertTrue("runners" in data_keys)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-    
+
     def test_post_horseracing(self):
         """Test region code correctly returns data"""
         payload = {
-            "region_code" : "fr"
+            "region_code": "fr"
         }
         res = self.client.post(
             HORSE_RACE_URL,
