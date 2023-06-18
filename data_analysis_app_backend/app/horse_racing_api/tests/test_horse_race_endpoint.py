@@ -14,11 +14,11 @@ class HorseRacingTestProduct(TestCase):
         self.client = APIClient()
 
     def test_list_horseracing(self):
-        """Test Horse models are listed"""
+        """Test Horse data is listed"""
         res = self.client.get(LIST_HORSE_RACE_URL)
         data = res.data
         data_keys = dict.keys(data[0])
-        # check if there is certain keys and no other ones.
+        # check if there are certain keys and no other ones.
         self.assertTrue("race_name" in data_keys)
         self.assertTrue("race_prize" in data_keys)
         self.assertTrue("runners" in data_keys)

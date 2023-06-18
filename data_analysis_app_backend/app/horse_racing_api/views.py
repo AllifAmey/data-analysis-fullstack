@@ -14,6 +14,9 @@ class HorseRacingViewSet(viewsets.ViewSet):
         """Grabs relevant horse data and returns it"""
         horse_name = horse['horse']
         trainer = horse['trainer']
+        # note should be made:
+        # jockey weight is important for betters
+        # lower the weight the better.
         jockey_weight = horse['lbs']
         extracted_horse_data = {
                     "horse_name": horse_name,
@@ -119,3 +122,16 @@ class HorseRacingViewSet(viewsets.ViewSet):
         # Field trainer String 255
 
         return Response(racecard_data_parsed, status=status.HTTP_200_OK)
+
+    def create(self, request):
+        """Post horse data dependant on request"""
+
+        """
+        Laying out plan:
+        Post request accepts region code parameter,
+        The params for requesting the horse data changes,
+        to the region code in the parameter
+        Then the data is parsed and returned.
+        """
+
+        return Response({"message": "data"}, status=status.HTTP_201_CREATED)
