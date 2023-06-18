@@ -40,3 +40,15 @@ class HorseRacingTestProduct(TestCase):
         self.assertTrue("race_name" in data_keys)
         self.assertTrue("race_prize" in data_keys)
         self.assertTrue("runners" in data_keys)
+    
+    def test_post_horseracing_validation(self):
+        """Test region code correctly returns data"""
+        payload = {
+            "region_code": "frr"
+        }
+        res = self.client.post(
+            HORSE_RACE_URL,
+            payload)
+
+        # check if there are certain keys and no other ones.
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
