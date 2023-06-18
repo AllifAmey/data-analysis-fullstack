@@ -40,7 +40,7 @@ class HorseRacingTestProduct(TestCase):
         self.assertTrue("race_name" in data_keys)
         self.assertTrue("race_prize" in data_keys)
         self.assertTrue("runners" in data_keys)
-    
+
     def test_post_horseracing_validation(self):
         """Test region code correctly returns data"""
         payload = {

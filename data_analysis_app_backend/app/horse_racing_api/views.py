@@ -55,6 +55,8 @@ class HorseRacingViewSet(viewsets.ViewSet):
             "region_codes": [
                 region_code
             ]}
+        if region_code == "":
+            params = {}
         response = requests.request(
             "GET",
             horse_racing_endpoint,
@@ -117,6 +119,10 @@ class HorseRacingViewSet(viewsets.ViewSet):
             self.extract_racecard_data(racecard)
             for racecard in racecard_data['racecards']]
 
+        all_racecard_data = self.call_racing_api_racecard("")
+        available_regions = list(
+            set(r['region'].lower() for r in all_racecard_data['racecards']))
+
         # potential loading to database:
         # Model Race
         # Field Race_name String 255 char
@@ -127,7 +133,9 @@ class HorseRacingViewSet(viewsets.ViewSet):
         # Field jockey_weight Int
         # Field trainer String 255
 
-        return Response(racecard_data_parsed, status=status.HTTP_200_OK)
+        return Response(
+            racecard_data_parsed+[available_regions],
+            status=status.HTTP_200_OK)
 
     def create(self, request):
         """Post horse data dependant on request"""

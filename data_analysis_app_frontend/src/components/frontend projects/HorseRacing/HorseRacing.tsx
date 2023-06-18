@@ -20,6 +20,11 @@ import { ValidRegionCodes } from "./utility/ValidateRegionCode";
 // apis
 import { getHorseData, postHorseData } from "./APIs/HorseAPI";
 
+type AvailableRegionType = {
+  region: string;
+  region_code: string;
+};
+
 const HorseRacing = () => {
   /**
    * Display horse racing data
@@ -28,6 +33,8 @@ const HorseRacing = () => {
    */
   const [horseRaceData, setHorseRaceData] = useState<any>([]);
   const [region, setRegion] = useState<string>("Great Britain");
+  const [availableRegions, setAvailableRegions] =
+    useState<AvailableRegionType[]>(ValidRegionCodes);
   const [regionCode, setRegionCode] = useState<string>("gb");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -35,6 +42,13 @@ const HorseRacing = () => {
 
   useEffect(() => {
     getHorseData(setIsLoading, setError).then((horseData) => {
+      const fetchedAvailableRegions = horseData.pop();
+      const newAvailableRegions = ValidRegionCodes.filter(
+        (val: AvailableRegionType) => {
+          return fetchedAvailableRegions.includes(`${val.region_code}`);
+        }
+      );
+      setAvailableRegions(newAvailableRegions);
       setHorseRaceData(horseData);
     });
   }, [setIsLoading]);
@@ -104,6 +118,7 @@ const HorseRacing = () => {
                 }</span>`}
               />
             </div>
+
             <Box w="40%">
               <Select
                 placeholder={`${region} | ${regionCode}`}
@@ -122,7 +137,7 @@ const HorseRacing = () => {
                   );
                 }}
               >
-                {ValidRegionCodes.map((validRegionCode) => {
+                {availableRegions.map((validRegionCode: any) => {
                   return (
                     <option
                       value={`${validRegionCode.region_code}|${validRegionCode.region}`}
