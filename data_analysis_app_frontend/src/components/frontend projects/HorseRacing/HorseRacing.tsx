@@ -1,14 +1,24 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
-import { Flex, Button, Text, CircularProgress } from "@chakra-ui/react";
+import {
+  Flex,
+  Button,
+  Text,
+  CircularProgress,
+  Select,
+  Box,
+} from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import domain from "../../../domain";
 
 // utiliy
 import RunnersRender from "./utility/RunnersRender";
 import RacePrizeRender from "./utility/RacePrizeRender";
+import { ValidRegionCodes } from "./utility/ValidateRegionCode";
+
+// apis
+import { getHorseData, postHorseData } from "./APIs/HorseAPI";
 
 const HorseRacing = () => {
   /**
@@ -17,25 +27,16 @@ const HorseRacing = () => {
    *
    */
   const [horseRaceData, setHorseRaceData] = useState<any>([]);
+  const [region, setRegion] = useState<string>("Great Britain");
+  const [regionCode, setRegionCode] = useState<string>("gb");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   //styles
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`${domain}/api/horse-racing/`)
-      .then((response) => {
-        if (!response.ok) {
-          setError(true);
-        } else {
-          const horseData = response.json();
-          return horseData;
-        }
-      })
-      .then((data) => {
-        setHorseRaceData(data);
-      });
-    setIsLoading(false);
+    getHorseData(setIsLoading, setError).then((horseData) => {
+      setHorseRaceData(horseData);
+    });
   }, [setIsLoading]);
 
   const getRowId: any = useCallback((params: any) => {
@@ -51,7 +52,6 @@ const HorseRacing = () => {
     }),
     []
   );
-  console.log(defaultColDef);
   const gridRef: any = useRef();
 
   const columnDefs: any = [
@@ -84,7 +84,7 @@ const HorseRacing = () => {
         {isLoading && <CircularProgress />}
         {!isLoading && (
           <>
-            <Text fontSize="44">HorseRacing Data</Text>
+            <Text fontSize="44">HorseRacing Data for {region}</Text>
             <Text fontSize="20">Using https://www.theracingapi.com/</Text>
             <div
               className={"ag-theme-material"}
@@ -97,13 +97,45 @@ const HorseRacing = () => {
                 animateRows={true}
                 defaultColDef={defaultColDef}
                 columnDefs={columnDefs}
+                overlayNoRowsTemplate={`<span>${
+                  error
+                    ? "There's an error with the servers"
+                    : "No available data for that region code. Try another one!"
+                }</span>`}
               />
             </div>
-            <Flex gap="4rem" justifyItems="space-between" alignItems="center">
-              <Button colorScheme="cyan" as={RouterLink} to="/frontend">
-                Back
-              </Button>
-            </Flex>
+            <Box w="40%">
+              <Select
+                placeholder={`${region} | ${regionCode}`}
+                color="#66d9e8"
+                value={regionCode}
+                onChange={(e) => {
+                  const regionSplit = e.target.value.split(" ");
+                  const regionCode = regionSplit[0];
+                  const region = regionSplit[1];
+                  setRegionCode(regionCode);
+                  setRegion(region);
+                  postHorseData(setIsLoading, setError, regionCode).then(
+                    (newHorseData) => {
+                      setHorseRaceData(newHorseData);
+                    }
+                  );
+                }}
+              >
+                {ValidRegionCodes.map((validRegionCode) => {
+                  return (
+                    <option
+                      value={`${validRegionCode.region_code} ${validRegionCode.region}`}
+                    >
+                      {`${validRegionCode.region_code} | ${validRegionCode.region}`}
+                    </option>
+                  );
+                })}
+              </Select>
+            </Box>
+            <Button colorScheme="cyan" as={RouterLink} to="/frontend">
+              Back
+            </Button>
           </>
         )}
       </Flex>
