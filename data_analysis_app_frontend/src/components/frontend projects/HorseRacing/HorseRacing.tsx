@@ -110,7 +110,7 @@ const HorseRacing = () => {
                 color="#66d9e8"
                 value={regionCode}
                 onChange={(e) => {
-                  const regionSplit = e.target.value.split(" ");
+                  const regionSplit = e.target.value.split("|");
                   const regionCode = regionSplit[0];
                   const region = regionSplit[1];
                   setRegionCode(regionCode);
@@ -125,7 +125,7 @@ const HorseRacing = () => {
                 {ValidRegionCodes.map((validRegionCode) => {
                   return (
                     <option
-                      value={`${validRegionCode.region_code} ${validRegionCode.region}`}
+                      value={`${validRegionCode.region_code}|${validRegionCode.region}`}
                     >
                       {`${validRegionCode.region_code} | ${validRegionCode.region}`}
                     </option>
