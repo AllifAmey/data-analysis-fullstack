@@ -33,7 +33,7 @@ class HorseRacingViewSet(viewsets.ViewSet):
         """Grabs relevant racecard data and returns it"""
         race_name = racecard['race_name']
         race_prize = racecard['prize']\
-            .translate({ord(i): "" for i in '£,'})
+            .translate({ord(i): "" for i in ','})
         horses = racecard['runners']
         parsed_horses = [
                 self.extract_horse_data(horse)
@@ -150,7 +150,6 @@ class HorseRacingViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             valid_region_code = serializer.validated_data.get('region_code')
-
             racecard_data = self.call_racing_api_racecard(valid_region_code)
             racecard_data_parsed = [
                 {"region_code": valid_region_code,

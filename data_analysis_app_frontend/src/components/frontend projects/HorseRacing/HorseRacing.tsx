@@ -74,12 +74,16 @@ const HorseRacing = () => {
       field: "race_prize",
       headerName: "Prizes to win!",
       comparator: (
-        valueA: any,
-        valueB: any,
+        valueA: string,
+        valueB: string,
         nodeA: any,
         nodeB: any,
         isDescending: any
-      ) => valueA - valueB,
+      ) => {
+        const newValueA = valueA.substring(1);
+        const newValueB = valueB.substring(1);
+        return Number(newValueA) - Number(newValueB);
+      },
       cellRenderer: RacePrizeRender,
     },
     { field: "runners", cellRenderer: RunnersRender },
@@ -121,7 +125,7 @@ const HorseRacing = () => {
 
             <Box w="40%">
               <Select
-                placeholder={`${region} | ${regionCode}`}
+                placeholder={`${regionCode} | ${region} `}
                 color="#66d9e8"
                 value={regionCode}
                 onChange={(e) => {
@@ -132,19 +136,24 @@ const HorseRacing = () => {
                   setRegion(region);
                   postHorseData(setIsLoading, setError, regionCode).then(
                     (newHorseData) => {
+                      console.log(newHorseData);
                       setHorseRaceData(newHorseData);
                     }
                   );
                 }}
               >
                 {availableRegions.map((validRegionCode: any) => {
-                  return (
-                    <option
-                      value={`${validRegionCode.region_code}|${validRegionCode.region}`}
-                    >
-                      {`${validRegionCode.region_code} | ${validRegionCode.region}`}
-                    </option>
-                  );
+                  if (validRegionCode.region_code !== regionCode) {
+                    return (
+                      <option
+                        value={`${validRegionCode.region_code}|${validRegionCode.region}`}
+                      >
+                        {`${validRegionCode.region_code} | ${validRegionCode.region}`}
+                      </option>
+                    );
+                  } else {
+                    return null;
+                  }
                 })}
               </Select>
             </Box>

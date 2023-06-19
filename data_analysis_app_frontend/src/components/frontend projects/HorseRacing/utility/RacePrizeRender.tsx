@@ -4,10 +4,13 @@ const RacePrizeRender = (props: any) => {
    *
    *
    */
-  const prize = Number(props.data.race_prize).toLocaleString("en-GB");
+  const currency = props.data.race_prize.charAt(0);
+  const prize = Number(props.data.race_prize.substring(1)).toLocaleString(
+    "en-GB"
+  );
   return (
     <>
-      <div>{`£${prize}`}</div>
+      <div>{`${currency}${prize}`}</div>
     </>
   );
 };
