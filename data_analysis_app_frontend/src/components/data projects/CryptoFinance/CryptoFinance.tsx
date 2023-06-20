@@ -210,7 +210,7 @@ const CryptoFinance = () => {
             (((new_value - old_value) / old_value) * 100).toFixed(2);
           new_price[new_price_idx].quantityDiff = quantityDiff;
         }
-        new_price[new_price_idx].price = parseFloat(data.p);
+        new_price[new_price_idx].price = parseFloat(data.p).toFixed(2);
         new_price[new_price_idx].quantity = parseFloat(data.q);
 
         setPrices([...new_price]);
@@ -236,6 +236,15 @@ const CryptoFinance = () => {
     { field: "symbol" },
     {
       field: "price",
+      comparator: (
+        valueA: any,
+        valueB: any,
+        nodeA: any,
+        nodeB: any,
+        isDescending: any
+      ) => {
+        return valueA - valueB;
+      },
       cellRenderer: (props: any) => {
         if (props.data.price === "waiting..") {
           return <div>Waiting...</div>;
@@ -286,6 +295,7 @@ const CryptoFinance = () => {
   const defaultColDef = useMemo(
     () => ({
       flex: 1,
+      sortable: true,
     }),
     []
   );
@@ -305,6 +315,7 @@ const CryptoFinance = () => {
           <AgGridReact
             domLayout="autoHeight"
             getRowId={getRowId}
+            animateRows={true}
             ref={gridRef}
             rowData={prices}
             defaultColDef={defaultColDef}

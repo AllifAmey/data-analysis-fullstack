@@ -113,7 +113,7 @@ const HomePage = () => {
             <br />
             <br />
             There is so much valuable information out waiting to be processed
-            and transformed. That is where I am in. Here are my projects
+            and transformed. That is where I come in. Here are my projects
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="1em"
