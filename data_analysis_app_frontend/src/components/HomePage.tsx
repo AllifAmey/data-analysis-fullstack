@@ -41,7 +41,8 @@ const ProjectCardData: ProjectData[] = [
     project_image:
       "https://media.microbilt.com/Cms_Data/Contents/MBNewsBlogs/Media/MB/FinancialData23.jpg?width=730&height=335&mode=carve",
     project_url: "CryptoFinance",
-    project_has_more_info: false,
+    project_has_more_info: true,
+    project_technology_info: ["Binance WebSocket API", "Ag Grid"],
   },
 ];
 
